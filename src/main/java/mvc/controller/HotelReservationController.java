@@ -115,7 +115,7 @@ public class HotelReservationController {
             cartItemDatabaseList.addAll(cartItemSessionList);
 
             request.getSession().setAttribute("cartItemList", cartItemSessionList);
-            return "booking_cart";
+            return "redirect:/bookingcart";
         }
         // TH2
         if (cartItemSessionList == null || cartItemDatabaseList != null) {
@@ -146,7 +146,7 @@ public class HotelReservationController {
                 // save DB list in database by repo
                 bookingCartItemRepository.saveAll(cartItemDatabaseList);
             } else {
-                return "bookingcart";
+                return "redirect:/bookingcart";
             }
             request.getSession().setAttribute("cartItemList", cartItemSessionList);
 
