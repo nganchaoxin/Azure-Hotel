@@ -20,7 +20,11 @@ public class AccountEntity implements Serializable {
 
     @Column(unique = true, length = 100)
     private String email;
+
     private String password;
+
+    @Column(name="username")
+    private String username;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -56,7 +60,7 @@ public class AccountEntity implements Serializable {
 
     @Column (name="registration_date")
     @DateTimeFormat(pattern="dd/MM/yyyy")
-    private LocalDate registration_date;
+    private Date registration_date;
 
     @OneToMany(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AccountBankingEntity> accountBankingEntities;
@@ -155,11 +159,11 @@ public class AccountEntity implements Serializable {
         this.address = address;
     }
 
-    public LocalDate getRegistration_date() {
+    public Date getRegistration_date() {
         return registration_date;
     }
 
-    public void setRegistration_date(LocalDate registration_date) {
+    public void setRegistration_date(Date registration_date) {
         this.registration_date = registration_date;
     }
 
@@ -185,5 +189,13 @@ public class AccountEntity implements Serializable {
 
     public void setBookingCartEntity(BookingCartEntity bookingCartEntity) {
         this.bookingCartEntity = bookingCartEntity;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

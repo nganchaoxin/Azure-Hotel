@@ -64,11 +64,11 @@
 				<span>Become a member of Azure Hotel! Sign Up Now!</span>
 				<input type="email" placeholder="Email" name="email" required />
 				<input type="text" placeholder="Username" name="username" required />
-				<input type="text" placeholder="Phone Number" name="phonenumber" required />
+				<input type="text" placeholder="Phone Number" name="phone_number" required />
 
 				<!-- Password -->
 				<input type="password" placeholder="Password" name="password"required />
-				<input type="password-two" placeholder="Verify Password" style="margin-bottom: 2rem;" name="password-two"required />
+				<input type="password" placeholder="Verify Password" style="margin-bottom: 2rem;" name="password_two"required />
 				<!-- sign in button submit -->
 				<button id="button">Sign Up</button>
 			</form>

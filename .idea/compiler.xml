@@ -6,7 +6,6 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="HelloWorld-mvc" />
         <module name="Base-mvc" />
         <module name="Azure-Hotel" />
       </profile>
@@ -14,7 +13,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Azure-Hotel" options="-endorseddirs C:\Users\LENOVO\Desktop\Azure-Hotel\Azure-Hotel\target/endorsed" />
+      <module name="Azure-Hotel" options="-endorseddirs &quot;$PROJECT_DIR$/target/endorsed&quot;" />
     </option>
   </component>
 </project>
