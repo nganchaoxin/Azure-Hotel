@@ -20,4 +20,7 @@ public class BookingDetailService {
 
     public void save(BookingDetailEntity bookingDetail) { bookingDetailRepository.save(bookingDetail);
     }
+
+    public List<BookingDetailEntity> findByBookingId(int id) { return  bookingDetailRepository.findAllByBooking_id(id);
+    }
 }

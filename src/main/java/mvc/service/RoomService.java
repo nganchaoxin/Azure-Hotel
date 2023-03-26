@@ -14,7 +14,6 @@ public class RoomService {
     @Autowired
     RoomRepository roomRepository;
 
-
     public List<RoomEntity> getAvailableRooms(String roomType, int guests, Date checkin, Date checkout) {
         List<RoomEntity> availableRooms = roomRepository.getRoomHaveReservation(roomType, guests, checkin, checkout);
 
