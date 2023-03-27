@@ -83,7 +83,9 @@ public class LoginController {
 
         // Load Cart Item to session
         AccountEntity accountEntity = accountService.findByEmail(username);
+
         if(accountEntity != null) {
+            session.setAttribute("accountEntity", accountEntity);
             List<BookingCartEntity> bookingCartList = bookingCartService.findByAccountId(accountEntity.getId());
             if (bookingCartList.isEmpty()) {
                 BookingCartEntity bookingCart = new BookingCartEntity();

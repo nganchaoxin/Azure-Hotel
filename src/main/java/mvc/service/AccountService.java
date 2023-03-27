@@ -31,4 +31,7 @@ public class AccountService {
 
     public AccountEntity findByEmail(String userMail) { return accountRepository.findByEmail(userMail);
     }
+
+    public AccountEntity findByUsername(String username) { return accountRepository.findByUsername(username);
+    }
 }
