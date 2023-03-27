@@ -15,18 +15,10 @@ public class RoomService {
     RoomRepository roomRepository;
 
 
-    public List<RoomEntity> getAvailableRooms(Date checkin, Date checkout, String roomType, int guests) {
-        List<RoomEntity> rooms = roomRepository.getRoomByCategoryAndMaxPerson(roomType, guests);
-        List<RoomEntity> isBookedRooms = roomRepository.getRoomHaveReservation(checkin, checkout);
-        if (isBookedRooms.isEmpty()) {
-            return rooms;
-        }
-        List<RoomEntity> availableRooms = new ArrayList<>(rooms);
-        availableRooms.removeAll(isBookedRooms);
+    public List<RoomEntity> getAvailableRooms(String roomType, int guests, Date checkin, Date checkout) {
+        List<RoomEntity> availableRooms = roomRepository.getRoomHaveReservation(roomType, guests, checkin, checkout);
 
         return availableRooms;
-
-
     }
 
     public RoomEntity findRoomById(int roomId) {

@@ -130,6 +130,8 @@ public class BookingCartController {
             bookingDetail.setBookingEntity(newBookingEntity);
             bookingDetail.setRoomEntity(cartItem.getRoomEntity());
             bookingDetail.setNumber_of_person(cartItem.getRoomEntity().getCategoryEntity().getMax_occupancy());
+            bookingDetail.setBooking_check_in(cartItem.getCheck_in());
+            bookingDetail.setBooking_check_out(cartItem.getCheck_out());
             bookingDetailService.save(bookingDetail);
         }
 
