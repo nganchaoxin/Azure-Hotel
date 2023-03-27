@@ -68,7 +68,7 @@
 
 				<!-- Password -->
 				<input type="password" placeholder="Password" name="password"required />
-				<input type="password-two" placeholder="Verify Password" style="margin-bottom: 2rem;" name="password-two"required />
+				<input type="password" placeholder="Verify Password" style="margin-bottom: 2rem;" name="password_two"required />
 				<!-- sign in button submit -->
 				<button id="button">Sign Up</button>
 			</form>

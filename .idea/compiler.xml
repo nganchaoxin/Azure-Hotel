@@ -14,7 +14,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Azure-Hotel" options="-endorseddirs C:\Users\LENOVO\Desktop\Azure-Hotel\Azure-Hotel\target/endorsed" />
+      <module name="Azure-Hotel" options="-endorseddirs C:\Users\LENOVO\Desktop\Azure-Hotel\target/endorsed" />
     </option>
   </component>
 </project>
