@@ -32,12 +32,6 @@ public class CategoryEntity {
     @Column(name = "price")
     private double price;
 
-    @Column(name = "status")
-    private String status;
-
-    @Column(name = "create_date")
-    @DateTimeFormat(pattern="dd/MM/yyyy")
-    private Date create_date;
 
     @OneToMany(mappedBy = "categoryEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RoomEntity> roomEntities;
@@ -99,22 +93,6 @@ public class CategoryEntity {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Date getCreate_date() {
-        return create_date;
-    }
-
-    public void setCreate_date(Date create_date) {
-        this.create_date = create_date;
     }
 
     public List<RoomEntity> getRoomEntities() {

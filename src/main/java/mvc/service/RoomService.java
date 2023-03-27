@@ -32,4 +32,10 @@ public class RoomService {
     public RoomEntity findRoomById(int roomId) {
         return roomRepository.findRoomById(roomId);
     }
+    public List<RoomEntity> findAllRoom() {
+        return roomRepository.findAll();
+    }
+    public void saveRoom(RoomEntity roomEntity){
+        roomRepository.save(roomEntity);
+    }
 }
