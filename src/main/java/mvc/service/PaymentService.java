@@ -5,6 +5,8 @@ import mvc.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PaymentService {
     @Autowired
@@ -16,5 +18,8 @@ public class PaymentService {
     }
 
     public void save(PaymentEntity newPayment) { paymentRepository.save(newPayment);
+    }
+
+    public List<PaymentEntity> findByAccountBankingId(int id) { return paymentRepository.findByAccountBankingId(id);
     }
 }

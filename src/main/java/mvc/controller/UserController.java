@@ -1,7 +1,7 @@
 package mvc.controller;
 
-import mvc.entity.AccountEntity;
-import mvc.service.AccountService;
+import mvc.entity.*;
+import mvc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -24,6 +25,18 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class UserController {
     @Autowired
     AccountService accountService;
+
+    @Autowired
+    BookingService bookingService;
+
+    @Autowired
+    BookingDetailService bookingDetailService;
+
+    @Autowired
+    AccountBankingService accountBankingService;
+
+    @Autowired
+    PaymentService paymentService;
 
     @RequestMapping(value = "/account", method = GET)
     public String userHome(Model model, HttpSession session) {
@@ -63,18 +76,27 @@ public class UserController {
         return "user/payment_card";
     }
 
-    @RequestMapping("/paymenthistory")
-    public String paymentHistory() {
+    @GetMapping("/paymenthistory")
+    public String paymentHistory(HttpSession session, Model model) {
+        AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
+        AccountBankingEntity accountBankingEntity = accountBankingService.findByAccountId(accountEntity.getId());
+        List<PaymentEntity> paymentEntity = paymentService.findByAccountBankingId(accountBankingEntity.getId());
+        model.addAttribute("paymentEntity", paymentEntity);
         return "user/payment_history";
     }
 
-    @RequestMapping("/booking")
-    public String booking() {
+    @GetMapping("/booking")
+    public String booking(HttpSession session, Model model) {
+        AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
+        List<BookingEntity> bookingEntityList = bookingService.findByAccountId(accountEntity.getId());
+        model.addAttribute("bookingEntityList", bookingEntityList);
         return "user/booking";
     }
 
-    @RequestMapping("/bookingdetail")
-    public String bookingDetail() {
+    @GetMapping("/bookingdetail&bookingid={id}")
+    public String bookingDetail(Model model, @PathVariable(name = "id") int id) {
+        List<BookingDetailEntity> bookingDetailEntities = bookingDetailService.findByBookingId(id);
+        model.addAttribute("bookingDetails", bookingDetailEntities);
         return "user/booking_detail";
     }
 

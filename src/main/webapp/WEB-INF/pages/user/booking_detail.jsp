@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <head>
   <meta charset="utf-8" />
@@ -61,13 +61,13 @@
           <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Account Management</span>
           </li>
-          <li class="menu-item active open">
+          <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
               <i class="menu-icon tf-icons bx bx-dock-top"></i>
               <div data-i18n="Account Settings">Account Settings</div>
             </a>
             <ul class="menu-sub">
-              <li class="menu-item active">
+              <li class="menu-item">
                 <a href="account" class="menu-link">
                   <div data-i18n="Account">Account</div>
                 </a>
@@ -100,7 +100,7 @@
           <!-- Components -->
           <li class="menu-header small text-uppercase"><span class="menu-header-text">Booking Managerment</span></li>
           <!-- Cards -->
-          <li class="menu-item">
+          <li class="menu-item active open">
             <a href="booking" class="menu-link">
               <i class="menu-icon tf-icons bx bx-collection"></i>
               <div data-i18n="Basic">Booking</div>
@@ -230,14 +230,16 @@
                     </tr>
                   </thead>
                   <tbody class="table-border-bottom-0">
+                  <c:forEach var="item" items="${bookingDetails}">
                     <tr>
-                      <td>Cuc Tan - Phong Gia Dinh</td>
-                      <td>2023-03-14</td>
-                      <td>2023-03-15</td>
-                      <td>2</td>
-                      <td>2</td>
-                      <td>200.000 VND</td>
+                      <td><strong>${item.roomEntity.room_name}</strong></td>
+                      <td><fmt:formatDate value="${item.booking_check_in}" pattern="dd-MM-yyyy" /></td>
+                      <td><fmt:formatDate value="${item.booking_check_out}" pattern="dd-MM-yyyy" /></td>
+                      <td>${item.number_of_adult}</td>
+                      <td>${item.number_of_children}</td>
+                      <td><fmt:formatNumber value="${item.roomEntity.room_price}" type="currency" currencySymbol="VND" groupingUsed="true" /></td>
                     </tr>
+                  </c:forEach>
                   </tbody>
                 </table>
               </div>

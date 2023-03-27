@@ -230,6 +230,7 @@
                              </tr>
                            </thead>
                            <tbody class="table-border-bottom-0">
+                           <c:forEach var="payment" items="${paymentEntity}">
                              <tr>
                                <td>Tamler98</td>
                                <td>**** **** **** 4908</td>
@@ -237,6 +238,7 @@
                                <td>300.000 VND</td>
                                <td>Thanh Toan Tien Phong 15.03</td>
                              </tr>
+                             </c:forEach>
                            </tbody>
                          </table>
                        </div>

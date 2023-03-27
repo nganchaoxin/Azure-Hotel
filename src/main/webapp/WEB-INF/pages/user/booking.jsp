@@ -229,22 +229,23 @@
                     </tr>
                   </thead>
                   <tbody class="table-border-bottom-0">
+                  <c:forEach var="booking" items="${bookingEntityList}">
                     <tr>
-                      <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Tamler98</strong></td>
-                      <td>2023-03-15</td>
-                      <td><span class="badge bg-label-primary me-1">New Booking</span></td>
+                      <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${booking.accountEntity.username}</strong></td>
+                      <td><strong>2023-02-10</td>
+                      <td><span class="badge bg-label-primary me-1">${booking.accountEntity.status}</span></td>
                       <td>400.000 VND</td>
                       <td>
                         <div class="dropdown" style="display: flex;">
                           </button>
-                            <a style="width: 20%; border-radius: 1.3em;color: rgb(132, 122, 5); font-weight: 500;" class="dropdown-item" href="bookingdetail"><i class="bx bx-edit-alt me-1"></i>
+                            <a style="width: 20%; border-radius: 1.3em;color: rgb(132, 122, 5); font-weight: 500;" class="dropdown-item" href="bookingdetail&bookingid=${booking.id}"><i class="bx bx-edit-alt me-1"></i>
                               View</a>
                             <a style="width: 20%; border-radius: 1.3em; padding-right: 5em; color: rgb(221, 75, 75);" class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i>
-                              Delete</a>
+                              Cancel</a>
                         </div>
                       </td>
                     </tr>
-
+                    </c:forEach>
                   </tbody>
                 </table>
               </div>
