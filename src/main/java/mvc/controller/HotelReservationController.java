@@ -53,7 +53,7 @@ public class HotelReservationController {
 
     @RequestMapping(value = "/availableRoom", method = RequestMethod.GET)
     public String showAvailableRoom(@RequestParam("checkin") @DateTimeFormat(pattern = "yyyy-MM-dd") Date checkin, @RequestParam("checkout") @DateTimeFormat(pattern = "yyyy-MM-dd") Date checkout, @RequestParam("roomType") String roomType, @RequestParam("guests") int guests, Model model, HttpSession session) {
-        List<RoomEntity> availableRoomList = roomService.getAvailableRooms(checkin, checkout, roomType, guests);
+        List<RoomEntity> availableRoomList = roomService.getAvailableRooms(roomType, guests, checkin, checkout);
         session.setAttribute("check_in", checkin);
         session.setAttribute("check_out", checkout);
         model.addAttribute("availableRoomList", availableRoomList);

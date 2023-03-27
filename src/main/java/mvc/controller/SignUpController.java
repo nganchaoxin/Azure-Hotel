@@ -33,7 +33,6 @@ public class SignUpController {
     AccountService accountService;
     @Autowired
     RoleRepository roleRepository;
-
     @Autowired
     MailSender mailSender;
     @GetMapping("signup")
@@ -73,7 +72,6 @@ public class SignUpController {
         model.addAttribute("accountEntity", accountEntity);
         return "login";
     }
-
     @GetMapping("/activate")
     public String activate(@RequestParam("id") int id, Model model) {
         AccountEntity accountEntity = accountService.findById(id);

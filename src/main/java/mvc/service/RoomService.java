@@ -16,14 +16,19 @@ public class RoomService {
 
 
     public List<RoomEntity> getAvailableRooms(Date checkin, Date checkout, String roomType, int guests) {
+    public List<RoomEntity> getAvailableRooms(String roomType, int guests, Date checkin, Date checkout) {
         List<RoomEntity> availableRooms = roomRepository.getRoomHaveReservation(roomType, guests, checkin, checkout);
 
         return availableRooms;
-
-
     }
 
     public RoomEntity findRoomById(int roomId) {
         return roomRepository.findRoomById(roomId);
+    }
+    public List<RoomEntity> findAllRoom() {
+        return roomRepository.findAll();
+    }
+    public void saveRoom(RoomEntity roomEntity){
+        roomRepository.save(roomEntity);
     }
 }

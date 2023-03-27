@@ -16,6 +16,7 @@ public interface  RoomRepository extends CrudRepository<RoomEntity,Integer> {
     RoomEntity findRoomById(int roomId);
 
     @Query(value="select DISTINCT room.*,category.* from room left join category on category.id = room.category_id\n" +
+
             "left join booking_detail on room.id = booking_detail.room_id\n" +
             "\n" +
             "            where (category.category_name = :roomType) and (:guests <= category.max_occupancy )\n" +
@@ -28,5 +29,19 @@ public interface  RoomRepository extends CrudRepository<RoomEntity,Integer> {
             "                OR :checkout BETWEEN booking_detail.booking_check_in AND booking_detail.booking_check_out\n" +
             "                OR :checkin < booking_detail.booking_check_out AND booking_detail.booking_check_in < :checkout) )", nativeQuery = true)
     List<RoomEntity> getRoomHaveReservation(@Param("roomType")String roomType, @Param("guests") int guests, @Param("checkin") Date checkin, @Param("checkout") Date checkout);
+
+    "left join booking_detail on room.id = booking_detail.room_id\n" +
+    "\n" +
+    "            where (category.category_name = :roomType) and (:guests <= category.max_occupancy )\n" +
+    "            and room.id not in\n" +
+    "            (SELECT room.id\n" +
+    "            FROM room\n" +
+    "            left join booking_detail ON booking_detail.room_id = room.id\n" +
+    "            WHERE \n" +
+    "                (:checkin BETWEEN booking_detail.booking_check_in AND booking_detail.booking_check_out\n" +
+    "                OR :checkout BETWEEN booking_detail.booking_check_in AND booking_detail.booking_check_out\n" +
+    "                OR :checkin < booking_detail.booking_check_out AND booking_detail.booking_check_in < :checkout) )", nativeQuery = true)
+List<RoomEntity> getRoomHaveReservation(@Param("roomType")String roomType, @Param("guests") int guests, @Param("checkin") Date checkin, @Param("checkout") Date checkout);
+
 
 }
