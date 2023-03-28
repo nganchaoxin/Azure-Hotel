@@ -57,7 +57,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                      </li>
                 </sec:authorize>
                 <li class="nav-item">
-                      <a href="<c:url value="/user/home/userInfoView" />" class="nav-link">
+                      <a href="<c:url value="/user/account" />" class="nav-link">
                         <sec:authentication property="principal.username"/>
                       </a>
                  </li>

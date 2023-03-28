@@ -20,6 +20,7 @@ public class AccountEntity implements Serializable {
 
     @Column(unique = true, length = 100)
     private String email;
+
     private String password;
 
     @Column(name="username")
@@ -92,6 +93,14 @@ public class AccountEntity implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public UserStatus getStatus() {
@@ -188,13 +197,5 @@ public class AccountEntity implements Serializable {
 
     public void setBookingCartEntity(BookingCartEntity bookingCartEntity) {
         this.bookingCartEntity = bookingCartEntity;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 }

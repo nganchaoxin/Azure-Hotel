@@ -71,7 +71,7 @@ public class LoginController {
         return "user/home";
     }
 
-    @RequestMapping(value = {"/"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/index"}, method = RequestMethod.GET)
     public String welcomePage(Model model, HttpSession session) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = principal.toString();
@@ -83,40 +83,20 @@ public class LoginController {
 
         // Load Cart Item to session
         AccountEntity accountEntity = accountService.findByEmail(username);
+
         if(accountEntity != null) {
+            session.setAttribute("accountEntity", accountEntity);
             List<BookingCartEntity> bookingCartList = bookingCartService.findByAccountId(accountEntity.getId());
-            if (bookingCartList.isEmpty()) {
-                BookingCartEntity bookingCart = new BookingCartEntity();
-                bookingCart.setAccountEntity(accountEntity);
-                bookingCart.setId(1);
-                bookingCartService.save(bookingCart);
-                return "index";
+            List<BookingCartItemEntity> cartItemDatabaseList = null;
+
+            if(bookingCartList != null && !bookingCartList.isEmpty()){
+                BookingCartEntity bookingCart = bookingCartList.get(0);
+                List<BookingCartItemEntity> cartItemSessionList = (List<BookingCartItemEntity>) session.getAttribute("cartItemList");
+                if (cartItemSessionList == null || cartItemSessionList.isEmpty()) {
+                    cartItemDatabaseList = bookingCartItemService.findAllByBookingCartId(bookingCart.getId());
+                    session.setAttribute("cartItemList", cartItemDatabaseList);
+                }
             }
-            BookingCartEntity bookingCart = bookingCartList.get(0);
-            List<BookingCartItemEntity> cartItemSessionList = (List<BookingCartItemEntity>) session.getAttribute("cartItemList");
-            List<BookingCartItemEntity> cartItemDatabaseList = bookingCartItemService.findAllByBookingCartId(bookingCart.getId());
-
-            if (cartItemSessionList == null && cartItemDatabaseList.isEmpty()) {
-                System.out.println("cart -> cartItemSessionList == null && cartItemDatabaseList == null");
-                cartItemSessionList = new ArrayList<>();
-                cartItemDatabaseList = new ArrayList<>(cartItemSessionList);
-
-                session.setAttribute("cartItemList", cartItemSessionList);
-            }
-
-            if (cartItemSessionList == null && cartItemDatabaseList != null) {
-                System.out.println("cart -> add DB list to SS list to load from session");
-                cartItemSessionList = new ArrayList<>();
-                cartItemSessionList.addAll(cartItemDatabaseList);
-
-                session.setAttribute("cartItemList", cartItemSessionList);
-
-            } else {
-                System.out.println("cart -> load from session");
-                session.setAttribute("cartItemList", cartItemSessionList);
-            }
-
-            model.addAttribute("cartItemList", cartItemSessionList);
         }
         return "index";
     }

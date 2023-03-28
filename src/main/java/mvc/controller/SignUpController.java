@@ -33,6 +33,7 @@ public class SignUpController {
     AccountService accountService;
     @Autowired
     RoleRepository roleRepository;
+
     @Autowired
     MailSender mailSender;
     @GetMapping("signup")
@@ -53,16 +54,13 @@ public class SignUpController {
         // Encoder password
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         accountEntity.setPassword(encoder.encode(accountEntity.getPassword()));
-
         RoleEntity role = new RoleEntity();
         role.setRole(ROLE_USER);
         role.setId(2);
-
 //        RoleEntity role = roleRepository.getRoleUser();
 
         Set<RoleEntity> roles = new HashSet<>();
         roles.add(role);
-
         accountEntity.setUserRoles(roles);
         accountEntity.setStatus(UserStatus.UNACTIVE);
         accountEntity.setRegistration_date(new Date());
@@ -71,11 +69,11 @@ public class SignUpController {
         int id = accountEntity.getId();
 
         String email = accountEntity.getEmail();
-        sendEmail(email, "Azure Hotel -Signup new account", "This is your activation link: http://localhost:8080/Azure-Hotel/activate?id="+id);
-
+        sendEmail(email, "Azure Hotel -Signup new account", "This is your activation link: http://localhost:8080/HelloWorld-mvc/activate?id="+id);
         model.addAttribute("accountEntity", accountEntity);
         return "login";
     }
+
     @GetMapping("/activate")
     public String activate(@RequestParam("id") int id, Model model) {
         AccountEntity accountEntity = accountService.findById(id);

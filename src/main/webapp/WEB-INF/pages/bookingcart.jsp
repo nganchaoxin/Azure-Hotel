@@ -49,25 +49,30 @@
                             <div class="room-name">
                                 <h1>Cuc Tan - Superior Double – SPECIAL</h1>
                             </div>
-                            <div class="room-number_of_person">2 Guestss</div>
-                            <div class="room-info">
-                                <div class="room-number_of_bed"><i class="fas fa-user"></i> Sleeps 4</div>
-                                <div class="room-number_of_double_bed"><i class="fas fa-bed"></i> 1 Double bed</div>
-                                <div class="room-number_of_bathroom"><i class="fas fa-bath"></i> 1 Bathroom</div>
-                            </div>
-                            <div class="room-info-special">
-                                <div class="room-square">27 m&#178; </div>
-                                <div class="heart_icon"> <i class="fas fa-map-marker"></i></div>
-                                <div class="room-smoking">Non-smoking</div>
-                                <div class="heart_icon"> <i class="fas fa-map-marker"></i></div>
-                                <div class="room-views">Various views</div>
-                            </div>
-                            <div class="room-cost">
-                                <div class="cost-before">1.200.000 VND</div>
-                                <div class="cost-after">999.000 VND</div>
+                            <div class="room-card-content">
+                                <div class="room-name">
+                                    <h1>${cartItem.roomEntity.room_name}</h1>
+                                </div>
+                                <div class="room-number_of_person">${cartItem.roomEntity.categoryEntity.max_occupancy} Guestss</div>
+                                <div class="room-info">
+                                    <div class="room-number_of_bed"><i class="fas fa-user"></i> Sleeps ${cartItem.roomEntity.categoryEntity.max_occupancy}</div>
+                                    <div class="room-number_of_double_bed"><i class="fas fa-bed"></i> ${cartItem.roomEntity.categoryEntity.bed_info} Double bed</div>
+                                    <div class="room-number_of_bathroom"><i class="fas fa-bath"></i> ${cartItem.roomEntity.categoryEntity.bed_info} Bathroom</div>
+                                </div>
+                                <div class="room-info-special">
+                                    <div class="room-square">${cartItem.roomEntity.categoryEntity.square} m&#178; </div>
+                                    <div class="heart_icon"> <i class="fas fa-map-marker"></i></div>
+                                    <div class="room-smoking">Non-smoking</div>
+                                    <div class="heart_icon"> <i class="fas fa-map-marker"></i></div>
+                                    <div class="room-views">Various views</div>
+                                </div>
+                                <div class="room-cost">
+                                    <div class="cost-before"><fmt:formatNumber value="${cartItem.roomEntity.categoryEntity.price*1.2}" pattern="#,###.##" /> VND</div>
+                                    <div class="cost-after"><fmt:formatNumber value="${cartItem.roomEntity.categoryEntity.price}" pattern="#,###.##" /> VND</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </c:forEach>
                     <div class="customer-dtails">
                         <div id="customer-detail">
                             <div class="dropbtn">
@@ -85,7 +90,7 @@
                                 </div>
                                 <div class="customer-info_detail">
                                     <div class="customer-info_heading">Birth Date</div>
-                                    <div class="customer-info_content">${accountEntity.birth_date}</div>
+                                    <div class="customer-info_content"><fmt:formatDate value="${accountEntity.birth_date}" pattern="dd/MM/yyyy" /></div>
                                 </div>
                                 <div class="customer-info_detail">
                                     <div class="customer-info_heading">Phone Number:</div>
@@ -102,7 +107,6 @@
                             </div>
                         </div>
                     </div>
-                    <c:if test="${cart.equals('available')}">
                         <div class="customer-dtails">
                             <div id="customer-review">
                                 <div class="dropbtn">
@@ -133,13 +137,13 @@
                                                         <div class="card-item icon-relative">
                                                             <label class="label">Expired date:</label>
                                                             <form:input path="expired_date" type="text" class="input"
-                                                                data-mask="00 / 00" placeholder="00 / 00" />
+                                                                data-mask="dd/MM/yyyy" placeholder="dd/MM/yyyy" required="true"/>
                                                             <i class="far fa-calendar-alt"></i>
                                                         </div>
                                                         <div class="card-item icon-relative">
                                                             <label class="label">CVV:</label>
                                                             <form:input path="cvv" type="text" class="input" data-mask="000"
-                                                                placeholder="000" />
+                                                                placeholder="000" maxlength="3" required="true"/>
                                                             <i class="fas fa-lock"></i>
                                                         </div>
                                                     </div>
@@ -172,8 +176,7 @@
                                                     <div class="card-grp space">
                                                         <div class="card-item icon-relative">
                                                             <label class="label">Expired date:</label>
-                                                            <input value="${accountBanking.expired_date}" class="input"
-                                                                data-mask="00 / 00" placeholder="00 / 00" readonly="readonly">
+                                                            <div class="input"><fmt:formatDate value="${accountBanking.expired_date}" pattern="MM/yy" /> </div>
                                                             <i class="far fa-calendar-alt"></i>
                                                         </div>
                                                         <div class="card-item icon-relative">
@@ -190,7 +193,6 @@
                                 </c:if>
                             </div>
                         </div>
-                    </c:if>
                 </div>
                 <div class="main-content-right">
                     <div class="booking-summary">
@@ -198,20 +200,20 @@
                             <div class="booking-summary-heading">
                                 <div class="room-p_vnd">VND</div>
                                 <div class="room-price">
-                                    <fmt:formatNumber value="${totalOfPrice}" pattern="#,###.##" />
+                                    <fmt:formatNumber value="${totalPrices}" pattern="#,###.##" />
                                 </div>
                                 <div class="room-p_total">total</div>
                             </div>
                             <div class="booking-summary-date_and_staynight">
-                                <div class="booking_checkin"><fmt:formatDate value="${checkin}" pattern="dd MMM yy"/></div>
-                                <div class="booking-to">-</div>
-                                <div class="booking_checkout"><fmt:formatDate value="${checkout}" pattern="dd MMM yy"/></div>
+                                <div class="booking_checkin"><fmt:formatDate value="${cartItemList.get(0).getCheck_in()}" pattern="dd MMM yy"/></div>
+                                <div class="booking-to" style="margin:0px .1em;">-</div>
+                                <div class="booking_checkout"><fmt:formatDate value="${cartItemList.get(0).getCheck_out()}" pattern="dd MMM yy"/></div>
                                 <div class="booking_space"></div>
                                 <div class="booking_staynight">${totalDays} night</div>
                             </div>
                             <div class="booking-summary-accupancy-room">
-                                <div class="booking-summary-accupancy-number_of_room">${totalOfRoom} room,</div>
-                                <div class="booking-summary-accupancy-number_of_guest">${totalOfGuests} guests</div>
+                                <div class="booking-summary-accupancy-number_of_room">${cartItemList.size()} room,</div>
+                                <div class="booking-summary-accupancy-number_of_guest">${totalGuests} guests</div>
                             </div>
                             <div class="booking-summary-room_info"></div>
                         </div>
@@ -229,7 +231,7 @@
                                             </div>
                                             <div class="booking-summary-stay-detail-room-detail_info_space"></div>
                                             <div class="booking-summary-stay-detail-room-detail_info_price">VND
-                                                <fmt:formatNumber value="${cartItem.roomEntity.room_price}"
+                                                <fmt:formatNumber value="${cartItem.roomEntity.categoryEntity.price}"
                                                     pattern="#,###.##" />
                                             </div>
                                         </div>
@@ -240,7 +242,7 @@
                                 <div class="booking-summary-stay-detail-total_total">Total</div>
                                 <div class="booking-summary-stay-detail-total_space"></div>
                                 <div class="booking-summary-stay-detail-total_totalprice">VND
-                                    <fmt:formatNumber value="${totalOfPrice}" pattern="#,###.##" />
+                                    <fmt:formatNumber value="${totalPrices}" pattern="#,###.##" />
                                 </div>
                             </div>
                         </div>

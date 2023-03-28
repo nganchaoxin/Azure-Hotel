@@ -60,38 +60,6 @@ public class HotelReservationController {
         return "available_rooms";
     }
 
-//    @RequestMapping(value = "/myCart", method = RequestMethod.GET)
-//    public String showBookingCart(Model model, @PathVariable int cartId, HttpSession session, HttpServletRequest request) {
-//
-//
-//        List<BookingCartItemEntity> cartItemSessionList = (List<BookingCartItemEntity>) session.getAttribute("cartItemList");
-//        List<BookingCartItemEntity> cartItemDatabaseList = bookingCartItemService.findAllByBookingCartId(cartId);
-//
-//        if (cartItemSessionList == null && cartItemDatabaseList == null) {
-//            System.out.println("cart -> cartItemSessionList == null && cartItemDatabaseList == null");
-//            cartItemSessionList = new ArrayList<>();
-//            cartItemDatabaseList = new ArrayList<>(cartItemSessionList);
-//
-//            request.getSession().setAttribute("cartItemList", cartItemSessionList);
-//        }
-//
-//        if (cartItemSessionList == null && cartItemDatabaseList != null) {
-//            System.out.println("cart -> add DB list to SS list to load from session");
-//            cartItemSessionList = new ArrayList<>();
-//            cartItemSessionList.addAll(cartItemDatabaseList);
-//
-//            request.getSession().setAttribute("cartItemList", cartItemSessionList);
-//
-//        } else {
-//            System.out.println("cart -> load from session");
-//            request.getSession().setAttribute("cartItemList", cartItemSessionList);
-//
-//        }
-//
-//        model.addAttribute("cartItemList", cartItemSessionList);
-//        return "booking_cart";
-//    }
-
     @RequestMapping(value = "/addToCart/room={roomId}", method = RequestMethod.GET)
     public String addToCart(Model model, @PathVariable int roomId, HttpSession session, HttpServletRequest request) {
         List<BookingCartItemEntity> cartItemSessionList = (List<BookingCartItemEntity>) request.getSession().getAttribute("cartItemList");
@@ -112,6 +80,7 @@ public class HotelReservationController {
             cartItemSessionList = new ArrayList<>();
             request.getSession().setAttribute("cartItemList", cartItemSessionList);
             return "redirect:/bookingcart";
+
         } else {
             // Check if item exist in ss
             int indexSession = this.exists(roomId, cartItemSessionList);
