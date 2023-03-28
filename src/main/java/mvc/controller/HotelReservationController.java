@@ -107,49 +107,26 @@ public class HotelReservationController {
         cartItem.setBookingCartEntity(bookingCart);
 
         // Init
-        if (cartItemSessionList == null && cartItemDatabaseList.isEmpty()) {
-            System.out.println("cartItemSessionList == null && cartItemDatabaseList == null");
+        if (cartItemSessionList == null) {
+            System.out.println("cartItemSessionList == null");
             cartItemSessionList = new ArrayList<>();
-            cartItemDatabaseList = new ArrayList<>();
-            cartItemSessionList.add(cartItem);
-            cartItemDatabaseList.addAll(cartItemSessionList);
-
             request.getSession().setAttribute("cartItemList", cartItemSessionList);
             return "redirect:/bookingcart";
-        }
-        // TH2
-        if (cartItemSessionList == null || cartItemDatabaseList != null) {
-            System.out.println("cartItemSessionList == null && cartItemDatabaseList != null");
-            cartItemSessionList = new ArrayList<>();
-            // add DB list to SS list to load from session
-            Set<BookingCartItemEntity> uniqueRoomInSession = new HashSet<>(cartItemSessionList);
-            uniqueRoomInSession.addAll(cartItemDatabaseList);
-            cartItemSessionList = new ArrayList<>(uniqueRoomInSession);
-
-            request.getSession().setAttribute("cartItemList", cartItemSessionList);
-        }
-        // TH3
-        if (cartItemSessionList != null && cartItemDatabaseList != null) {
-            System.out.println("cartItemSessionList != null && cartItemDatabaseList != null");
-            // add DB list to SS list to load from session
-            Set<BookingCartItemEntity> uniqueRoomInSession = new HashSet<>(cartItemSessionList);
-            uniqueRoomInSession.addAll(cartItemDatabaseList);
-            cartItemSessionList = new ArrayList<>(uniqueRoomInSession);
+        } else {
             // Check if item exist in ss
             int indexSession = this.exists(roomId, cartItemSessionList);
             if (indexSession == -1) {
                 cartItemSessionList.add(cartItem);
-                // add SS list to DB list
-                Set<BookingCartItemEntity> uniqueRoomInDatabase = new HashSet<>(cartItemDatabaseList);
-                uniqueRoomInDatabase.addAll(cartItemSessionList);
-                cartItemDatabaseList = new ArrayList<>(uniqueRoomInDatabase);
+
+                for (BookingCartItemEntity b : cartItemSessionList) {
+                    //bookingCartItemService.deleteByCartId(b.getCartID);
+
+                }
                 // save DB list in database by repo
                 bookingCartItemRepository.saveAll(cartItemDatabaseList);
             } else {
                 return "redirect:/bookingcart";
             }
-            request.getSession().setAttribute("cartItemList", cartItemSessionList);
-
         }
 
         model.addAttribute("cartItemList", cartItemSessionList);

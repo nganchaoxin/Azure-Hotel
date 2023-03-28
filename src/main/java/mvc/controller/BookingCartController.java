@@ -87,6 +87,7 @@ public class BookingCartController {
                 session.setAttribute("checkin", cartItemsInSession.get(0).getCheck_in());
                 session.setAttribute("checkout", cartItemsInSession.get(0).getCheck_out());
                 model.addAttribute("cart", "available");
+
                 AccountBankingEntity accountBanking = accountBankingService.findByAccountId(accountEntity.getId());
                 if (accountBanking != null) {
                     model.addAttribute("accountBanking", accountBanking);

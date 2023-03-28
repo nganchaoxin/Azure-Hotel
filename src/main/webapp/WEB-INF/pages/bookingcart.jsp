@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib  uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 
 <head>
@@ -17,17 +18,29 @@
 
     <link href='<c:url value="/resources/static/images/Logo_icon.svg" />' rel='shortcut icon'>
     <link href='<c:url value="/resources/static/css/bookingdetail.css" />' rel='stylesheet'>
-    <title>Tanz Hotel</title>
+    <title>Azure Hotel | Hotel in Da Nang</title>
 </head>
 
 <body>
     <header>
+
         <a href="/Azure-Hotel"><img src='<c:url value="/resources/static/images/Logo_logo_white.png" />' alt=""
                 style="height: 45px; margin-left: 100px;"></a>
+
     </header>
     <main>
+
             <div class="container">
+
                 <div class="main-content-left">
+                    <h3>
+                         <sec:authorize access="isAuthenticated()">
+                             <sec:authorize access="hasRole('ROLE_USER')">
+                                 <sec:authentication property="principal.username"/>
+                             </sec:authorize>
+                         </sec:authorize>
+                     </h3>
+
                     <div class="room-card">
                         <div class="room-card-image">
                             <img src='<c:url value="/resources/static/images/rooms/room-1.jpg" />' alt="">

@@ -71,7 +71,8 @@ public class SignUpController {
         int id = accountEntity.getId();
 
         String email = accountEntity.getEmail();
-        sendEmail(email, "Azure Hotel -Signup new account", "This is your activation link: http://localhost:8080/HelloWorld-mvc/activate?id="+id);
+        sendEmail(email, "Azure Hotel -Signup new account", "This is your activation link: http://localhost:8080/Azure-Hotel/activate?id="+id);
+
         model.addAttribute("accountEntity", accountEntity);
         return "login";
     }

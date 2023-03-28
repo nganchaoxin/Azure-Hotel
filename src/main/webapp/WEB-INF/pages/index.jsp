@@ -108,8 +108,9 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                       <input
                         name="checkin"
                         type="date"
-
+                        class="form-control"
                         placeholder="Check-in date"
+                        id="date-input"
                       />
                     </div>
                   </div>
@@ -123,8 +124,9 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                       <input
                         name="checkout"
                         type="date"
-
+                        class="form-control"
                         placeholder="Check-out date"
+                        id="date-input"
                       />
                     </div>
                   </div>
@@ -727,7 +729,10 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         />
       </svg>
     </div>
-
+    <script>
+        var today = new Date().toISOString().split('T')[0];
+        document.getElementById('date-input').setAttribute('min', today);
+    </script>
     <script src="${pageContext.request.contextPath}/resources/static/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/static/js/jquery-migrate-3.0.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/static/js/popper.min.js"></script>
