@@ -58,48 +58,6 @@ public class BookingCartController {
         if(accountEntity == null){
             return "login";
         }
-<<<<<<< HEAD
-        session.setAttribute("accountEntity", accountEntity);
-
-        // Get BookingCart By Account ID
-        List<BookingCartEntity> bookingCart = bookingCartService.findByAccountId(accountEntity.getId());
-        if(bookingCart.isEmpty()) {
-            model.addAttribute("msg_account_banking", "Can't find your account banking!");
-            model.addAttribute("status", "yes");
-        } else{
-            List<BookingCartItemEntity> cartItemEntities = bookingCartItemService.findAllByBookingCartId((int) bookingCart.get(0).getId());
-            int totalOfRoom = 0;
-            int totalOfGuests = 0;
-            double totalPrice = 0;
-            for (BookingCartItemEntity cartItem : cartItemEntities) {
-                totalOfRoom += 1;
-                totalOfGuests += cartItem.getRoomEntity().getCategoryEntity().getMax_occupancy();
-                totalPrice += cartItem.getRoomEntity().getRoom_price();
-            }
-            session.setAttribute("totalOfRoom", totalOfRoom);
-            session.setAttribute("totalOfGuests", totalOfGuests);
-            session.setAttribute("totalOfPrice", totalPrice);
-
-            List<BookingCartItemEntity> cartItemsInSession = (List<BookingCartItemEntity>) session.getAttribute("cartItemList");
-
-            //Check account banking
-            if(cartItemsInSession.size() > 0) {
-                session.setAttribute("checkin", cartItemsInSession.get(0).getCheck_in());
-                session.setAttribute("checkout", cartItemsInSession.get(0).getCheck_out());
-                model.addAttribute("cart", "available");
-
-                AccountBankingEntity accountBanking = accountBankingService.findByAccountId(accountEntity.getId());
-                if (accountBanking != null) {
-                    model.addAttribute("accountBanking", accountBanking);
-                    model.addAttribute("payment_status", "payment_available");
-                } else {
-                    model.addAttribute("msg_account_banking", "Can't find your account banking!");
-                    model.addAttribute("payment_status", "payment_unavailable");
-                    model.addAttribute("accountBanking", new AccountBankingEntity());
-//                    long totalDays = ChronoUnit.DAYS.between((Temporal) cartItemsInSession.get(0).getCheck_in(), (Temporal) cartItemsInSession.get(0).getCheck_out());
-//                    session.setAttribute("totalDays", totalDays);
-                }
-=======
         //Get cart items from session
         List<BookingCartItemEntity> listBookingCartItemEntity = (List<BookingCartItemEntity>) session.getAttribute("cartItemList");
         if(listBookingCartItemEntity == null || listBookingCartItemEntity.isEmpty()) {
@@ -114,7 +72,6 @@ public class BookingCartController {
             } else {
                 model.addAttribute("accountBanking", new AccountBankingEntity());
                 model.addAttribute("payment_status", "payment_unavailable");
->>>>>>> 550e172 (load_session_and_usercard)
             }
         }
         return "bookingcart";
