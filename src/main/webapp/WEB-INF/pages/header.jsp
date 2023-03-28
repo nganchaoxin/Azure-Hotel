@@ -9,7 +9,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <nav
       class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
       <div class="container">
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="./">
           <img width="200" height="auto" src="resources/static/images/Logo_logo.png"/>
         </a>
         <button
@@ -27,7 +27,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <div class="collapse navbar-collapse" id="ftco-nav">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a href="../" class="nav-link">Home</a>
+              <a href="./" class="nav-link">Home</a>
             </li>
             <li class="nav-item">
               <a href="rooms.html" class="nav-link">Rooms</a>
@@ -57,8 +57,8 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                      </li>
                 </sec:authorize>
                 <li class="nav-item">
-                      <a href="<c:url value="/user/account" />" class="nav-link">
-                        <sec:authentication property="principal.username"/>
+                      <a href="<c:url value="/user/account" />" class="nav-link" style="font-weight: 500;">
+                        ${accountEntity.username}
                       </a>
                  </li>
                 <li class="nav-item">

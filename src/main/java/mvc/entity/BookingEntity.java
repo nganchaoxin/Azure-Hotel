@@ -24,9 +24,8 @@ public class BookingEntity {
     @Column(name= "note")
     private String note;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "booking_cart_id", referencedColumnName = "id")
-//    private BookingCartEntity bookingCartEntity;
+    @Column(name="total_price")
+    private double total_price;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "account_id")
     private AccountEntity accountEntity;
@@ -99,6 +98,14 @@ public class BookingEntity {
 
     public List<PaymentEntity> getPaymentEntities() {
         return paymentEntities;
+    }
+
+    public double getTotal_price() {
+        return total_price;
+    }
+
+    public void setTotal_price(double total_price) {
+        this.total_price = total_price;
     }
 
     public void setPaymentEntities(List<PaymentEntity> paymentEntities) {
