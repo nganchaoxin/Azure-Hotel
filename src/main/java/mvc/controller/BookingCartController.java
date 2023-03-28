@@ -52,52 +52,26 @@ public class BookingCartController {
 
     @GetMapping()
     public String bookingCart(Model model, HttpSession session) {
-        // Get account
+        // Check null account
         String userMail = (String) session.getAttribute("userEmail");
         AccountEntity accountEntity = accountService.findByEmail(userMail);
-
-        if(accountEntity == null ){
+        if(accountEntity == null){
             return "login";
         }
-        session.setAttribute("accountEntity", accountEntity);
-
-        // Get BookingCart By Account ID
-        List<BookingCartEntity> bookingCart = bookingCartService.findByAccountId(accountEntity.getId());
-        if(bookingCart.isEmpty()) {
-            model.addAttribute("msg_account_banking", "Can't find your account banking!");
-            model.addAttribute("status", "yes");
-        } else{
-            List<BookingCartItemEntity> cartItemEntities = bookingCartItemService.findAllByBookingCartId((int) bookingCart.get(0).getId());
-            int totalOfRoom = 0;
-            int totalOfGuests = 0;
-            double totalPrice = 0;
-            for (BookingCartItemEntity cartItem : cartItemEntities) {
-                totalOfRoom += 1;
-                totalOfGuests += cartItem.getRoomEntity().getCategoryEntity().getMax_occupancy();
-                totalPrice += cartItem.getRoomEntity().getRoom_price();
-            }
-            session.setAttribute("totalOfRoom", totalOfRoom);
-            session.setAttribute("totalOfGuests", totalOfGuests);
-            session.setAttribute("totalOfPrice", totalPrice);
-
-            List<BookingCartItemEntity> cartItemsInSession = (List<BookingCartItemEntity>) session.getAttribute("cartItemList");
-
-            //Check account banking
-            if(cartItemsInSession.size() > 0) {
-                session.setAttribute("checkin", cartItemsInSession.get(0).getCheck_in());
-                session.setAttribute("checkout", cartItemsInSession.get(0).getCheck_out());
-                model.addAttribute("cart", "available");
-                AccountBankingEntity accountBanking = accountBankingService.findByAccountId(accountEntity.getId());
-                if (accountBanking != null) {
-                    model.addAttribute("accountBanking", accountBanking);
-                    model.addAttribute("payment_status", "payment_available");
-                } else {
-                    model.addAttribute("msg_account_banking", "Can't find your account banking!");
-                    model.addAttribute("payment_status", "payment_unavailable");
-                    model.addAttribute("accountBanking", new AccountBankingEntity());
-//                    long totalDays = ChronoUnit.DAYS.between((Temporal) cartItemsInSession.get(0).getCheck_in(), (Temporal) cartItemsInSession.get(0).getCheck_out());
-//                    session.setAttribute("totalDays", totalDays);
-                }
+        //Get cart items from session
+        List<BookingCartItemEntity> listBookingCartItemEntity = (List<BookingCartItemEntity>) session.getAttribute("cartItemList");
+        if(listBookingCartItemEntity == null || listBookingCartItemEntity.isEmpty()) {
+            model.addAttribute("Your Booking Cart is empty, Please insert some item!!", "msg");
+        }else {
+            setInfoBookingCart(model,listBookingCartItemEntity);
+            session.setAttribute("cartItemList", listBookingCartItemEntity);
+            AccountBankingEntity accountBanking = accountBankingService.findByAccountId(accountEntity.getId());
+            if (accountBanking != null) {
+                model.addAttribute("accountBanking", accountBanking);
+                model.addAttribute("payment_status", "payment_available");
+            } else {
+                model.addAttribute("accountBanking", new AccountBankingEntity());
+                model.addAttribute("payment_status", "payment_unavailable");
             }
         }
         return "bookingcart";
@@ -170,9 +144,23 @@ public class BookingCartController {
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         sdf.setLenient(true);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
     }
 
+    public void setInfoBookingCart(Model model, List<BookingCartItemEntity> listBookingCartItemEntity) {
+        int totalGuests = 0;
+        double totalPrices = 0;
+        for (BookingCartItemEntity cartItem: listBookingCartItemEntity) {
+            totalPrices += cartItem.getRoomEntity().getCategoryEntity().getPrice();
+            totalGuests += cartItem.getRoomEntity().getCategoryEntity().getMax_occupancy();
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        int differenceInMillis = (int) (listBookingCartItemEntity.get(0).getCheck_out().getTime() - listBookingCartItemEntity.get(0).getCheck_in().getTime());
+        int totalDays = differenceInMillis / (1000 * 60 * 60 * 24);
+        model.addAttribute("totalDays",totalDays);
+        model.addAttribute("totalGuests",totalGuests);
+        model.addAttribute("totalPrices",totalPrices);
+    }
 }

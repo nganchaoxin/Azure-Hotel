@@ -43,7 +43,7 @@
 
       <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
         <div class="app-brand demo">
-          <a href="/index" class="app-brand-link">
+          <a href="../index" class="app-brand-link">
             <span class="app-brand-text demo menu-text fw-bolder ms-2"><img src='<c:url value="/resources/static/assets/img/Logo_logo.png" />' alt=""
                 width="190px"></span>
           </a>
@@ -213,7 +213,7 @@
                    <!-- Content -->
 
                    <div class="container-xxl flex-grow-1 container-p-y">
-                     <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tables /</span> Booking Details</h4>
+                     <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Payment Infomation /</span> History</h4>
 
                      <!-- Basic Bootstrap Table -->
                      <div class="card">

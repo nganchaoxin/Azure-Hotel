@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <head>
   <meta charset="utf-8" />
@@ -43,7 +44,7 @@
 
       <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
         <div class="app-brand demo">
-          <a href="/index" class="app-brand-link">
+          <a href="../index" class="app-brand-link">
             <span class="app-brand-text demo menu-text fw-bolder ms-2"><img src='<c:url value="/resources/static/assets/img/Logo_logo.png" />' alt=""
                 width="190px"></span>
           </a>
@@ -294,8 +295,8 @@
                         </div>
                         <div class="mb-3 col-md-6">
                           <label for="zipCode" class="form-label">Birth Date</label>
-                          <input type="date" name="birth_date" value="${accountEntity.birth_date}"
-                             />
+                          <input class="form-control" type="text" class="input" name="birth_date" value="${accountEntity.birth_date}"
+/>
                         </div>
                       </div>
                       <button type="submit" class="btn btn-primary me-2">Save</button>

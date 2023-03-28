@@ -52,7 +52,7 @@ public class UserController {
                            @RequestParam(name="username") String username,
                            @RequestParam(name="phone_number") String phone_number,
                            @RequestParam(name="gender") String gender,
-                           @RequestParam(name ="birth_date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date birth_date,
+                           @RequestParam(name ="birth_date") @DateTimeFormat(pattern = "dd/MM/yyyy") Date birth_date,
                            HttpSession session) {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         accountEntity.setFirst_name(first_name);
@@ -71,8 +71,17 @@ public class UserController {
         return "user/forgot_password";
     }
 
-    @RequestMapping("/cardpayment")
-    public String paymentCard() {
+    @RequestMapping(value = "/cardpayment", method = GET)
+    public String paymentCard(HttpSession session, Model model) {
+        AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
+        AccountBankingEntity accountBankingEntity = accountBankingService.findByAccountId(accountEntity.getId());
+        model.addAttribute("accountBankingEntity",accountBankingEntity);
+        return "user/payment_card";
+    }
+
+    @RequestMapping(value = "/cardpayment", method = POST, produces = "text/plain;charset=UTF-8")
+    public String paymentCard(@ModelAttribute(name="accountBankingEntity") AccountBankingEntity accountBankingEntity) {
+        accountBankingService.save(accountBankingEntity);
         return "user/payment_card";
     }
 
@@ -102,7 +111,7 @@ public class UserController {
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         sdf.setLenient(true);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
     }
