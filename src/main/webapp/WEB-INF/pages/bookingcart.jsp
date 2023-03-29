@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@taglib  uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 
 <head>
@@ -18,36 +17,39 @@
 
     <link href='<c:url value="/resources/static/images/Logo_icon.svg" />' rel='shortcut icon'>
     <link href='<c:url value="/resources/static/css/bookingdetail.css" />' rel='stylesheet'>
-    <title>Azure Hotel | Hotel in Da Nang</title>
+    <link href='<c:url value="/resources/static/css/bookingcart.css" />' rel='stylesheet'>
+    <title>Tanz Hotel</title>
 </head>
 
 <body>
     <header>
-
-        <a href="/Azure-Hotel"><img src='<c:url value="/resources/static/images/Logo_logo_white.png" />' alt=""
+        <a href="./"><img src='<c:url value="/resources/static/images/Logo_logo_white.png" />' alt=""
                 style="height: 45px; margin-left: 100px;"></a>
-
     </header>
     <main>
-
             <div class="container">
-
-                <div class="main-content-left">
-                    <h3>
-                         <sec:authorize access="isAuthenticated()">
-                             <sec:authorize access="hasRole('ROLE_USER')">
-                                 <sec:authentication property="principal.username"/>
-                             </sec:authorize>
-                         </sec:authorize>
-                     </h3>
-
-                    <div class="room-card">
-                        <div class="room-card-image">
-                            <img src='<c:url value="/resources/static/images/rooms/room-1.jpg" />' alt="">
+            <c:if test="${type.equals('listNull')}">
+                <div class="container-fluid  mt-100">
+                	<div class="row">
+                	    <div class="col-md-12">
+                            <div class="card">
+                                <div class="col-sm-12 empty-cart-cls text-center">
+                                    <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+                                    <h3><strong>Your Booking Items is Empty</strong></h3>
+                                    <h4>Please choose room and add to cart <3 </h4>
+                                    <a href="./" class="btn btn-primary cart-btn-transform m-3" data-abc="true">Homepage</a>
+                				</div>
+                			</div>
                         </div>
-                        <div class="room-card-content">
-                            <div class="room-name">
-                                <h1>Cuc Tan - Superior Double – SPECIAL</h1>
+                    </div>
+                </div>
+            </c:if>
+            <c:if test="${cartItemList.size() > 0}">
+                <div class="main-content-left">
+                    <c:forEach var="cartItem" items="${cartItemList}">
+                        <div class="room-card">
+                            <div class="room-card-image">
+                                <img src='<c:url value="/resources/static/images/rooms/room-1.jpg" />' alt="">
                             </div>
                             <div class="room-card-content">
                                 <div class="room-name">
@@ -260,6 +262,7 @@
                         </c:if>
                     </div>
                 </div>
+            </c:if>
             </div>
         </main>
 </body>
