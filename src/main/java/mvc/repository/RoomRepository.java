@@ -27,7 +27,7 @@ public interface  RoomRepository extends CrudRepository<RoomEntity,Integer> {
     "                (:checkin BETWEEN booking_detail.booking_check_in AND booking_detail.booking_check_out\n" +
     "                OR :checkout BETWEEN booking_detail.booking_check_in AND booking_detail.booking_check_out\n" +
     "                OR :checkin < booking_detail.booking_check_out AND booking_detail.booking_check_in < :checkout) )", nativeQuery = true)
-List<RoomEntity> getRoomHaveReservation(@Param("roomType")String roomType, @Param("guests") int guests, @Param("checkin") Date checkin, @Param("checkout") Date checkout);
+List<RoomEntity> getAvailableRooms(@Param("checkin") Date checkin, @Param("checkout") Date checkout,@Param("roomType")String roomType, @Param("guests") int guests);
 
 
 }

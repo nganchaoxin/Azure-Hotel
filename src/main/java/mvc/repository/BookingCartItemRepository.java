@@ -1,5 +1,6 @@
 package mvc.repository;
 
+import mvc.entity.BookingCartEntity;
 import mvc.entity.BookingCartItemEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -11,5 +12,7 @@ import java.util.List;
 public interface BookingCartItemRepository extends CrudRepository<BookingCartItemEntity, Integer> {
     @Query(value = "Select * from booking_cart_item where booking_card_id=?1", nativeQuery = true)
     List<BookingCartItemEntity> findByBookingCartId(int id);
+
     void deleteById(int id);
+
 }
