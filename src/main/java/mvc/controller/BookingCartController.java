@@ -137,9 +137,7 @@ public class BookingCartController {
 
             BookingCartEntity bookingCartEntity = bookingCartService.findByAccountId(accountEntity.getId()).get(0);
             List<BookingCartItemEntity> bookingCartItemEntities = bookingCartItemService.findAllByBookingCartId(bookingCartEntity.getId());
-            for (BookingCartItemEntity cartItem : bookingCartItemEntities) {
-                bookingCartItemService.deleteById(cartItem.getId());
-            }
+            bookingCartItemService.deleteAll(bookingCartItemEntities);
             // Send email success booking new
             String email = accountEntity.getEmail();
             sendEmail(email, "Azure Hotel - New Booking Successfully", "Your Booking has been create successfully!");

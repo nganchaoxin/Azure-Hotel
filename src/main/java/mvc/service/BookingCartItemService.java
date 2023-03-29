@@ -30,4 +30,7 @@ public class BookingCartItemService {
 
     public void deleteById(int id) { bookingCartItemRepository.deleteById(id);
     }
+
+    public void deleteAll(List<BookingCartItemEntity> bookingCartItemEntities) { bookingCartItemRepository.deleteAll(bookingCartItemEntities);
+    }
 }
