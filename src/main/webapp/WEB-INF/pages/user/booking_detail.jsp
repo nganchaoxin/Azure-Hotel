@@ -237,7 +237,6 @@
                       <td><fmt:formatDate value="${item.booking_check_out}" pattern="dd-MM-yyyy" /></td>
                       <td>${item.number_of_adult}</td>
                       <td>${item.number_of_children}</td>
-                      <td><fmt:formatNumber value="${item.roomEntity.room_price}" type="currency" currencySymbol="VND" groupingUsed="true" /></td>
                     </tr>
                   </c:forEach>
                   </tbody>

@@ -81,17 +81,11 @@ public class LoginController {
             username = ((UserDetails) principal).getUsername();
             session.setAttribute("userEmail", username);
         }
-
-        // Load Cart Item to session
         AccountEntity accountEntity = accountService.findByEmail(username);
-        session.setAttribute("accountEntity", accountEntity);
+
         if(accountEntity != null) {
             session.setAttribute("accountEntity", accountEntity);
-
             List<BookingCartEntity> bookingCartList = bookingCartService.findByAccountId(accountEntity.getId());
-
-            session.setAttribute("bookingCartList", bookingCartList);
-
             List<BookingCartItemEntity> cartItemDatabaseList = null;
 
             if(bookingCartList != null && !bookingCartList.isEmpty()){

@@ -17,7 +17,7 @@ public class BookingCartItemEntity {
     private Date check_out;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "booking_card_id")
+    @JoinColumn(name = "booking_cart_id")
     private BookingCartEntity bookingCartEntity;
 
     @ManyToOne(fetch = FetchType.EAGER)

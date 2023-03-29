@@ -13,12 +13,6 @@ public class RoomEntity {
     @Column(name = "room_name")
     private String room_name;
 
-    @Column(name= "room_price")
-    private int room_price;
-
-    @Column(name = "room_status")
-    private String room_status;
-
     @Column(name = "room_number")
     private int room_number;
 
@@ -49,22 +43,6 @@ public class RoomEntity {
 
     public void setRoom_name(String room_name) {
         this.room_name = room_name;
-    }
-
-    public int getRoom_price() {
-        return room_price;
-    }
-
-    public void setRoom_price(int room_price) {
-        this.room_price = room_price;
-    }
-
-    public String getRoom_status() {
-        return room_status;
-    }
-
-    public void setRoom_status(String room_status) {
-        this.room_status = room_status;
     }
 
     public int getRoom_number() {
