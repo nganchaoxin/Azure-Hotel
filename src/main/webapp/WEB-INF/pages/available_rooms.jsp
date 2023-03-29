@@ -4,6 +4,9 @@ pageEncoding="UTF-8"%>
 <%@ taglib prefix="mvc" uri="http://www.springframework.org/tags/form" %> <%@
 taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ taglib
 prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -201,8 +204,8 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
                         <div class="room-views">${room.position}</div>
                       </div>
                       <div class="room-cost">
-                        <div class="cost-before">1.200.000 VND</div>
-
+                        <div class="cost-before"><fmt:formatNumber value="${room.categoryEntity.price*1.2}" pattern="#,###.##" /> VND</div>
+                        <div class="cost-after"><fmt:formatNumber value="${room.categoryEntity.price}" pattern="#,###.##" /> VND</div>
                       </div>
                       <div style="padding-right:25px; padding-top: 10px;">
                         <button
