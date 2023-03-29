@@ -295,8 +295,9 @@
                         </div>
                         <div class="mb-3 col-md-6">
                           <label for="zipCode" class="form-label">Birth Date</label>
-                          <input class="form-control" type="text" class="input" name="birth_date" value="${accountEntity.birth_date}"
-/>
+
+                            <input type="text" class="form-label" name="birth_date" <fmt:formatDate value="${accountEntity.birth_date}" pattern="yyyy-MM-dd" />/>
+
                         </div>
                       </div>
                       <button type="submit" class="btn btn-primary me-2">Save</button>

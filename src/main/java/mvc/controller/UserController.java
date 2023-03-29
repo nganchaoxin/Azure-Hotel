@@ -44,13 +44,14 @@ public class UserController {
     }
 
     @RequestMapping(value = "/account", method = POST, produces = "text/plain;charset=UTF-8")
-    public String saveUser(@RequestParam(name = "first_name") String first_name,
+    public String saveUser(@ModelAttribute("accountEntity") AccountEntity account,
+                            @RequestParam(name = "first_name") String first_name,
                            @RequestParam(name = "last_name") String last_name,
                            @RequestParam(name = "address") String address,
                            @RequestParam(name = "username") String username,
                            @RequestParam(name = "phone_number") String phone_number,
                            @RequestParam(name = "gender") String gender,
-                           @RequestParam(name = "birth_date") @DateTimeFormat(pattern = "dd/MM/yyyy") Date birth_date,
+                           @RequestParam(name = "birth_date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date birth_date,
                            HttpSession session) {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         accountEntity.setFirst_name(first_name);
@@ -109,7 +110,7 @@ public class UserController {
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.setLenient(true);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
     }

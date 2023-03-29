@@ -48,7 +48,7 @@ public class AccountEntity implements Serializable {
     private String gender;
 
     @Column(name = "birth_date")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birth_date;
 
     @Column(name = "phone_number")
@@ -58,7 +58,7 @@ public class AccountEntity implements Serializable {
     private String address;
 
     @Column(name = "registration_date")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date registration_date;
 
     @OneToMany(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true)
