@@ -4,23 +4,23 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Past;
-import java.time.LocalDate;
 import java.util.Date;
+
 @Entity
-@Table (name = "booking_detail")
+@Table(name = "booking_detail")
 public class BookingDetailEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column (name="booking_check_in")
-    @DateTimeFormat(pattern="dd/MM/yyyy")
+    @Column(name = "booking_check_in")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Past
     private Date booking_check_in;
 
-    @Column (name="booking_check_out")
+    @Column(name = "booking_check_out")
     @Past
-    @DateTimeFormat(pattern="dd/MM/yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date booking_check_out;
 
     @Column(name = "total_price")
@@ -36,11 +36,11 @@ public class BookingDetailEntity {
     private int number_of_children;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn (name = "booking_id")
+    @JoinColumn(name = "booking_id")
     private BookingEntity bookingEntity;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn (name = "room_id")
+    @JoinColumn(name = "room_id")
     private RoomEntity roomEntity;
 
     public int getId() {

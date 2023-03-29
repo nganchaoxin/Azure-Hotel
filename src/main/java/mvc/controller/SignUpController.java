@@ -1,10 +1,12 @@
 package mvc.controller;
 
 import mvc.entity.AccountEntity;
+import mvc.entity.BookingCartEntity;
 import mvc.entity.RoleEntity;
 import mvc.enums.UserStatus;
 import mvc.repository.RoleRepository;
 import mvc.service.AccountService;
+import mvc.service.BookingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -27,15 +29,17 @@ import static mvc.enums.Role.ROLE_USER;
 
 @Controller
 public class SignUpController {
-    @PersistenceContext
-    private EntityManager entityManager;
     @Autowired
     AccountService accountService;
     @Autowired
     RoleRepository roleRepository;
-
     @Autowired
     MailSender mailSender;
+    @Autowired
+    BookingCartService bookingCartService;
+    @PersistenceContext
+    private EntityManager entityManager;
+
     @GetMapping("signup")
     public String signUpPage(Model model, @RequestParam(value = "error", required = false) boolean error) {
         if (error) {
@@ -47,8 +51,8 @@ public class SignUpController {
     }
 
     @PostMapping("signup")
-    public  String signUp(@ModelAttribute(name = "newAccount") AccountEntity accountEntity, Model model, @RequestParam String password_two) {
-        if(!accountEntity.getPassword().equals(password_two)) {
+    public String signUp(@ModelAttribute(name = "newAccount") AccountEntity accountEntity, Model model, @RequestParam String password_two) {
+        if (!accountEntity.getPassword().equals(password_two)) {
             return "signup";
         }
         // Encoder password
@@ -57,8 +61,8 @@ public class SignUpController {
         RoleEntity role = new RoleEntity();
         role.setRole(ROLE_USER);
         role.setId(2);
-//        RoleEntity role = roleRepository.getRoleUser();
 
+        // Set role
         Set<RoleEntity> roles = new HashSet<>();
         roles.add(role);
         accountEntity.setUserRoles(roles);
@@ -66,10 +70,10 @@ public class SignUpController {
         accountEntity.setRegistration_date(new Date());
         accountService.save(accountEntity);
 
+        // Send email
         int id = accountEntity.getId();
-
         String email = accountEntity.getEmail();
-        sendEmail(email, "Azure Hotel -Signup new account", "This is your activation link: http://localhost:8080/HelloWorld-mvc/activate?id="+id);
+        sendEmail(email, "Azure Hotel -Signup new account", "This is your activation link: http://localhost:8080/Azure-Hotel/activate?id=" + id);
         model.addAttribute("accountEntity", accountEntity);
         return "login";
     }
@@ -79,6 +83,11 @@ public class SignUpController {
         AccountEntity accountEntity = accountService.findById(id);
         if (accountEntity != null) {
             accountEntity.setStatus(UserStatus.ACTIVE);
+            // New Cart
+            BookingCartEntity bookingCart = new BookingCartEntity();
+            accountEntity.setBookingCartEntity(bookingCart);
+            bookingCart.setAccountEntity(accountEntity);
+
             accountService.save(accountEntity);
             // add any necessary attributes to the model
             return "login";

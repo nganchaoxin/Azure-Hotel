@@ -23,7 +23,7 @@ public class RoomEntity {
     private List<BookingDetailEntity> bookingDetailEntities;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn (name = "category_id")
+    @JoinColumn(name = "category_id")
     private CategoryEntity categoryEntity;
 
     @OneToMany(mappedBy = "roomEntity", cascade = CascadeType.ALL, orphanRemoval = true)

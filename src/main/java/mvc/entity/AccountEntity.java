@@ -5,7 +5,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -23,7 +22,7 @@ public class AccountEntity implements Serializable {
 
     private String password;
 
-    @Column(name="username")
+    @Column(name = "username")
     private String username;
 
     @Column(nullable = false)
@@ -48,8 +47,8 @@ public class AccountEntity implements Serializable {
     @Column(name = "gender")
     private String gender;
 
-    @Column (name="birth_date")
-    @DateTimeFormat(pattern="dd/MM/yyyy")
+    @Column(name = "birth_date")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date birth_date;
 
     @Column(name = "phone_number")
@@ -58,8 +57,8 @@ public class AccountEntity implements Serializable {
     @Column(name = "address")
     private String address;
 
-    @Column (name="registration_date")
-    @DateTimeFormat(pattern="dd/MM/yyyy")
+    @Column(name = "registration_date")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date registration_date;
 
     @OneToMany(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true)

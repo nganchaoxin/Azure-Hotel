@@ -58,8 +58,8 @@ public class AdminController {
     }
 
     // Edit
-    @RequestMapping(value="/editRoom/{roomId}", method=RequestMethod.GET)
-    public String showEditRoom(Model model, @PathVariable int roomId){
+    @RequestMapping(value = "/editRoom/{roomId}", method = RequestMethod.GET)
+    public String showEditRoom(Model model, @PathVariable int roomId) {
         model.addAttribute("room", roomService.findRoomById(roomId));
         model.addAttribute("msg", "Update room information");
         model.addAttribute("type", "update");
@@ -74,6 +74,7 @@ public class AdminController {
 
         return "notFound";
     }
+
     // Update
     @RequestMapping(value = "/editRoom/updateRoom", method = RequestMethod.POST)
     public String updateRoom(@Valid @ModelAttribute("room") RoomEntity room, BindingResult result, Model model) {
@@ -91,12 +92,13 @@ public class AdminController {
         roomService.saveRoom(room);
         return "redirect:/adminHotel";
     }
+
     private void setCategoryDropDownList(Model model) {
         List<CategoryEntity> categoryList = categoryService.findAllCategory();
 
-        if(!categoryList.isEmpty()){
+        if (!categoryList.isEmpty()) {
             Map<Integer, String> categoryMap = new HashMap<>();
-            for(CategoryEntity categoryEntity: categoryList) {
+            for (CategoryEntity categoryEntity : categoryList) {
                 categoryMap.put(categoryEntity.getId(), categoryEntity.getCategory_name());
             }
             model.addAttribute("categoryList", categoryMap);

@@ -16,17 +16,17 @@ public class BookingEntity {
     private int id;
 
     @Column(name = "booking_date")
-    @DateTimeFormat(pattern="dd/MM/yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date booking_date;
 
-    @Column(name= "booking_status")
+    @Column(name = "booking_status")
     @Enumerated(EnumType.STRING)
     private BookingStatus booking_status;
 
-    @Column(name= "note")
+    @Column(name = "note")
     private String note;
 
-    @Column(name="total_price")
+    @Column(name = "total_price")
     private double total_price;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "account_id")
@@ -102,15 +102,15 @@ public class BookingEntity {
         return paymentEntities;
     }
 
+    public void setPaymentEntities(List<PaymentEntity> paymentEntities) {
+        this.paymentEntities = paymentEntities;
+    }
+
     public double getTotal_price() {
         return total_price;
     }
 
     public void setTotal_price(double total_price) {
         this.total_price = total_price;
-    }
-
-    public void setPaymentEntities(List<PaymentEntity> paymentEntities) {
-        this.paymentEntities = paymentEntities;
     }
 }

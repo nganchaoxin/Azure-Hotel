@@ -9,22 +9,14 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.Temporal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
@@ -58,18 +50,18 @@ public class BookingCartController {
         // Check null account
         String userMail = (String) session.getAttribute("userEmail");
         AccountEntity accountEntity = accountService.findByEmail(userMail);
-        if(accountEntity == null){
+        if (accountEntity == null) {
             return "login";
         }
         // Check Booking cart is empty?
         List<BookingCartEntity> bookingCartEntity = bookingCartService.findByAccountId(accountEntity.getId());
-        if(bookingCartEntity == null || bookingCartEntity.isEmpty()) {
+        if (bookingCartEntity == null || bookingCartEntity.isEmpty()) {
             BookingCartEntity newBookingCartEntity = new BookingCartEntity();
             newBookingCartEntity.setId(1);
             newBookingCartEntity.setAccountEntity(accountEntity);
             bookingCartService.save(newBookingCartEntity);
             model.addAttribute("type", "listNull");
-        }else {
+        } else {
             //Get cart items from session
             List<BookingCartItemEntity> listBookingCartItemEntity = (List<BookingCartItemEntity>) session.getAttribute("cartItemList");
             if (listBookingCartItemEntity == null || listBookingCartItemEntity.isEmpty()) {
@@ -92,7 +84,7 @@ public class BookingCartController {
     }
 
     @RequestMapping(value = "/payment", method = POST, produces = "text/plain;charset=UTF-8")
-    public String saveNewAccountBanking(@ModelAttribute(name = "accountBanking") AccountBankingEntity accountBanking,HttpSession session) {
+    public String saveNewAccountBanking(@ModelAttribute(name = "accountBanking") AccountBankingEntity accountBanking, HttpSession session) {
         // Get Account
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         // Set Account to payment
@@ -106,7 +98,7 @@ public class BookingCartController {
         // Get account
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         AccountBankingEntity accountBanking = accountBankingService.findByAccountId(accountEntity.getId());
-        if(accountBanking.getBalance() > (Double) session.getAttribute("totalPrices")) {
+        if (accountBanking.getBalance() > (Double) session.getAttribute("totalPrices")) {
             //// Create new booking entity
             BookingEntity newBookingEntity = new BookingEntity();
             newBookingEntity.setBooking_date(new Date());
@@ -144,8 +136,7 @@ public class BookingCartController {
             sendEmail(email, "Azure Hotel - New Booking Successfully", "Your Booking has been create successfully!");
             model.addAttribute("status", "completed");
             model.addAttribute("newBookingEntity", newBookingEntity);
-        }
-        else {
+        } else {
             model.addAttribute("status", "dismiss");
             model.addAttribute("accountEntity", accountEntity);
         }
@@ -155,8 +146,8 @@ public class BookingCartController {
     @GetMapping("/delete&cartid={id}")
     public String deleteCartItem(@PathVariable int id, HttpSession session) {
         List<BookingCartItemEntity> cartItemEntities = (List<BookingCartItemEntity>) session.getAttribute("listCartItem");
-        for (BookingCartItemEntity cartItem: cartItemEntities) {
-            if(cartItem.getId() == id) {
+        for (BookingCartItemEntity cartItem : cartItemEntities) {
+            if (cartItem.getId() == id) {
                 cartItemEntities.remove(cartItem);
                 break;
             }
@@ -166,7 +157,9 @@ public class BookingCartController {
     }
 
     @GetMapping("/success")
-    public String successPage(){return "successpage";}
+    public String successPage() {
+        return "successpage";
+    }
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -178,16 +171,16 @@ public class BookingCartController {
     public void setInfoBookingCart(List<BookingCartItemEntity> listBookingCartItemEntity, HttpSession session) {
         int totalGuests = 0;
         double totalPrices = 0;
-        for (BookingCartItemEntity cartItem: listBookingCartItemEntity) {
+        for (BookingCartItemEntity cartItem : listBookingCartItemEntity) {
             totalPrices += cartItem.getRoomEntity().getCategoryEntity().getPrice();
             totalGuests += cartItem.getRoomEntity().getCategoryEntity().getMax_occupancy();
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         int differenceInMillis = (int) (listBookingCartItemEntity.get(0).getCheck_out().getTime() - listBookingCartItemEntity.get(0).getCheck_in().getTime());
         int totalDays = differenceInMillis / (1000 * 60 * 60 * 24);
-        session.setAttribute("totalDays",totalDays);
-        session.setAttribute("totalGuests",totalGuests);
-        session.setAttribute("totalPrices",totalPrices);
+        session.setAttribute("totalDays", totalDays);
+        session.setAttribute("totalGuests", totalGuests);
+        session.setAttribute("totalPrices", totalPrices);
     }
 
     public void removeSession(HttpSession session) {

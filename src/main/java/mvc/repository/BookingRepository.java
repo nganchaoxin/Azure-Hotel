@@ -11,6 +11,7 @@ import java.util.List;
 public interface BookingRepository extends CrudRepository<BookingEntity, Integer> {
     @Query(value = "select * from booking where id =?1", nativeQuery = true)
     BookingEntity findById(int id);
+
     @Query(value = "select * from booking where account_id =?1", nativeQuery = true)
     List<BookingEntity> findByAccountId(int id);
 }

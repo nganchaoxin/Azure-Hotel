@@ -3,8 +3,8 @@ package mvc.entity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
+
 @Entity
 @Table(name = "rating_and_review")
 public class RatingAndReview {
@@ -22,7 +22,7 @@ public class RatingAndReview {
     private double rating_point;
 
     @Column(name = "review_date")
-    @DateTimeFormat(pattern="dd/MM/yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date review_date;
 
     public int getId() {

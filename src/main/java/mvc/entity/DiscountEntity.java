@@ -3,7 +3,6 @@ package mvc.entity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -17,15 +16,15 @@ public class DiscountEntity {
     @Column(name = "discount_name")
     private String discount_name;
 
-    @Column(name= "discount_amount")
+    @Column(name = "discount_amount")
     private double discount_value;
 
     @Column(name = "discount_start_date")
-    @DateTimeFormat(pattern="dd/MM/yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date discount_start_date;
 
     @Column(name = "discount_end_date")
-    @DateTimeFormat(pattern="dd/MM/yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date discount_end_date;
 
     @Column(name = "discount_description")

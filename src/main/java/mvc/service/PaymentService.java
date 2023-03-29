@@ -17,9 +17,11 @@ public class PaymentService {
         return paymentRepository.findById(id);
     }
 
-    public void save(PaymentEntity newPayment) { paymentRepository.save(newPayment);
+    public void save(PaymentEntity newPayment) {
+        paymentRepository.save(newPayment);
     }
 
-    public List<PaymentEntity> findByAccountBankingId(int id) { return paymentRepository.findByAccountBankingId(id);
+    public List<PaymentEntity> findByAccountBankingId(int id) {
+        return paymentRepository.findByAccountBankingId(id);
     }
 }

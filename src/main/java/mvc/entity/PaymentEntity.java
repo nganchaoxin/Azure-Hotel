@@ -16,14 +16,14 @@ public class PaymentEntity {
     private double amount;
 
     @Column(name = "payment_date")
-    @DateTimeFormat(pattern="dd/MM/yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date payment_date;
 
     @Column(name = "note")
     private String note;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn (name = "account_banking_id")
+    @JoinColumn(name = "account_banking_id")
     private AccountBankingEntity accountBankingEntity;
 
     @ManyToOne(fetch = FetchType.EAGER)

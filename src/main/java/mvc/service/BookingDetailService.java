@@ -13,17 +13,21 @@ import java.util.List;
 public class BookingDetailService {
     @Autowired
     BookingDetailRepository bookingDetailRepository;
+
     public BookingDetailEntity findById(int id) {
         return bookingDetailRepository.findById(id);
     }
 
-    public List<BookingDetailEntity> findAllByBooking_id(int id) { return bookingDetailRepository.findAllByBooking_id(id);
+    public List<BookingDetailEntity> findAllByBooking_id(int id) {
+        return bookingDetailRepository.findAllByBooking_id(id);
     }
 
-    public void save(BookingDetailEntity bookingDetail) { bookingDetailRepository.save(bookingDetail);
+    public void save(BookingDetailEntity bookingDetail) {
+        bookingDetailRepository.save(bookingDetail);
     }
 
-    public List<BookingDetailEntity> findByBookingId(int id) { return  bookingDetailRepository.findAllByBooking_id(id);
+    public List<BookingDetailEntity> findByBookingId(int id) {
+        return bookingDetailRepository.findAllByBooking_id(id);
     }
 
     public void createNewBookingDetail(BookingCartItemEntity cartItem, BookingEntity newBookingEntity) {

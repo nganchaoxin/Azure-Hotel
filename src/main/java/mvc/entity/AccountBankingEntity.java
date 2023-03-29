@@ -3,7 +3,6 @@ package mvc.entity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -19,8 +18,8 @@ public class AccountBankingEntity {
     @Column(name = "full_name")
     private String full_name;
 
-    @Column (name="expired_date")
-    @DateTimeFormat(pattern="dd/MM/yyyy")
+    @Column(name = "expired_date")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date expired_date;
 
     @Column(name = "cvv")

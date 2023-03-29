@@ -12,10 +12,11 @@ import java.util.List;
 public interface BookingDetailRepository extends CrudRepository<BookingDetailEntity, Integer> {
     @Query(value = "select * from booking_detail where id =?1", nativeQuery = true)
     BookingDetailEntity findById(int id);
+
     @Query(value = "select * from booking_detail where booking_id =?1", nativeQuery = true)
     List<BookingDetailEntity> findAllByBooking_id(int id);
 
-    @Query(value="SELECT room.*\n" +
+    @Query(value = "SELECT room.*\n" +
             "FROM booking_detail \n" +
             "JOIN room  ON booking_detail.room_id = room.id\n" +
             "WHERE \n" +
