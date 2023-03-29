@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -71,7 +72,7 @@ public class LoginController {
         return "user/home";
     }
 
-    @RequestMapping(value = {"/index"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/"}, method = RequestMethod.GET)
     public String welcomePage(Model model, HttpSession session) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = principal.toString();

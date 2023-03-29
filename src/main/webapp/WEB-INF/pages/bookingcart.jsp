@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@taglib  uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 
 <head>
@@ -18,30 +17,64 @@
 
     <link href='<c:url value="/resources/static/images/Logo_icon.svg" />' rel='shortcut icon'>
     <link href='<c:url value="/resources/static/css/bookingdetail.css" />' rel='stylesheet'>
-    <title>Azure Hotel | Hotel in Da Nang</title>
+    <link href='<c:url value="/resources/static/css/bookingcart.css" />' rel='stylesheet'>
+    <title>Tanz Hotel</title>
 </head>
 
 <body>
     <header>
-
-        <a href="/Azure-Hotel"><img src='<c:url value="/resources/static/images/Logo_logo_white.png" />' alt=""
+        <a href="./"><img src='<c:url value="/resources/static/images/Logo_logo_white.png" />' alt=""
                 style="height: 45px; margin-left: 100px;"></a>
-
     </header>
     <main>
-
             <div class="container">
-
+            <c:if test="${type.equals('listNull')}">
+                <div class="container-fluid  mt-100">
+                	<div class="row">
+                	    <div class="col-md-12">
+                            <div class="card">
+                                <div class="col-sm-12 empty-cart-cls text-center">
+                                    <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+                                    <h3><strong>Your Booking Items is Empty</strong></h3>
+                                    <h4>Please choose room and add to cart <3 </h4>
+                                    <a href="./" class="btn btn-primary cart-btn-transform m-3" data-abc="true">Homepage</a>
+                				</div>
+                			</div>
+                        </div>
+                    </div>
+                </div>
+            </c:if>
+            <c:if test="${cartItemList.size() > 0}">
                 <div class="main-content-left">
-                    <h3>
-                         <sec:authorize access="isAuthenticated()">
-                             <sec:authorize access="hasRole('ROLE_USER')">
-                                 <sec:authentication property="principal.username"/>
-                             </sec:authorize>
-                         </sec:authorize>
-                     </h3>
-
-
+                    <c:forEach var="cartItem" items="${cartItemList}">
+                        <div class="room-card">
+                            <div class="room-card-image">
+                                <img src='<c:url value="/resources/static/images/rooms/room-1.jpg" />' alt="">
+                            </div>
+                            <div class="room-card-content">
+                                <div class="room-name">
+                                    <h1>${cartItem.roomEntity.room_name}</h1>
+                                </div>
+                                <div class="room-number_of_person">${cartItem.roomEntity.categoryEntity.max_occupancy} Guestss</div>
+                                <div class="room-info">
+                                    <div class="room-number_of_bed"><i class="fas fa-user"></i> Sleeps ${cartItem.roomEntity.categoryEntity.max_occupancy}</div>
+                                    <div class="room-number_of_double_bed"><i class="fas fa-bed"></i> ${cartItem.roomEntity.categoryEntity.bed_info} Double bed</div>
+                                    <div class="room-number_of_bathroom"><i class="fas fa-bath"></i> ${cartItem.roomEntity.categoryEntity.bed_info} Bathroom</div>
+                                </div>
+                                <div class="room-info-special">
+                                    <div class="room-square">${cartItem.roomEntity.categoryEntity.square} m&#178; </div>
+                                    <div class="heart_icon"> <i class="fas fa-map-marker"></i></div>
+                                    <div class="room-smoking">Non-smoking</div>
+                                    <div class="heart_icon"> <i class="fas fa-map-marker"></i></div>
+                                    <div class="room-views">Various views</div>
+                                </div>
+                                <div class="room-cost">
+                                    <div class="cost-before"><fmt:formatNumber value="${cartItem.roomEntity.categoryEntity.price*1.2}" pattern="#,###.##" /> VND</div>
+                                    <div class="cost-after"><fmt:formatNumber value="${cartItem.roomEntity.categoryEntity.price}" pattern="#,###.##" /> VND</div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
                     <div class="customer-dtails">
                         <div id="customer-detail">
                             <div class="dropbtn">
@@ -229,6 +262,7 @@
                         </c:if>
                     </div>
                 </div>
+            </c:if>
             </div>
         </main>
 </body>
