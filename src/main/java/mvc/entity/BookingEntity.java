@@ -1,5 +1,6 @@
 package mvc.entity;
 
+import mvc.enums.BookingStatus;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -19,7 +20,8 @@ public class BookingEntity {
     private Date booking_date;
 
     @Column(name= "booking_status")
-    private String booking_status;
+    @Enumerated(EnumType.STRING)
+    private BookingStatus booking_status;
 
     @Column(name= "note")
     private String note;
@@ -56,11 +58,11 @@ public class BookingEntity {
         this.booking_date = booking_date;
     }
 
-    public String getBooking_status() {
+    public BookingStatus getBooking_status() {
         return booking_status;
     }
 
-    public void setBooking_status(String booking_status) {
+    public void setBooking_status(BookingStatus booking_status) {
         this.booking_status = booking_status;
     }
 

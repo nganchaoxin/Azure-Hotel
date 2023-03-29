@@ -28,6 +28,4 @@ public class BookingCartItemService {
     }
 
 
-    public void deleteById(int id) { bookingCartItemRepository.deleteById(id);
-    }
 }

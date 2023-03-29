@@ -28,6 +28,7 @@
     </header>
     <main>
             <div class="container">
+
             <c:if test="${type.equals('listNull')}">
                 <div class="container-fluid  mt-100">
                 	<div class="row">
@@ -75,6 +76,7 @@
                             </div>
                         </div>
                     </c:forEach>
+
                     <div class="customer-dtails">
                         <div id="customer-detail">
                             <div class="dropbtn">

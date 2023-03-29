@@ -75,16 +75,7 @@ public class HotelReservationController {
 
     @RequestMapping(value = "/addToCart/room={roomId}", method = RequestMethod.GET)
     public String addToCart(Model model, @PathVariable int roomId, HttpSession session, HttpServletRequest request) {
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        String username = principal.toString();
-//
-//        if (principal instanceof UserDetails) {
-//            username = ((UserDetails) principal).getUsername();
-//            session.setAttribute("userEmail", username);
-//        }
-
         AccountEntity account = (AccountEntity) session.getAttribute("accountEntity");
-
         BookingCartEntity bookingCart = bookingCartService.findById(account.getId());
 
         List<BookingCartItemEntity> cartItemSessionList = (List<BookingCartItemEntity>) request.getSession().getAttribute("cartItemList");

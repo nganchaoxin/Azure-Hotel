@@ -1,6 +1,7 @@
 package mvc.controller;
 
 import mvc.entity.*;
+import mvc.enums.BookingStatus;
 import mvc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -109,7 +110,7 @@ public class BookingCartController {
             //// Create new booking entity
             BookingEntity newBookingEntity = new BookingEntity();
             newBookingEntity.setBooking_date(new Date());
-            newBookingEntity.setBooking_status("New Booking");
+            newBookingEntity.setBooking_status(BookingStatus.COMPLETED);
             newBookingEntity.setAccountEntity(accountEntity);
             newBookingEntity.setTotal_price((Double) session.getAttribute("totalPrices"));
             bookingService.save(newBookingEntity);

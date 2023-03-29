@@ -202,7 +202,6 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
                       </div>
                       <div class="room-cost">
                         <div class="cost-before">1.200.000 VND</div>
-                        <div class="cost-after">${room.room_price} VND</div>
 
                       </div>
                       <div style="padding-right:25px; padding-top: 10px;">
