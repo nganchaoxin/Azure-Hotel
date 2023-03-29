@@ -1,6 +1,5 @@
 package mvc.repository;
 
-import mvc.entity.BookingCartEntity;
 import mvc.entity.BookingCartItemEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

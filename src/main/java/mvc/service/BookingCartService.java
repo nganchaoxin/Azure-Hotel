@@ -1,7 +1,6 @@
 package mvc.service;
 
 import mvc.entity.BookingCartEntity;
-import mvc.entity.BookingCartItemEntity;
 import mvc.repository.BookingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,15 +13,19 @@ public class BookingCartService {
     BookingCartRepository bookingCartRepository;
 
 
-    public BookingCartEntity findById(int id) { return bookingCartRepository.findById(id);
+    public BookingCartEntity findById(int id) {
+        return bookingCartRepository.findById(id);
     }
 
-    public void save(BookingCartEntity bookingCartEntity) {bookingCartRepository.save(bookingCartEntity);
+    public void save(BookingCartEntity bookingCartEntity) {
+        bookingCartRepository.save(bookingCartEntity);
     }
 
-    public List<BookingCartEntity> findByAccountId(int id) { return bookingCartRepository.findByAccountId(id);
+    public List<BookingCartEntity> findByAccountId(int id) {
+        return bookingCartRepository.findByAccountId(id);
     }
 
-    public void deleteAll() { bookingCartRepository.deleteAll();
+    public void deleteAll() {
+        bookingCartRepository.deleteAll();
     }
 }

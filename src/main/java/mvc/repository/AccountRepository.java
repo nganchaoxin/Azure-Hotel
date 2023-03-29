@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface AccountRepository extends CrudRepository<AccountEntity, Integer> {
     @Query(value = "select * from account where id =?1", nativeQuery = true)
     AccountEntity findById(int id);
+
     AccountEntity findByEmailLikeAndStatusLike(String email,
                                                UserStatus status);
 

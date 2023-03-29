@@ -1,8 +1,6 @@
 package mvc.entity;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "image")
@@ -21,11 +19,11 @@ public class ImageEntity {
     private String url;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn (name = "category_id")
+    @JoinColumn(name = "category_id")
     private CategoryEntity categoryEntity;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn (name = "post_id")
+    @JoinColumn(name = "post_id")
     private PostEntity postEntity;
 
     public int getId() {

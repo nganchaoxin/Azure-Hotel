@@ -6,19 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookingService {
     @Autowired
     BookingRepository bookingRepository;
 
-    public BookingEntity findById(int id) { return bookingRepository.findById(id);
+    public BookingEntity findById(int id) {
+        return bookingRepository.findById(id);
     }
 
-    public void save(BookingEntity newBookingEntity) { bookingRepository.save(newBookingEntity);
+    public void save(BookingEntity newBookingEntity) {
+        bookingRepository.save(newBookingEntity);
     }
 
-    public List<BookingEntity> findByAccountId(int id) { return bookingRepository.findByAccountId(id);
+    public List<BookingEntity> findByAccountId(int id) {
+        return bookingRepository.findByAccountId(id);
     }
 }

@@ -16,13 +16,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -47,7 +45,6 @@ public class LoginController {
 
     @RequestMapping("/admin/home")
     public String viewHomeAdmin(Model model, HttpSession session) {
-
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = principal.toString();
         if (principal instanceof UserDetails) {
@@ -74,6 +71,7 @@ public class LoginController {
 
     @RequestMapping(value = {"/"}, method = RequestMethod.GET)
     public String welcomePage(Model model, HttpSession session) {
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = principal.toString();
 
@@ -83,12 +81,13 @@ public class LoginController {
         }
         AccountEntity accountEntity = accountService.findByEmail(username);
 
-        if(accountEntity != null) {
+        if (accountEntity != null) {
             session.setAttribute("accountEntity", accountEntity);
+
             List<BookingCartEntity> bookingCartList = bookingCartService.findByAccountId(accountEntity.getId());
             List<BookingCartItemEntity> cartItemDatabaseList = null;
 
-            if(bookingCartList != null && !bookingCartList.isEmpty()){
+            if (bookingCartList != null && !bookingCartList.isEmpty()) {
                 BookingCartEntity bookingCart = bookingCartList.get(0);
                 List<BookingCartItemEntity> cartItemSessionList = (List<BookingCartItemEntity>) session.getAttribute("cartItemList");
                 if (cartItemSessionList == null || cartItemSessionList.isEmpty()) {
@@ -96,6 +95,7 @@ public class LoginController {
                     session.setAttribute("cartItemList", cartItemDatabaseList);
                 }
             }
+
         }
         return "index";
     }

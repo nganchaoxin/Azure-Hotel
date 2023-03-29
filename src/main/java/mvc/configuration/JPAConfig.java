@@ -43,7 +43,7 @@ public class JPAConfig {
         entityManagerFactoryBean.setDataSource(dataSource());
         entityManagerFactoryBean.setPackagesToScan(
                 new String[]{
-                    "mvc.entity"
+                        "mvc.entity"
                 });
         final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         entityManagerFactoryBean.setJpaVendorAdapter(vendorAdapter);
@@ -80,8 +80,8 @@ public class JPAConfig {
         //Using gmail
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
-        mailSender.setUsername("kimnganphamsu01@gmail.com");
-        mailSender.setPassword("lhxjgnfgjwqxuxur");
+        mailSender.setUsername("kimnganphamsu02@gmail.com");
+        mailSender.setPassword("dhxjennxosteswul");
 
         Properties javaMailProperties = new Properties();
         javaMailProperties.put("mail.smtp.starttls.enable", "true");
@@ -89,11 +89,11 @@ public class JPAConfig {
         javaMailProperties.put("mail.smtp.ssl.protocols", "TLSv1.2");
         javaMailProperties.put("mail.debug", "true");
         javaMailProperties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-        
+
         mailSender.setJavaMailProperties(javaMailProperties);
         return mailSender;
 
     }
-    
-    
+
+
 }

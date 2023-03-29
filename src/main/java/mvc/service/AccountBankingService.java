@@ -9,15 +9,18 @@ import org.springframework.stereotype.Service;
 public class AccountBankingService {
     @Autowired
     AccountBankingRepository accountBankingRepository;
+
     public AccountBankingEntity findById(int id) {
         return accountBankingRepository.findById(id);
     }
 
 
-    public AccountBankingEntity findByAccountId(int id) { return accountBankingRepository.findByAccountId(id);
+    public AccountBankingEntity findByAccountId(int id) {
+        return accountBankingRepository.findByAccountId(id);
     }
 
-    public void save(AccountBankingEntity accountBankingEntity) { accountBankingRepository.save(accountBankingEntity);
+    public void save(AccountBankingEntity accountBankingEntity) {
+        accountBankingRepository.save(accountBankingEntity);
     }
 
     public void reduceMoney(int accountID, double amount) {

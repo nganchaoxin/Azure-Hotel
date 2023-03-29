@@ -6,13 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpSession;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -46,13 +44,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "/account", method = POST, produces = "text/plain;charset=UTF-8")
-    public String saveUser(@RequestParam(name="first_name") String first_name,
-                           @RequestParam(name="last_name") String last_name,
-                           @RequestParam(name="address") String address,
-                           @RequestParam(name="username") String username,
-                           @RequestParam(name="phone_number") String phone_number,
-                           @RequestParam(name="gender") String gender,
-                           @RequestParam(name ="birth_date") @DateTimeFormat(pattern = "dd/MM/yyyy") Date birth_date,
+    public String saveUser(@RequestParam(name = "first_name") String first_name,
+                           @RequestParam(name = "last_name") String last_name,
+                           @RequestParam(name = "address") String address,
+                           @RequestParam(name = "username") String username,
+                           @RequestParam(name = "phone_number") String phone_number,
+                           @RequestParam(name = "gender") String gender,
+                           @RequestParam(name = "birth_date") @DateTimeFormat(pattern = "dd/MM/yyyy") Date birth_date,
                            HttpSession session) {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         accountEntity.setFirst_name(first_name);
@@ -75,12 +73,12 @@ public class UserController {
     public String paymentCard(HttpSession session, Model model) {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         AccountBankingEntity accountBankingEntity = accountBankingService.findByAccountId(accountEntity.getId());
-        model.addAttribute("accountBankingEntity",accountBankingEntity);
+        model.addAttribute("accountBankingEntity", accountBankingEntity);
         return "user/payment_card";
     }
 
     @RequestMapping(value = "/cardpayment", method = POST, produces = "text/plain;charset=UTF-8")
-    public String paymentCard(@ModelAttribute(name="accountBankingEntity") AccountBankingEntity accountBankingEntity) {
+    public String paymentCard(@ModelAttribute(name = "accountBankingEntity") AccountBankingEntity accountBankingEntity) {
         accountBankingService.save(accountBankingEntity);
         return "user/payment_card";
     }
