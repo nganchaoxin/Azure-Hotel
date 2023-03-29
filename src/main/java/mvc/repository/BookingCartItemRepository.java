@@ -11,5 +11,4 @@ import java.util.List;
 public interface BookingCartItemRepository extends CrudRepository<BookingCartItemEntity, Integer> {
     @Query(value = "Select * from booking_cart_item where booking_card_id=?1", nativeQuery = true)
     List<BookingCartItemEntity> findByBookingCartId(int id);
-    void deleteById(int id);
 }

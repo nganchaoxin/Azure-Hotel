@@ -11,7 +11,6 @@ import java.util.List;
 public class BookingCartItemService {
     @Autowired
     BookingCartItemRepository bookingCartItemRepository;
-
     public void save(BookingCartItemEntity bookingCartItemEntity) { bookingCartItemRepository.save(bookingCartItemEntity);
     }
 
@@ -21,6 +20,4 @@ public class BookingCartItemService {
     public void clearAll() { bookingCartItemRepository.deleteAll();
     }
 
-    public void deleteById(int id) { bookingCartItemRepository.deleteById(id);
-    }
 }

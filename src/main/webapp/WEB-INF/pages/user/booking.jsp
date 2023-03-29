@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <head>
@@ -44,7 +43,7 @@
 
       <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
         <div class="app-brand demo">
-          <a href="../" class="app-brand-link">
+          <a href="../index" class="app-brand-link">
             <span class="app-brand-text demo menu-text fw-bolder ms-2"><img src='<c:url value="/resources/static/assets/img/Logo_logo.png" />' alt=""
                 width="190px"></span>
           </a>
@@ -233,9 +232,9 @@
                   <c:forEach var="booking" items="${bookingEntityList}">
                     <tr>
                       <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${booking.accountEntity.username}</strong></td>
-                      <td><fmt:formatDate value="${booking.booking_date}" pattern="dd-MM-yyyy" /></td>
-                      <td><span class="badge bg-label-primary me-1">${booking.booking_status}</span></td>
-                      <td>${booking.total_price} VND</td>
+                      <td><strong>2023-02-10</td>
+                      <td><span class="badge bg-label-primary me-1">${booking.accountEntity.status}</span></td>
+                      <td>400.000 VND</td>
                       <td>
                         <div class="dropdown" style="display: flex;">
                           </button>
