@@ -41,38 +41,7 @@
                          </sec:authorize>
                      </h3>
 
-                    <div class="room-card">
-                        <div class="room-card-image">
-                            <img src='<c:url value="/resources/static/images/rooms/room-1.jpg" />' alt="">
-                        </div>
-                        <div class="room-card-content">
-                            <div class="room-name">
-                                <h1>Cuc Tan - Superior Double – SPECIAL</h1>
-                            </div>
-                            <div class="room-card-content">
-                                <div class="room-name">
-                                    <h1>${cartItem.roomEntity.room_name}</h1>
-                                </div>
-                                <div class="room-number_of_person">${cartItem.roomEntity.categoryEntity.max_occupancy} Guestss</div>
-                                <div class="room-info">
-                                    <div class="room-number_of_bed"><i class="fas fa-user"></i> Sleeps ${cartItem.roomEntity.categoryEntity.max_occupancy}</div>
-                                    <div class="room-number_of_double_bed"><i class="fas fa-bed"></i> ${cartItem.roomEntity.categoryEntity.bed_info} Double bed</div>
-                                    <div class="room-number_of_bathroom"><i class="fas fa-bath"></i> ${cartItem.roomEntity.categoryEntity.bed_info} Bathroom</div>
-                                </div>
-                                <div class="room-info-special">
-                                    <div class="room-square">${cartItem.roomEntity.categoryEntity.square} m&#178; </div>
-                                    <div class="heart_icon"> <i class="fas fa-map-marker"></i></div>
-                                    <div class="room-smoking">Non-smoking</div>
-                                    <div class="heart_icon"> <i class="fas fa-map-marker"></i></div>
-                                    <div class="room-views">Various views</div>
-                                </div>
-                                <div class="room-cost">
-                                    <div class="cost-before"><fmt:formatNumber value="${cartItem.roomEntity.categoryEntity.price*1.2}" pattern="#,###.##" /> VND</div>
-                                    <div class="cost-after"><fmt:formatNumber value="${cartItem.roomEntity.categoryEntity.price}" pattern="#,###.##" /> VND</div>
-                                </div>
-                            </div>
-                        </div>
-                    </c:forEach>
+
                     <div class="customer-dtails">
                         <div id="customer-detail">
                             <div class="dropbtn">

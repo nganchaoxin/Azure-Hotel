@@ -16,4 +16,5 @@ public interface BookingCartRepository extends CrudRepository<BookingCartEntity,
     @Query(value = "select * from booking_cart where account_id =?1", nativeQuery = true)
     List<BookingCartEntity> findByAccountId(int id);
 
+
 }

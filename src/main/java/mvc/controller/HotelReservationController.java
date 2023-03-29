@@ -12,12 +12,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 @Controller
@@ -52,20 +55,41 @@ public class HotelReservationController {
     }
 
     @RequestMapping(value = "/availableRoom", method = RequestMethod.GET)
-    public String showAvailableRoom(@RequestParam("checkin") @DateTimeFormat(pattern = "yyyy-MM-dd") Date checkin, @RequestParam("checkout") @DateTimeFormat(pattern = "yyyy-MM-dd") Date checkout, @RequestParam("roomType") String roomType, @RequestParam("guests") int guests, Model model, HttpSession session) {
-        List<RoomEntity> availableRoomList = roomService.getAvailableRooms(roomType, guests, checkin, checkout);
+    public String showAvailableRoom(
+                                    @RequestParam("checkin") @DateTimeFormat(pattern = "yyyy-MM-dd") Date checkin,
+                                    @RequestParam("checkout") @DateTimeFormat(pattern = "yyyy-MM-dd") Date checkout,
+                                    @RequestParam("roomType") String roomType,
+                                    @RequestParam("guests") int guests,
+                                    Model model,
+                                    HttpSession session) {
+        if (checkout.compareTo(checkin) < 0) {
+            return "notFound";
+        }
+        List<RoomEntity> availableRoomList = roomService.getAvailableRooms(checkin, checkout, roomType, guests);
         session.setAttribute("check_in", checkin);
         session.setAttribute("check_out", checkout);
         model.addAttribute("availableRoomList", availableRoomList);
+
         return "available_rooms";
     }
 
     @RequestMapping(value = "/addToCart/room={roomId}", method = RequestMethod.GET)
     public String addToCart(Model model, @PathVariable int roomId, HttpSession session, HttpServletRequest request) {
-        List<BookingCartItemEntity> cartItemSessionList = (List<BookingCartItemEntity>) request.getSession().getAttribute("cartItemList");
-        List<BookingCartItemEntity> cartItemDatabaseList = bookingCartItemService.findAllByBookingCartId(1);
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        String username = principal.toString();
+//
+//        if (principal instanceof UserDetails) {
+//            username = ((UserDetails) principal).getUsername();
+//            session.setAttribute("userEmail", username);
+//        }
 
-        BookingCartEntity bookingCart = bookingCartService.findById(1);
+        AccountEntity account = (AccountEntity) session.getAttribute("accountEntity");
+
+        BookingCartEntity bookingCart = bookingCartService.findById(account.getId());
+
+        List<BookingCartItemEntity> cartItemSessionList = (List<BookingCartItemEntity>) request.getSession().getAttribute("cartItemList");
+        List<BookingCartItemEntity> bookingCartItemDatabase = bookingCartItemService.findAllByBookingCartId(bookingCart.getId());
+
         RoomEntity room = roomService.findRoomById(roomId);
 
         BookingCartItemEntity cartItem = new BookingCartItemEntity();
@@ -76,27 +100,21 @@ public class HotelReservationController {
 
         // Init
         if (cartItemSessionList == null) {
-            System.out.println("cartItemSessionList == null");
             cartItemSessionList = new ArrayList<>();
+
             request.getSession().setAttribute("cartItemList", cartItemSessionList);
             return "redirect:/bookingcart";
-
         } else {
-            // Check if item exist in ss
             int indexSession = this.exists(roomId, cartItemSessionList);
             if (indexSession == -1) {
                 cartItemSessionList.add(cartItem);
-
-                for (BookingCartItemEntity b : cartItemSessionList) {
-                    //bookingCartItemService.deleteByCartId(b.getCartID);
-
-                }
-                // save DB list in database by repo
-                bookingCartItemRepository.saveAll(cartItemDatabaseList);
             } else {
                 return "redirect:/bookingcart";
             }
+            request.getSession().setAttribute("cartItemList", cartItemSessionList);
         }
+        bookingCartItemService.deleteAll(bookingCartItemDatabase);
+        bookingCartItemService.saveAll(cartItemSessionList);
 
         model.addAttribute("cartItemList", cartItemSessionList);
         return "redirect:/bookingcart";
