@@ -60,21 +60,31 @@ public class BookingCartController {
         if(accountEntity == null){
             return "login";
         }
-        //Get cart items from session
-        List<BookingCartItemEntity> listBookingCartItemEntity = (List<BookingCartItemEntity>) session.getAttribute("cartItemList");
-        if(listBookingCartItemEntity == null || listBookingCartItemEntity.isEmpty()) {
+        // Check Booking cart is empty?
+        List<BookingCartEntity> bookingCartEntity = bookingCartService.findByAccountId(accountEntity.getId());
+        if(bookingCartEntity == null || bookingCartEntity.isEmpty()) {
+            BookingCartEntity newBookingCartEntity = new BookingCartEntity();
+            newBookingCartEntity.setId(1);
+            newBookingCartEntity.setAccountEntity(accountEntity);
+            bookingCartService.save(newBookingCartEntity);
             model.addAttribute("type", "listNull");
-            model.addAttribute("msg", "Your Cart is empty, please add some thing <3 !");
         }else {
-            setInfoBookingCart(listBookingCartItemEntity,session);
-            session.setAttribute("cartItemList", listBookingCartItemEntity);
-            AccountBankingEntity accountBanking = accountBankingService.findByAccountId(accountEntity.getId());
-            if (accountBanking != null) {
-                model.addAttribute("accountBanking", accountBanking);
-                model.addAttribute("payment_status", "payment_available");
+            //Get cart items from session
+            List<BookingCartItemEntity> listBookingCartItemEntity = (List<BookingCartItemEntity>) session.getAttribute("cartItemList");
+            if (listBookingCartItemEntity == null || listBookingCartItemEntity.isEmpty()) {
+                model.addAttribute("type", "listNull");
+                model.addAttribute("msg", "Your Cart is empty, please add some thing <3 !");
             } else {
-                model.addAttribute("accountBanking", new AccountBankingEntity());
-                model.addAttribute("payment_status", "payment_unavailable");
+                setInfoBookingCart(listBookingCartItemEntity, session);
+                session.setAttribute("cartItemList", listBookingCartItemEntity);
+                AccountBankingEntity accountBanking = accountBankingService.findByAccountId(accountEntity.getId());
+                if (accountBanking != null) {
+                    model.addAttribute("accountBanking", accountBanking);
+                    model.addAttribute("payment_status", "payment_available");
+                } else {
+                    model.addAttribute("accountBanking", new AccountBankingEntity());
+                    model.addAttribute("payment_status", "payment_unavailable");
+                }
             }
         }
         return "bookingcart";
@@ -124,6 +134,7 @@ public class BookingCartController {
 
             // Clear Session List and Database
             removeSession(session);
+
             BookingCartEntity bookingCartEntity = bookingCartService.findByAccountId(accountEntity.getId()).get(0);
             List<BookingCartItemEntity> bookingCartItemEntities = bookingCartItemService.findAllByBookingCartId(bookingCartEntity.getId());
             for (BookingCartItemEntity cartItem : bookingCartItemEntities) {
