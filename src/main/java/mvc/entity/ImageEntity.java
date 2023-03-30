@@ -16,7 +16,8 @@ public class ImageEntity {
     private String image_type;
 
     @Column(name = "url")
-    private String url;
+    @Lob
+    private byte[] url;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
@@ -50,11 +51,11 @@ public class ImageEntity {
         this.image_type = image_type;
     }
 
-    public String getUrl() {
+    public byte[] getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
+    public void setUrl(byte[] url) {
         this.url = url;
     }
 
@@ -73,4 +74,5 @@ public class ImageEntity {
     public void setPostEntity(PostEntity postEntity) {
         this.postEntity = postEntity;
     }
+
 }
