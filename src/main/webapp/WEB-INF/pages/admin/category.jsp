@@ -182,7 +182,6 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
                           <td>${category.bed_info}</td>
                           <td>${category.square}</td>
                           <td>${category.price}</td>
-                          <td>${category.imageEntities.image_name}</td>
 
                           <td>
                             <button
