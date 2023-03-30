@@ -48,7 +48,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
             <sec:authorize access="isAuthenticated()">
                 <sec:authorize access="hasRole('ROLE_ADMIN')">
                     <li class="nav-item">
-                    <a href="<c:url value="/myCart" />">Manage Hotel</a>
+                    <a href="<c:url value="/admin/room" />" class="nav-link">Manage Hotel</a>
                     </li>
                 </sec:authorize>
                 <sec:authorize access="hasRole('ROLE_USER')">
