@@ -124,7 +124,6 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
                 <div data-i18n="Basic">Manage booking</div>
               </a>
             </li>
-<<<<<<< HEAD
             <!-- Components -->
                 <li class="menu-header small text-uppercase">
                   <span class="menu-header-text">Image Management</span>
@@ -136,8 +135,6 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
                     <div data-i18n="Basic">Manage image</div>
                   </a>
                 </li>
-=======
->>>>>>> 89cc534 (Add category feature)
           </ul>
         </aside>
         <!-- / Menu -->
@@ -172,10 +169,6 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
                         <th>Bed Info</th>
                         <th>Square</th>
                         <th>Price</th>
-<<<<<<< HEAD
-=======
-                        <th>Image</th>
->>>>>>> 89cc534 (Add category feature)
 
                         <th>Action</th>
                       </tr>

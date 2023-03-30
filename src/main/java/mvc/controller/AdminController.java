@@ -34,7 +34,6 @@ public class AdminController {
 
     @Autowired
     BookingService bookingService;
-
     // Show
     @RequestMapping(value = "/room", method = RequestMethod.GET)
     public String showRoom(Model model) {
