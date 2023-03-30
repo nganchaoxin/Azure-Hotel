@@ -70,7 +70,7 @@ public class BookingCartController {
             } else {
                 setInfoBookingCart(listBookingCartItemEntity, session);
                 session.setAttribute("cartItemList", listBookingCartItemEntity);
-                AccountBankingEntity accountBanking = accountBankingService.findByAccountId(accountEntity.getId());
+                AccountBankingEntity accountBanking = accountBankingService.findByAccountId(accountEntity.getId()).get(0);
                 if (accountBanking != null) {
                     model.addAttribute("accountBanking", accountBanking);
                     model.addAttribute("payment_status", "payment_available");
@@ -97,7 +97,7 @@ public class BookingCartController {
     public String checkOut(HttpSession session, Model model) {
         // Get account
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
-        AccountBankingEntity accountBanking = accountBankingService.findByAccountId(accountEntity.getId());
+        AccountBankingEntity accountBanking = accountBankingService.findByAccountId(accountEntity.getId()).get(0);
         if (accountBanking.getBalance() > (Double) session.getAttribute("totalPrices")) {
             //// Create new booking entity
             BookingEntity newBookingEntity = new BookingEntity();
@@ -117,7 +117,7 @@ public class BookingCartController {
             newPayment.setBookingEntity(newBookingEntity);
             newPayment.setPayment_date(new Date());
             newPayment.setAmount((Double) session.getAttribute("totalPrices"));
-            newPayment.setAccountBankingEntity(accountBankingService.findByAccountId(accountEntity.getId()));
+            newPayment.setAccountBankingEntity(accountBankingService.findByAccountId(accountEntity.getId()).get(0));
             paymentService.save(newPayment);
 
             // Update balance of account Banking

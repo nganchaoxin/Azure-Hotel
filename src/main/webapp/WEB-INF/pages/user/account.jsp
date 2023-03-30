@@ -43,7 +43,7 @@
       <!-- Menu -->
 
       <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-        <div class="app-brand demo">
+        <div class="app-brand demo" style="padding-top:1em;">
           <a href="../" class="app-brand-link">
             <span class="app-brand-text demo menu-text fw-bolder ms-2"><img src='<c:url value="/resources/static/assets/img/Logo_logo.png" />' alt=""
                 width="190px"></span>
@@ -288,16 +288,16 @@
                         </div>
                         <div class="mb-3 col-md-6">
                           <label for="state" class="form-label">Gender</label>
-                          <select name="gender" class="form-control">
-                            <option value="Male">Male</option>
-                            <option value="FeMale">Female</option>
+                          <select name="gender" class="form-control" id="gender">
+                                <option value="${accountEntity.gender}" label="${accountEntity.gender}"/>
+                                <c:forEach items="${genderList}" var="gender">
+                                    <option value="${gender}" label="${gender}"/>
+                                </c:forEach>
                           </select>
                         </div>
                         <div class="mb-3 col-md-6">
                           <label for="zipCode" class="form-label">Birth Date</label>
-
                             <input type="text" class="form-label" name="birth_date" <fmt:formatDate value="${accountEntity.birth_date}" pattern="yyyy-MM-dd" />/>
-
                         </div>
                       </div>
                       <button type="submit" class="btn btn-primary me-2">Save</button>

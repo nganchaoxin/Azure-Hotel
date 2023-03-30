@@ -28,7 +28,7 @@ public class AccountBankingEntity {
     @Column(name = "balance")
     private double balance;
 
-    @OneToMany(mappedBy = "accountBankingEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "accountBankingEntity", cascade = CascadeType.ALL)
     private List<PaymentEntity> paymentEntities;
 
     @ManyToOne(fetch = FetchType.EAGER)

@@ -43,7 +43,7 @@
       <!-- Menu -->
 
       <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-        <div class="app-brand demo">
+        <div class="app-brand demo" style="padding-top:1em;">
           <a href="../" class="app-brand-link">
             <span class="app-brand-text demo menu-text fw-bolder ms-2"><img src='<c:url value="/resources/static/assets/img/Logo_logo.png" />' alt=""
                 width="190px"></span>
@@ -217,7 +217,12 @@
 
             <!-- Basic Bootstrap Table -->
             <div class="card">
-              <h5 class="card-header">Your Booking Information</h5>
+              <h5 class="card-header">Your Booking Information
+              <c:if test="${not empty msg}">
+                  <div class="alert alert-success">${msg}</div>
+              </c:if>
+              </h5>
+
               <div class="table-responsive text-nowrap">
                 <table class="table">
                   <thead>
@@ -241,8 +246,10 @@
                           </button>
                             <a style="width: 20%; border-radius: 1.3em;color: rgb(132, 122, 5); font-weight: 500;" class="dropdown-item" href="bookingdetail&bookingid=${booking.id}"><i class="bx bx-edit-alt me-1"></i>
                               View</a>
-                            <a style="width: 20%; border-radius: 1.3em; padding-right: 5em; color: rgb(221, 75, 75);" class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i>
-                              Cancel</a>
+                              <form action="cancelbooking&id=${booking.id}" method ="POST">
+                            <button style="width: 20%; border-radius: 1.3em; padding-right: 5em; color: rgb(221, 75, 75);" class="dropdown-item" type="submit"><i class="bx bx-trash me-1"></i>
+                              Cancel</button>
+                              </form>
                         </div>
                       </td>
                     </tr>

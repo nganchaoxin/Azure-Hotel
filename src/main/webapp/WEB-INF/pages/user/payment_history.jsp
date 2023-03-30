@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <head>
@@ -42,7 +43,7 @@
       <!-- Menu -->
 
       <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-        <div class="app-brand demo">
+        <div class="app-brand demo" style="padding-top:1em;">
           <a href="../" class="app-brand-link">
             <span class="app-brand-text demo menu-text fw-bolder ms-2"><img src='<c:url value="/resources/static/assets/img/Logo_logo.png" />' alt=""
                 width="190px"></span>
@@ -230,13 +231,13 @@
                              </tr>
                            </thead>
                            <tbody class="table-border-bottom-0">
-                           <c:forEach var="payment" items="${paymentEntity}">
+                           <c:forEach var="payment" items="${paymentEntityList}">
                              <tr>
-                               <td>Tamler98</td>
-                               <td>**** **** **** 4908</td>
-                               <td>2023-03-15</td>
-                               <td>300.000 VND</td>
-                               <td>Thanh Toan Tien Phong 15.03</td>
+                               <td>${accountEntity.username}</td>
+                               <td>${payment.accountBankingEntity.card_number}</td>
+                               <td><fmt:formatDate value="${payment.payment_date}" pattern="dd/MM/yyyy" /></td>
+                               <td><fmt:formatNumber value="${payment.amount}" pattern="#,###.##" /> VND</td>
+                               <td>${payment.note}</td>
                              </tr>
                              </c:forEach>
                            </tbody>
