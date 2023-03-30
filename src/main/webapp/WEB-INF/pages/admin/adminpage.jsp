@@ -96,7 +96,7 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
               <span class="menu-header-text">Room Managerment</span>
             </li>
             <!-- Cards -->
-            <li class="menu-item">
+            <li class="menu-item active">
               <a href="booking" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Manage room</div>

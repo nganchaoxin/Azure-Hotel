@@ -30,4 +30,8 @@ public class RoomService {
     public void saveRoom(RoomEntity roomEntity) {
         roomRepository.save(roomEntity);
     }
+
+    public void deleteById(int id) {
+        roomRepository.deleteById(id);
+    }
 }
