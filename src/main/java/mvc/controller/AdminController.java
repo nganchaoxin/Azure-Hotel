@@ -2,6 +2,7 @@ package mvc.controller;
 
 import mvc.entity.CategoryEntity;
 import mvc.entity.RoomEntity;
+import mvc.enums.RoomStatus;
 import mvc.service.CategoryService;
 import mvc.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequestMapping(value = "/admin")
 public class AdminController {
     @Autowired
     RoomService roomService;
@@ -26,27 +29,32 @@ public class AdminController {
     @Autowired
     CategoryService categoryService;
 
-    @RequestMapping(value = "/adminHotel", method = RequestMethod.GET)
+    // Show
+    @RequestMapping(value = "/room", method = RequestMethod.GET)
     public String showAdminPage(Model model) {
         List<RoomEntity> roomList = roomService.findAllRoom();
+
         model.addAttribute("roomList", roomList);
         return "admin/adminpage";
     }
-
+    // Add
     @RequestMapping(value = "/addRoom", method = RequestMethod.GET)
     public String showAddRoom(Model model) {
         model.addAttribute("room", new RoomEntity());
         model.addAttribute("action", "addRoom");
         setCategoryDropDownList(model);
+        setStatusDropDownList(model);
+
         return "admin/updateroom";
-
     }
-
+    // Save room add
     @RequestMapping(value = "/addRoom", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     public String saveRoom(@Valid @ModelAttribute("room") RoomEntity room, BindingResult result, Model model) {
         if (result.hasErrors() || room.getCategoryEntity().getId() == 0) {
             model.addAttribute("type", "update");
             setCategoryDropDownList(model);
+            setStatusDropDownList(model);
+
             if (room.getCategoryEntity().getId() == 0) {
                 model.addAttribute("type", "update");
                 model.addAttribute("message", "Plz input category");
@@ -54,7 +62,7 @@ public class AdminController {
             return "admin/updateroom";
         }
         roomService.saveRoom(room);
-        return "redirect:/adminHotel";
+        return "redirect:/admin/room";
     }
 
     // Edit
@@ -65,6 +73,7 @@ public class AdminController {
         model.addAttribute("type", "update");
         model.addAttribute("action", "updateRoom");
         setCategoryDropDownList(model);
+        setStatusDropDownList(model);
 
         if (roomService.findRoomById(roomId) != null) {
             return "admin/updateroom";
@@ -82,6 +91,7 @@ public class AdminController {
         if (result.hasErrors() || room.getCategoryEntity().getId() == 0) {
             model.addAttribute("type", "update");
             setCategoryDropDownList(model);
+            setStatusDropDownList(model);
             if (room.getCategoryEntity().getId() == 0) {
                 model.addAttribute("type", "update");
                 model.addAttribute("message", "Plz input category");
@@ -90,7 +100,7 @@ public class AdminController {
         }
 
         roomService.saveRoom(room);
-        return "redirect:/adminHotel";
+        return "redirect:/admin/room";
     }
 
     private void setCategoryDropDownList(Model model) {
@@ -105,4 +115,11 @@ public class AdminController {
         }
     }
 
+    public void setStatusDropDownList(Model model) {
+        List<RoomStatus> roomStatusList = new ArrayList<>();
+        roomStatusList.add(RoomStatus.AVAILABLE);
+        roomStatusList.add(RoomStatus.OCCUPIED);
+
+        model.addAttribute("roomStatusList", roomStatusList);
+    }
 }

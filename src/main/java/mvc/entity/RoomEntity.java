@@ -1,5 +1,7 @@
 package mvc.entity;
 
+import mvc.enums.RoomStatus;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -15,18 +17,21 @@ public class RoomEntity {
 
     @Column(name = "room_number")
     private int room_number;
+    @Column(name = "room_status")
+    @Enumerated(EnumType.STRING)
+    private RoomStatus room_status;
 
     @Column(name = "position")
     private String position;
 
-    @OneToMany(mappedBy = "roomEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "roomEntity")
     private List<BookingDetailEntity> bookingDetailEntities;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private CategoryEntity categoryEntity;
 
-    @OneToMany(mappedBy = "roomEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "roomEntity")
     private List<BookingCartItemEntity> bookingCartItemEntities;
 
     public int getId() {
@@ -51,6 +56,14 @@ public class RoomEntity {
 
     public void setRoom_number(int room_number) {
         this.room_number = room_number;
+    }
+
+    public RoomStatus getRoom_status() {
+        return room_status;
+    }
+
+    public void setRoom_status(RoomStatus room_status) {
+        this.room_status = room_status;
     }
 
     public String getPosition() {
