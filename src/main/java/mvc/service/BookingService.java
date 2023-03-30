@@ -23,4 +23,8 @@ public class BookingService {
     public List<BookingEntity> findByAccountId(int id) {
         return bookingRepository.findByAccountId(id);
     }
+
+    public List<BookingEntity> findAll() {
+        return (List<BookingEntity>) bookingRepository.findAll();
+    }
 }

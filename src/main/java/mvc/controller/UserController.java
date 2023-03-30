@@ -195,6 +195,7 @@ public class UserController {
 
         mailSender.send(mailMessage);
     }
+
     public void setGenderDropDownList(Model model) {
         List<Gender> genderList = new ArrayList<>();
         genderList.add(Gender.MALE);
@@ -202,4 +203,5 @@ public class UserController {
 
         model.addAttribute("genderList", genderList);
     }
+
 }

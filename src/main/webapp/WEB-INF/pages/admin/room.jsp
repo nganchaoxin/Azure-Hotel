@@ -124,6 +124,18 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
                   <div data-i18n="Basic">Manage booking</div>
                 </a>
               </li>
+
+              <!-- Components -->
+              <li class="menu-header small text-uppercase">
+                <span class="menu-header-text">Image Management</span>
+              </li>
+              <!-- Cards -->
+              <li class="menu-item">
+                <a href="image" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-collection"></i>
+                  <div data-i18n="Basic">Manage image</div>
+                </a>
+              </li>
           </ul>
         </aside>
         <!-- / Menu -->

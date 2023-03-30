@@ -118,23 +118,23 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
               <span class="menu-header-text">Booking Management</span>
             </li>
             <!-- Cards -->
-            <li class="menu-item active">
+            <li class="menu-item">
               <a href="booking" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Manage booking</div>
               </a>
             </li>
             <!-- Components -->
-                <li class="menu-header small text-uppercase">
-                  <span class="menu-header-text">Image Management</span>
-                </li>
-                <!-- Cards -->
-                <li class="menu-item">
-                  <a href="image" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-collection"></i>
-                    <div data-i18n="Basic">Manage image</div>
-                  </a>
-                </li>
+            <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">Image Management</span>
+            </li>
+            <!-- Cards -->
+            <li class="menu-item active">
+              <a href="image" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Manage image</div>
+              </a>
+            </li>
           </ul>
         </aside>
         <!-- / Menu -->
@@ -146,10 +146,10 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4">Azure's Booking</h4>
-              <a href="addBooking">
+              <h4 class="fw-bold py-3 mb-4">Azure's Rooms</h4>
+              <a href="addImage">
                 <button type="button" class="btn btn-sm btn-outline-primary">
-                  <i class="bx bx-edit-alt me-1"></i> Add booking room
+                  <i class="bx bx-edit-alt me-1"></i> Add image category
                 </button>
               </a>
 
@@ -157,7 +157,7 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
               <!-- Hoverable Table rows -->
               <div class="card">
-                <h5 class="card-header">Booking</h5>
+                <h5 class="card-header">Image Category</h5>
                 <div class="table-responsive text-nowrap">
                   <table class="table table-hover">
                     <thead>
@@ -193,7 +193,6 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
                           <td>${category.square}</td>
                           <td>${category.price}</td>
 
-
                           <td>
                             <button
                               onclick="location.href='editCategory/${category.id}'"
@@ -203,14 +202,13 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
                               <i class="bx bx-edit-alt me-1"></i> Edit
                             </button>
 
-                              <button
-                                onclick="location.href='deleteCategory/${category.id}'"
-                                type="button"
-                                class="btn btn-sm btn-outline-secondary"
-                              >
-                                <i class="bx bx-trash me-1"></i> Cancel
-                              </button>
-
+                            <button
+                              onclick="location.href='deleteCategory/${category.id}'"
+                              type="button"
+                              class="btn btn-sm btn-outline-secondary"
+                            >
+                              <i class="bx bx-trash me-1"></i> Delete
+                            </button>
                           </td>
                         </tr>
                       </c:forEach>
