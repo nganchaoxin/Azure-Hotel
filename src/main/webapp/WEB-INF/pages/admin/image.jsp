@@ -96,7 +96,7 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
               <span class="menu-header-text">Room Management</span>
             </li>
             <!-- Cards -->
-            <li class="menu-item active">
+            <li class="menu-item">
               <a href="room" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Manage room</div>
@@ -104,37 +104,37 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
             </li>
             <!-- Components -->
             <li class="menu-header small text-uppercase">
-                <span class="menu-header-text">Category Management</span>
-              </li>
-              <!-- Cards -->
-              <li class="menu-item">
-                <a href="category" class="menu-link">
-                  <i class="menu-icon tf-icons bx bx-collection"></i>
-                  <div data-i18n="Basic">Manage category</div>
-                </a>
-              </li>
-              <!-- Components -->
+              <span class="menu-header-text">Category Management</span>
+            </li>
+            <!-- Cards -->
+            <li class="menu-item ">
+              <a href="category" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Manage category</div>
+              </a>
+            </li>
+            <!-- Components -->
             <li class="menu-header small text-uppercase">
-                <span class="menu-header-text">Booking Management</span>
-              </li>
-              <!-- Cards -->
-              <li class="menu-item">
-                <a href="booking" class="menu-link">
-                  <i class="menu-icon tf-icons bx bx-collection"></i>
-                  <div data-i18n="Basic">Manage booking</div>
-                </a>
-              </li>
-              <!-- Components -->
-              <li class="menu-header small text-uppercase">
-                <span class="menu-header-text">Image Management</span>
-              </li>
-              <!-- Cards -->
-              <li class="menu-item">
-                <a href="image" class="menu-link">
-                  <i class="menu-icon tf-icons bx bx-collection"></i>
-                  <div data-i18n="Basic">Manage image</div>
-                </a>
-              </li>
+              <span class="menu-header-text">Booking Management</span>
+            </li>
+            <!-- Cards -->
+            <li class="menu-item">
+              <a href="booking" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Manage booking</div>
+              </a>
+            </li>
+            <!-- Components -->
+            <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">Image Management</span>
+            </li>
+            <!-- Cards -->
+            <li class="menu-item active">
+              <a href="image" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Manage image</div>
+              </a>
+            </li>
           </ul>
         </aside>
         <!-- / Menu -->
@@ -147,9 +147,9 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
             <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4">Azure's Rooms</h4>
-              <a href="addRoom">
+              <a href="addImage">
                 <button type="button" class="btn btn-sm btn-outline-primary">
-                  <i class="bx bx-edit-alt me-1"></i> Add Room
+                  <i class="bx bx-edit-alt me-1"></i> Add image category
                 </button>
               </a>
 
@@ -157,24 +157,26 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
               <!-- Hoverable Table rows -->
               <div class="card">
-                <h5 class="card-header">Rooms</h5>
+                <h5 class="card-header">Image Category</h5>
                 <div class="table-responsive text-nowrap">
                   <table class="table table-hover">
                     <thead>
                       <tr>
                         <th>ID</th>
-                        <th>Room Name</th>
-                        <th>Room Number</th>
                         <th>Category Name</th>
-                        <th>Room Status</th>
+                        <th>Description</th>
+                        <th>Max Occupancy</th>
+                        <th>Bed Info</th>
+                        <th>Square</th>
+                        <th>Price</th>
 
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
                       <c:forEach
-                        var="room"
-                        items="${roomList}"
+                        var="category"
+                        items="${categoryList}"
                         varStatus="index"
                       >
                         <tr>
@@ -182,37 +184,31 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
                             <i
                               class="fab fa-angular fa-lg text-danger me-3"
                             ></i>
-                            <strong>${room.id}</strong>
+                            <strong>${category.id}</strong>
                           </td>
+                          <td>${category.category_name}</td>
+                          <td>${category.description}</td>
+                          <td>${category.max_occupancy}</td>
+                          <td>${category.bed_info}</td>
+                          <td>${category.square}</td>
+                          <td>${category.price}</td>
 
-                          <td>${room.room_name}</td>
-
-                          <td>${room.room_number}</td>
-
-                          <td>${room.categoryEntity.category_name}</td>
-
-                          <td>
-                            <span class="badge bg-label-primary me-1"
-                              >${room.room_status}</span
-                            >
-                          </td>
                           <td>
                             <button
-                              onclick="location.href='editRoom/${room.id}'"
+                              onclick="location.href='editCategory/${category.id}'"
                               type="button"
                               class="btn btn-sm btn-outline-primary"
                             >
                               <i class="bx bx-edit-alt me-1"></i> Edit
                             </button>
-                            <c:if test="${room.room_status == 'AVAILABLE'}">
-                              <button
-                                onclick="location.href='deleteRoom/${room.id}'"
-                                type="button"
-                                class="btn btn-sm btn-outline-secondary"
-                              >
-                                <i class="bx bx-trash me-1"></i> Delete
-                              </button>
-                            </c:if>
+
+                            <button
+                              onclick="location.href='deleteCategory/${category.id}'"
+                              type="button"
+                              class="btn btn-sm btn-outline-secondary"
+                            >
+                              <i class="bx bx-trash me-1"></i> Delete
+                            </button>
                           </td>
                         </tr>
                       </c:forEach>

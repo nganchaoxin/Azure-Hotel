@@ -1,9 +1,11 @@
 package mvc.controller;
 
+import mvc.entity.BookingEntity;
 import mvc.entity.CategoryEntity;
 import mvc.entity.RoomEntity;
 import mvc.enums.CategoryRoom;
 import mvc.enums.RoomStatus;
+import mvc.service.BookingService;
 import mvc.service.CategoryService;
 import mvc.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,8 @@ public class AdminController {
     @Autowired
     CategoryService categoryService;
 
+    @Autowired
+    BookingService bookingService;
     // Show
     @RequestMapping(value = "/room", method = RequestMethod.GET)
     public String showRoom(Model model) {
@@ -199,6 +203,23 @@ public class AdminController {
         categoryService.deleteById(id);
         return"redirect:/admin/category";
 
+    }
+
+    // BOOKING
+    // Show
+    @RequestMapping(value="/booking", method=RequestMethod.GET)
+    public String showBooking(Model model){
+        //List<BookingEntity> bookingList = bookingService.findAll();
+
+       // model.addAttribute("bookingList",bookingList);
+        return"admin/booking";
+    }
+    // IMAGE
+    // Show
+    @RequestMapping(value="/image", method=RequestMethod.GET)
+    public String showImage(Model model){
+
+        return"admin/image";
     }
 
 }
