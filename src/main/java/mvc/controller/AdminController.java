@@ -101,6 +101,7 @@ public class AdminController {
 
         roomService.saveRoom(room);
         return "redirect:/admin/room";
+
     }
 
     // Delete
@@ -108,6 +109,7 @@ public class AdminController {
     public String deleteRoom(Model model, @PathVariable int id) {
         roomService.deleteById(id);
         return"redirect:/admin/room";
+
     }
 
     private void setCategoryDropDownList(Model model) {
