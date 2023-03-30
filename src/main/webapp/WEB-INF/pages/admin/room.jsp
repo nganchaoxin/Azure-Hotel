@@ -93,15 +93,37 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
           <ul class="menu-inner py-1">
             <!-- Components -->
             <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">Room Managerment</span>
+              <span class="menu-header-text">Room Management</span>
             </li>
             <!-- Cards -->
             <li class="menu-item active">
-              <a href="booking" class="menu-link">
+              <a href="room" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Manage room</div>
               </a>
             </li>
+            <!-- Components -->
+            <li class="menu-header small text-uppercase">
+                <span class="menu-header-text">Category Management</span>
+              </li>
+              <!-- Cards -->
+              <li class="menu-item">
+                <a href="category" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-collection"></i>
+                  <div data-i18n="Basic">Manage category</div>
+                </a>
+              </li>
+              <!-- Components -->
+            <li class="menu-header small text-uppercase">
+                <span class="menu-header-text">Booking Management</span>
+              </li>
+              <!-- Cards -->
+              <li class="menu-item">
+                <a href="booking" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-collection"></i>
+                  <div data-i18n="Basic">Manage booking</div>
+                </a>
+              </li>
           </ul>
         </aside>
         <!-- / Menu -->

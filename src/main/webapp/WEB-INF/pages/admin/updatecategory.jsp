@@ -94,11 +94,11 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
                 </a>
               </div>
               <!-- /Logo -->
-              <h4 class="mb-2">Edit and Add Room Here 🚀</h4>
+              <h4 class="mb-2">Edit and Add Category Here 🚀</h4>
 
               <form:form
                 action="${action}"
-                modelAttribute="room"
+                modelAttribute="category"
                 method="post"
                 id="formAuthentication"
                 class="mb-3"
@@ -108,7 +108,7 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
                 </legend>
                 <c:if test="${type.equals('update')}">
                   <div class="mb-3">
-                    <label for="username" class="form-label">Room ID</label>
+                    <label for="username" class="form-label">Category ID</label>
                     <form:input
                       path="id"
                       type="text"
@@ -117,53 +117,13 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
                       disabled="true"
                     />
                     <form:hidden path="id" />
-                    <form:hidden path="categoryEntity.id" />
                   </div>
                 </c:if>
 
                 <div class="mb-3">
-                  <label for="username" class="form-label">Room name</label>
-                  <form:input
-                    path="room_name"
-                    type="text"
-                    class="form-control"
-                    id="username"
-                    name="username"
-                    placeholder="Enter room name"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="email" class="form-label">Room number</label>
-                  <form:input
-                    path="room_number"
-                    type="number"
-                    class="form-control"
-                    id="email"
-                    name="email"
-                    placeholder="Enter room number"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="username" class="form-label">Room status</label>
-                  <form:select
-                    path="room_status"
-                    class="form-control"
-                    id="status"
-                    name="status"
-                  >
-                    <form:option value="" label="---Select---" />
-                    <c:forEach items="${roomStatusList}" var="roomStatus">
-                      <form:option
-                        value="${roomStatus}"
-                        label="${roomStatus}"
-                      />
-                    </c:forEach>
-                  </form:select>
-                </div>
-                <div class="mb-3">
                   <label for="username" class="form-label">Category name</label>
                   <form:select
-                    path="categoryEntity.category_name"
+                    path="category_name"
                     class="form-control"
                     id="status"
                     name="status"
@@ -180,6 +140,74 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
                     <c:out value="${message}" />
                   </small>
                 </div>
+
+                <div class="mb-3">
+                  <label for="email" class="form-label">Description</label>
+                  <form:input
+                    path="description"
+                    type="text"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    placeholder="Enter room number"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Max Occupancy</label>
+                  <form:input
+                    path="max_occupancy"
+                    type="text"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    placeholder="Enter room number"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Bed Info</label>
+                  <form:input
+                    path="bed_info"
+                    type="text"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    placeholder="Enter room number"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Square</label>
+                  <form:input
+                    path="square"
+                    type="text"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    placeholder="Enter room number"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Price</label>
+                  <form:input
+                    path="price"
+                    type="text"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    placeholder="Enter room number"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Image</label>
+                  <form:input
+                    path=""
+                    type="text"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    placeholder="Enter room number"
+                  />
+                </div>
+
                 <button type="submit" class="btn btn-primary d-grid w-100">
                   Save
                 </button>

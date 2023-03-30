@@ -10,10 +10,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
@@ -51,7 +49,7 @@ public class UserController {
 
     @RequestMapping(value = "/account", method = POST, produces = "text/plain;charset=UTF-8")
     public String saveUser(@ModelAttribute("accountEntity") AccountEntity account,
-                            @RequestParam(name = "first_name") String first_name,
+                           @RequestParam(name = "first_name") String first_name,
                            @RequestParam(name = "last_name") String last_name,
                            @RequestParam(name = "address") String address,
                            @RequestParam(name = "username") String username,
@@ -81,7 +79,7 @@ public class UserController {
     public String confirmEmail(@RequestParam String email, HttpSession session, Model model) {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         model.addAttribute("page", "sendEmailSuccess");
-        if(!accountEntity.getEmail().equals(email)) {
+        if (!accountEntity.getEmail().equals(email)) {
             model.addAttribute("msg", "Form submitted successfully!");
             model.addAttribute("type", "wrongEmail");
             model.addAttribute("page", "password");
@@ -97,6 +95,7 @@ public class UserController {
         model.addAttribute("page", "changePassword");
         return "user/forgot_password";
     }
+
     @PostMapping("/forgotpassword&id={id}")
     public String saveNewPassword(@PathVariable int id, @RequestParam String password, @RequestParam String password_two, HttpSession session, Model model) {
         AccountEntity accountEntity = accountService.findById(id);

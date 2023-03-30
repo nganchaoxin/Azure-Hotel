@@ -2,6 +2,7 @@ package mvc.controller;
 
 import mvc.entity.CategoryEntity;
 import mvc.entity.RoomEntity;
+import mvc.enums.CategoryRoom;
 import mvc.enums.RoomStatus;
 import mvc.service.CategoryService;
 import mvc.service.RoomService;
@@ -31,11 +32,11 @@ public class AdminController {
 
     // Show
     @RequestMapping(value = "/room", method = RequestMethod.GET)
-    public String showAdminPage(Model model) {
+    public String showRoom(Model model) {
         List<RoomEntity> roomList = roomService.findAllRoom();
 
         model.addAttribute("roomList", roomList);
-        return "admin/adminpage";
+        return "admin/room";
     }
     // Add
     @RequestMapping(value = "/addRoom", method = RequestMethod.GET)
@@ -88,14 +89,11 @@ public class AdminController {
     @RequestMapping(value = "/editRoom/updateRoom", method = RequestMethod.POST)
     public String updateRoom(@Valid @ModelAttribute("room") RoomEntity room, BindingResult result, Model model) {
 
-        if (result.hasErrors() || room.getCategoryEntity().getId() == 0) {
+        if (result.hasErrors()) {
             model.addAttribute("type", "update");
             setCategoryDropDownList(model);
             setStatusDropDownList(model);
-            if (room.getCategoryEntity().getId() == 0) {
-                model.addAttribute("type", "update");
-                model.addAttribute("message", "Plz input category");
-            }
+
             return "admin/updateroom";
         }
 
@@ -111,17 +109,14 @@ public class AdminController {
         return"redirect:/admin/room";
 
     }
+    public void setCategoryDropDownList(Model model) {
+        List<CategoryRoom> categoryRoomList = new ArrayList<>();
+        categoryRoomList.add(CategoryRoom.STANDARD);
+        categoryRoomList.add(CategoryRoom.LUXURY);
+        categoryRoomList.add(CategoryRoom.BUSINESS);
+        categoryRoomList.add(CategoryRoom.FAMILY);
 
-    private void setCategoryDropDownList(Model model) {
-        List<CategoryEntity> categoryList = categoryService.findAllCategory();
-
-        if (!categoryList.isEmpty()) {
-            Map<Integer, String> categoryMap = new HashMap<>();
-            for (CategoryEntity categoryEntity : categoryList) {
-                categoryMap.put(categoryEntity.getId(), categoryEntity.getCategory_name());
-            }
-            model.addAttribute("categoryList", categoryMap);
-        }
+        model.addAttribute("categoryRoomList", categoryRoomList);
     }
 
     public void setStatusDropDownList(Model model) {
@@ -131,4 +126,79 @@ public class AdminController {
 
         model.addAttribute("roomStatusList", roomStatusList);
     }
+
+    // CATEGORY
+    // Show
+    @RequestMapping(value = "/category", method = RequestMethod.GET)
+    public String showCategory(Model model) {
+        List<CategoryEntity> categoryList = categoryService.findAllCategory();
+
+        model.addAttribute("categoryList", categoryList);
+        return "admin/category";
+    }
+    // Show add category
+    @RequestMapping(value = "/addCategory", method = RequestMethod.GET)
+    public String showAddCatgory(Model model) {
+        model.addAttribute("category", new CategoryEntity());
+        model.addAttribute("action", "addCategory");
+        setCategoryDropDownList(model);
+
+        return "admin/updatecategory";
+    }
+
+    // Save
+    @RequestMapping(value = "/addCategory", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    public String saveCategory(@Valid @ModelAttribute("category") CategoryEntity category, BindingResult result, Model model) {
+        if (result.hasErrors() ) {
+            model.addAttribute("type", "update");
+            setCategoryDropDownList(model);
+
+            return "admin/updatecategory";
+        }
+       categoryService.save(category);
+        return "redirect:/admin/category";
+    }
+
+    // Edit
+    @RequestMapping(value = "/editCategory/{categoryId}", method = RequestMethod.GET)
+    public String showEditCategory(Model model, @PathVariable int categoryId) {
+        model.addAttribute("category", categoryService.findById(categoryId));
+        model.addAttribute("msg", "Update category information");
+        model.addAttribute("type", "update");
+        model.addAttribute("action", "updateCategory");
+        setCategoryDropDownList(model);
+        setStatusDropDownList(model);
+
+        if (categoryService.findById(categoryId) != null) {
+            return "admin/updatecategory";
+        } else {
+            model.addAttribute("id", categoryId);
+        }
+
+        return "notFound";
+    }
+    // Update
+    @RequestMapping(value = "/editCategory/updateCategory", method = RequestMethod.POST)
+    public String updateCategory(@Valid @ModelAttribute("category") CategoryEntity category, BindingResult result, Model model) {
+
+        if (result.hasErrors()) {
+            model.addAttribute("type", "update");
+            setCategoryDropDownList(model);
+
+            return "admin/updateroom";
+        }
+
+        categoryService.save(category);
+        return "redirect:/admin/category";
+
+    }
+
+    // Delete
+    @RequestMapping(value="/deleteCategory/{id}", method=RequestMethod.GET)
+    public String deleteCategory(Model model, @PathVariable int id) {
+        categoryService.deleteById(id);
+        return"redirect:/admin/category";
+
+    }
+
 }
