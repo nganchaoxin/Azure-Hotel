@@ -1,5 +1,7 @@
 package mvc.entity;
 
+import mvc.enums.CategoryRoom;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,7 +13,8 @@ public class CategoryEntity {
     private int id;
 
     @Column(name = "category_name")
-    private String category_name;
+    @Enumerated(EnumType.STRING)
+    private CategoryRoom category_name;
 
     @Column(name = "description")
     private String description;
@@ -29,11 +32,12 @@ public class CategoryEntity {
     private double price;
 
 
-    @OneToMany(mappedBy = "categoryEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "categoryEntity")
     private List<RoomEntity> roomEntities;
 
-    @OneToMany(mappedBy = "categoryEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "categoryEntity")
     private List<ImageEntity> imageEntities;
+
 
     public int getId() {
         return id;
@@ -43,11 +47,11 @@ public class CategoryEntity {
         this.id = id;
     }
 
-    public String getCategory_name() {
+    public CategoryRoom getCategory_name() {
         return category_name;
     }
 
-    public void setCategory_name(String category_name) {
+    public void setCategory_name(CategoryRoom category_name) {
         this.category_name = category_name;
     }
 
@@ -106,4 +110,5 @@ public class CategoryEntity {
     public void setImageEntities(List<ImageEntity> imageEntities) {
         this.imageEntities = imageEntities;
     }
+
 }
