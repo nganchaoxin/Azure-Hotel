@@ -103,6 +103,13 @@ public class AdminController {
         return "redirect:/admin/room";
     }
 
+    // Delete
+    @RequestMapping(value="/deleteRoom/{id}", method=RequestMethod.GET)
+    public String deleteRoom(Model model, @PathVariable int id) {
+        roomService.deleteById(id);
+        return"redirect:/admin/room";
+    }
+
     private void setCategoryDropDownList(Model model) {
         List<CategoryEntity> categoryList = categoryService.findAllCategory();
 
