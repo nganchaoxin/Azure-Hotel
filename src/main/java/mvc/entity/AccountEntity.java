@@ -1,5 +1,6 @@
 package mvc.entity;
 
+import mvc.enums.Gender;
 import mvc.enums.UserStatus;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -45,7 +46,8 @@ public class AccountEntity implements Serializable {
     private String last_name;
 
     @Column(name = "gender")
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @Column(name = "birth_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -134,11 +136,11 @@ public class AccountEntity implements Serializable {
         this.last_name = last_name;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 

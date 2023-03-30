@@ -43,7 +43,7 @@
       <!-- Menu -->
 
       <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-        <div class="app-brand demo">
+        <div class="app-brand demo" style="padding-top:1em;">
           <a href="../" class="app-brand-link">
             <span class="app-brand-text demo menu-text fw-bolder ms-2"><img src='<c:url value="/resources/static/assets/img/Logo_logo.png" />' alt=""
                 width="190px"></span>
@@ -233,6 +233,9 @@
                   <div class="card-body">
                     <form:form action="cardpayment" id="paymentinfo" method="POST" modelAttribute="accountBankingEntity">
                       <div class="row">
+                      <div class="mb-3">
+                        <form:hidden path="id" />
+                      </div>
                         <div class="mb-3 col-md-6">
                           <label for="firstName" class="form-label">Full name</label>
                           <form:input class="form-control" type="text" id="firstName" path="full_name"

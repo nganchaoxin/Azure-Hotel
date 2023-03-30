@@ -15,11 +15,9 @@ public class BookingDetailEntity {
 
     @Column(name = "booking_check_in")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @Past
     private Date booking_check_in;
 
     @Column(name = "booking_check_out")
-    @Past
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date booking_check_out;
 

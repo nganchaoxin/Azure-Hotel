@@ -45,7 +45,9 @@
             <!-- Menu -->
 
             <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-                <div class="app-brand demo">
+
+                <div class="app-brand demo" style="padding-top:1em;">
+
                     <a href="../" class="app-brand-link">
                         <span class="app-brand-text demo menu-text fw-bolder ms-2"><img
                                 src='<c:url value="/resources/static/assets/img/Logo_logo.png" />' alt=""
@@ -267,11 +269,21 @@
                         </div>
                     </c:if>
                     <c:if test="${page.equals('sendEmailSuccess')}">
-                        <div class="card text-center" style="width: 350px;">
+                        <div class="card text-center" style="width: 520px;">
                             <div class="card-header h5 text-white bg-primary">Password Change Request</div>
-                            <div class="card-body px-5">
+                            <div class="card-body px-5" style="padding: 1em;">
                                 <p class="card-text py-2">
                                     A verification email has been sent. Please check your inbox.
+                                </p>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${page.equals('changePasswordSuccess')}">
+                        <div class="card text-center" style="width: 520px;">
+                            <div class="card-header h5 text-white bg-primary">Password Change Successfully</div>
+                            <div class="card-body px-5" style="padding: 1em;">
+                                <p class="card-text py-2">
+                                    Congratulations! Your password was successfully changed!
                                 </p>
                             </div>
                         </div>

@@ -1,6 +1,9 @@
 package mvc.controller;
 
 import mvc.entity.*;
+import mvc.enums.BookingStatus;
+import mvc.enums.Gender;
+import mvc.enums.RoomStatus;
 import mvc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,6 +48,7 @@ public class UserController {
     public String userHome(Model model, HttpSession session) {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         model.addAttribute("accountEntity", accountEntity);
+        setGenderDropDownList(model);
         return "user/account";
     }
 
@@ -54,9 +59,9 @@ public class UserController {
                            @RequestParam(name = "address") String address,
                            @RequestParam(name = "username") String username,
                            @RequestParam(name = "phone_number") String phone_number,
-                           @RequestParam(name = "gender") String gender,
+                           @RequestParam(name = "gender") Gender gender,
                            @RequestParam(name = "birth_date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date birth_date,
-                           HttpSession session) {
+                           HttpSession session, Model model) {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         accountEntity.setFirst_name(first_name);
         accountEntity.setLast_name(last_name);
@@ -66,6 +71,7 @@ public class UserController {
         accountEntity.setGender(gender);
         accountEntity.setBirth_date(birth_date);
         accountService.save(accountEntity);
+        setGenderDropDownList(model);
         return "user/account";
     }
 
@@ -79,6 +85,7 @@ public class UserController {
     public String confirmEmail(@RequestParam String email, HttpSession session, Model model) {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         model.addAttribute("page", "sendEmailSuccess");
+
         if (!accountEntity.getEmail().equals(email)) {
             model.addAttribute("msg", "Form submitted successfully!");
             model.addAttribute("type", "wrongEmail");
@@ -112,13 +119,22 @@ public class UserController {
     @RequestMapping(value = "/cardpayment", method = GET)
     public String paymentCard(HttpSession session, Model model) {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
-        AccountBankingEntity accountBankingEntity = accountBankingService.findByAccountId(accountEntity.getId());
-        model.addAttribute("accountBankingEntity", accountBankingEntity);
+        List<AccountBankingEntity> accountBankingEntityList = accountBankingService.findByAccountId(accountEntity.getId());
+        if(accountBankingEntityList == null || accountBankingEntityList.isEmpty()) {
+            model.addAttribute("status", "noCard");
+            model.addAttribute("accountBankingEntity", new AccountBankingEntity());
+        }else {
+            AccountBankingEntity accountBankingEntity = accountBankingEntityList.get(0);
+            model.addAttribute("accountBankingEntity", accountBankingEntity);
+            model.addAttribute("status", "haveCard");
+        }
         return "user/payment_card";
     }
 
     @RequestMapping(value = "/cardpayment", method = POST, produces = "text/plain;charset=UTF-8")
-    public String paymentCard(@ModelAttribute(name = "accountBankingEntity") AccountBankingEntity accountBankingEntity) {
+    public String paymentCard(@ModelAttribute(name = "accountBankingEntity") AccountBankingEntity accountBankingEntity, HttpSession session) {
+        AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
+        accountBankingEntity.setAccountEntity(accountEntity);
         accountBankingService.save(accountBankingEntity);
         return "user/payment_card";
     }
@@ -126,14 +142,31 @@ public class UserController {
     @GetMapping("/paymenthistory")
     public String paymentHistory(HttpSession session, Model model) {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
-        AccountBankingEntity accountBankingEntity = accountBankingService.findByAccountId(accountEntity.getId());
-        List<PaymentEntity> paymentEntity = paymentService.findByAccountBankingId(accountBankingEntity.getId());
-        model.addAttribute("paymentEntity", paymentEntity);
+        List<AccountBankingEntity> accountBankingEntityList = accountBankingService.findByAccountId(accountEntity.getId());
+        if(accountBankingEntityList == null || accountBankingEntityList.isEmpty()) {
+            model.addAttribute("status", "paymentNull");
+        }else {
+            List<PaymentEntity> paymentEntityList = paymentService.findByAccountBankingId(accountBankingEntityList.get(0).getId());
+            model.addAttribute("paymentEntityList", paymentEntityList);
+            model.addAttribute("status", "paymentNull");
+        }
         return "user/payment_history";
     }
 
     @GetMapping("/booking")
     public String booking(HttpSession session, Model model) {
+        AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
+        List<BookingEntity> bookingEntityList = bookingService.findByAccountId(accountEntity.getId());
+        model.addAttribute("bookingEntityList", bookingEntityList);
+        return "user/booking";
+    }
+
+    @PostMapping("/cancelbooking&id={id}")
+    public String cancelBooking(@PathVariable int id, RedirectAttributes redirectAttributes, HttpSession session, Model model){
+        BookingEntity bookingEntity = bookingService.findById(id);
+        bookingEntity.setBooking_status(BookingStatus.CANCEL);
+        bookingService.save(bookingEntity);
+        redirectAttributes.addFlashAttribute("Cancel Booking Successfully!", "msg");
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         List<BookingEntity> bookingEntityList = bookingService.findByAccountId(accountEntity.getId());
         model.addAttribute("bookingEntityList", bookingEntityList);
@@ -161,6 +194,14 @@ public class UserController {
         mailMessage.setText(content);
 
         mailSender.send(mailMessage);
+    }
+
+    public void setGenderDropDownList(Model model) {
+        List<Gender> genderList = new ArrayList<>();
+        genderList.add(Gender.MALE);
+        genderList.add(Gender.FEMALE);
+
+        model.addAttribute("genderList", genderList);
     }
 
 }

@@ -220,6 +220,7 @@ public class AdminController {
     public String showImage(Model model){
 
         return"admin/image";
+
     }
 
 }

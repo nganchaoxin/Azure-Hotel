@@ -4,7 +4,7 @@ pageEncoding="UTF-8"%>
 <%@taglib  uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib prefix="mvc" uri="http://www.springframework.org/tags/form" %> <%@
 taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<link href='<c:url value="/resources/static/css/header.css" />' rel='stylesheet'>
   <header>
     <nav
       class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
@@ -53,7 +53,11 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                 </sec:authorize>
                 <sec:authorize access="hasRole('ROLE_USER')">
                     <li class="nav-item">
-                        <a href="<c:url value="/bookingcart" />" class="nav-link">My Cart</a>
+                        <a href="<c:url value="/bookingcart" />" class="nav-link">My Cart
+                        <span class="cart-basket d-flex align-items-center justify-content-center" style="height: 1.4em;border-radius: 50%;width: 1.4em;background-color: #fff700b8;position: relative;top: -38px;left: 52px;font-size: 105%;color: #a67f01;font-weight: 500">
+                        ${cartItemList.size()}
+                      </span>
+                        </a>
                      </li>
                 </sec:authorize>
                 <li class="nav-item">
