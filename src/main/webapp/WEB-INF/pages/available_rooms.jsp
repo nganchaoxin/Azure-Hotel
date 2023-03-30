@@ -43,6 +43,8 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
       href='<c:url value="/resources/static/css/search.css" />'
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="resources/template/assets/vendor/css/pages/page-misc.css" />
+
   </head>
   <body>
     <header>
@@ -228,7 +230,21 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
       </div>
     </c:if>
     <c:if test="${empty availableRoomList}">
-      <p>No available rooms found.</p>
+        <div class="misc-wrapper">
+          <h2 class=" mx-2">No available rooms found!</h2>
+          <p class="mb-4 mx-2">Sorry for the inconvenience</p>
+          <a href="./" class="btn btn-primary btn-lg" style="background-color:#cca772; border: none;">Back to home</a>
+          <div class="mt-4">
+            <img
+              src="resources/template/assets/img/illustrations/girl-doing-yoga-light.png"
+              alt="girl-doing-yoga-light"
+              width="500"
+              class="img-fluid"
+              data-app-dark-img="illustrations/girl-doing-yoga-dark.png"
+              data-app-light-img="illustrations/girl-doing-yoga-light.png"
+            />
+          </div>
+        </div>
     </c:if>
 
     <script

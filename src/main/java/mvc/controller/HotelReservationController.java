@@ -59,10 +59,12 @@ public class HotelReservationController {
             @RequestParam("guests") int guests,
             Model model,
             HttpSession session) {
+
         if (checkout.compareTo(checkin) < 0) {
             return "notFound";
         }
         List<RoomEntity> availableRoomList = roomService.getAvailableRooms(checkin, checkout, roomType, guests);
+
         session.setAttribute("check_in", checkin);
         session.setAttribute("check_out", checkout);
         model.addAttribute("availableRoomList", availableRoomList);
