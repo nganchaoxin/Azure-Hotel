@@ -17,4 +17,6 @@ public interface AccountRepository extends CrudRepository<AccountEntity, Integer
     AccountEntity findByEmail(String userMail);
 
     AccountEntity findByUsername(String username);
+
+    AccountEntity findByToken(String token);
 }

@@ -36,10 +36,10 @@ public class BookingEntity {
     @JoinColumn(name = "discount_id")
     private DiscountEntity discountEntity;
 
-    @OneToMany(mappedBy = "bookingEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "bookingEntity", cascade = CascadeType.ALL)
     private List<BookingDetailEntity> bookingDetailEntities;
 
-    @OneToMany(mappedBy = "bookingEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "bookingEntity", cascade = CascadeType.ALL)
     private List<PaymentEntity> paymentEntities;
 
     public int getId() {

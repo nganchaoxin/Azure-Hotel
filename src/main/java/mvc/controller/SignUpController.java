@@ -20,9 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static mvc.enums.Role.ROLE_USER;
 
@@ -52,7 +50,8 @@ public class SignUpController {
 
     @PostMapping("signup")
     public String signUp(@ModelAttribute(name = "newAccount") AccountEntity accountEntity, Model model, @RequestParam String password_two) {
-        if (!accountEntity.getPassword().equals(password_two)) {
+        AccountEntity accountTest = accountService.findByEmail(accountEntity.getEmail());
+        if (!accountEntity.getPassword().equals(password_two) || accountTest != null) {
             return "signup";
         }
         // Encoder password
@@ -62,27 +61,34 @@ public class SignUpController {
         role.setRole(ROLE_USER);
         role.setId(2);
 
+        String email = accountEntity.getEmail();
+        String encodedString = UUID.randomUUID().toString();
+
         // Set role
         Set<RoleEntity> roles = new HashSet<>();
         roles.add(role);
         accountEntity.setUserRoles(roles);
         accountEntity.setStatus(UserStatus.UNACTIVE);
         accountEntity.setRegistration_date(new Date());
+        accountEntity.setToken(encodedString);
         accountService.save(accountEntity);
 
         // Send email
         int id = accountEntity.getId();
-        String email = accountEntity.getEmail();
-        sendEmail(email, "Azure Hotel -Signup new account", "This is your activation link: http://localhost:8080/Azure-Hotel/activate?id=" + id);
+
+
+        sendEmail(email, "Azure Hotel -Signup new account", "This is your activation link: http://localhost:8080/Azure-Hotel/activate?token=" + encodedString);
         model.addAttribute("accountEntity", accountEntity);
         return "login";
     }
 
     @GetMapping("/activate")
-    public String activate(@RequestParam("id") int id, Model model) {
-        AccountEntity accountEntity = accountService.findById(id);
+    public String activate(@RequestParam("token") String token, Model model) {
+
+        AccountEntity accountEntity = accountService.findByToken(token);
         if (accountEntity != null) {
             accountEntity.setStatus(UserStatus.ACTIVE);
+            accountEntity.setToken("");
             // New Cart
             BookingCartEntity bookingCart = new BookingCartEntity();
             accountEntity.setBookingCartEntity(bookingCart);
@@ -93,7 +99,7 @@ public class SignUpController {
             return "login";
         } else {
             // add any necessary attributes to the model
-            return "signup";
+            return "notFound";
         }
     }
 
