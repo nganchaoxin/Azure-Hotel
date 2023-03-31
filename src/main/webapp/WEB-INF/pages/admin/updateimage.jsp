@@ -4,6 +4,7 @@ pageEncoding="UTF-8"%>
 <%@ taglib prefix="mvc" uri="http://www.springframework.org/tags/form" %> <%@
 taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ taglib
 prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@page isELIgnored="false"%>
 <!DOCTYPE html>
 
 <html
@@ -94,113 +95,50 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
                 </a>
               </div>
               <!-- /Logo -->
-              <h4 class="mb-2">Edit and Add Category Here 🚀</h4>
+              <h4 class="mb-2">Edit and Add Image Category Here 🚀</h4>
 
-              <form:form
-                action="${action}"
-                modelAttribute="category"
-                method="post"
+              <form
+                action="addImage"
+
                 id="formAuthentication"
                 class="mb-3"
+                method="POST"
+                enctype="multipart/form-data"
               >
-                <legend class="scheduler-border">
-                  <c:out value="${msg}" />
-                </legend>
-                <c:if test="${type.equals('update')}">
-                  <div class="mb-3">
-                    <label for="username" class="form-label">Category ID</label>
-                    <form:input
-                      path="id"
-                      type="text"
-                      class="form-control"
-                      id="id"
-                      disabled="true"
-                    />
-                    <form:hidden path="id" />
-                  </div>
-                </c:if>
+
 
                 <div class="mb-3">
-                  <label for="username" class="form-label">Category name</label>
-                  <form:select
-                    path="category_name"
+                  <label for="email" class="form-label">Image Name</label>
+                  <input
+                    name="image_name"
+                    type="text"
                     class="form-control"
-                    id="status"
-                    name="status"
-                  >
-                    <form:option value="" label="---Select---" />
-                    <c:forEach items="${categoryRoomList}" var="categoryRoom">
-                      <form:option
-                        value="${categoryRoom}"
-                        label="${categoryRoom}"
-                      />
-                    </c:forEach>
-                  </form:select>
-                  <small style="color: red">
-                    <c:out value="${message}" />
-                  </small>
+                  />
                 </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Image Type</label>
+                  <input
+                    name="image_type"
+                    type="text"
+                    class="form-control"
 
-                <div class="mb-3">
-                  <label for="email" class="form-label">Description</label>
-                  <form:input
-                    path="description"
-                    type="text"
-                    class="form-control"
-                    id="email"
-                    name="email"
-                    placeholder="Enter room number"
                   />
                 </div>
                 <div class="mb-3">
-                  <label for="email" class="form-label">Max Occupancy</label>
-                  <form:input
-                    path="max_occupancy"
-                    type="text"
+                  <label for="email" class="form-label">Url</label>
+                  <input
+                    name="image_url"
+                    type="file"
                     class="form-control"
-                    id="email"
-                    name="email"
-                    placeholder="Enter room number"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="email" class="form-label">Bed Info</label>
-                  <form:input
-                    path="bed_info"
-                    type="text"
-                    class="form-control"
-                    id="email"
-                    name="email"
-                    placeholder="Enter room number"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="email" class="form-label">Square</label>
-                  <form:input
-                    path="square"
-                    type="text"
-                    class="form-control"
-                    id="email"
-                    name="email"
-                    placeholder="Enter room number"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="email" class="form-label">Price</label>
-                  <form:input
-                    path="price"
-                    type="text"
-                    class="form-control"
-                    id="email"
-                    name="email"
-                    placeholder="Enter room number"
+
                   />
                 </div>
 
-                <button type="submit" class="btn btn-primary d-grid w-100">
+
+                <button type="submit" value="Submit" class="btn btn-primary d-grid w-100">
                   Save
                 </button>
-              </form:form>
+              </form>
             </div>
           </div>
           <!-- Register Card -->

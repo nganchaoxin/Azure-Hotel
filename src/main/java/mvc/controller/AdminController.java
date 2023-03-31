@@ -1,27 +1,33 @@
 package mvc.controller;
 
-import mvc.entity.BookingEntity;
+import mvc.entity.AccountEntity;
 import mvc.entity.CategoryEntity;
+import mvc.entity.ImageEntity;
 import mvc.entity.RoomEntity;
 import mvc.enums.CategoryRoom;
 import mvc.enums.RoomStatus;
+import mvc.repository.ImageRepository;
 import mvc.service.BookingService;
 import mvc.service.CategoryService;
+import mvc.service.ImageService;
 import mvc.service.RoomService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -34,6 +40,13 @@ public class AdminController {
 
     @Autowired
     BookingService bookingService;
+
+    @Autowired
+    ImageService imageService;
+
+    @Autowired
+    ImageRepository imageRepository;
+
     // Show
     @RequestMapping(value = "/room", method = RequestMethod.GET)
     public String showRoom(Model model) {
@@ -42,6 +55,7 @@ public class AdminController {
         model.addAttribute("roomList", roomList);
         return "admin/room";
     }
+
     // Add
     @RequestMapping(value = "/addRoom", method = RequestMethod.GET)
     public String showAddRoom(Model model) {
@@ -52,6 +66,7 @@ public class AdminController {
 
         return "admin/updateroom";
     }
+
     // Save room add
     @RequestMapping(value = "/addRoom", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     public String saveRoom(@Valid @ModelAttribute("room") RoomEntity room, BindingResult result, Model model) {
@@ -107,12 +122,13 @@ public class AdminController {
     }
 
     // Delete
-    @RequestMapping(value="/deleteRoom/{id}", method=RequestMethod.GET)
+    @RequestMapping(value = "/deleteRoom/{id}", method = RequestMethod.GET)
     public String deleteRoom(Model model, @PathVariable int id) {
         roomService.deleteById(id);
-        return"redirect:/admin/room";
+        return "redirect:/admin/room";
 
     }
+
     public void setCategoryDropDownList(Model model) {
         List<CategoryRoom> categoryRoomList = new ArrayList<>();
         categoryRoomList.add(CategoryRoom.STANDARD);
@@ -140,6 +156,7 @@ public class AdminController {
         model.addAttribute("categoryList", categoryList);
         return "admin/category";
     }
+
     // Show add category
     @RequestMapping(value = "/addCategory", method = RequestMethod.GET)
     public String showAddCatgory(Model model) {
@@ -153,13 +170,13 @@ public class AdminController {
     // Save
     @RequestMapping(value = "/addCategory", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     public String saveCategory(@Valid @ModelAttribute("category") CategoryEntity category, BindingResult result, Model model) {
-        if (result.hasErrors() ) {
+        if (result.hasErrors()) {
             model.addAttribute("type", "update");
             setCategoryDropDownList(model);
 
             return "admin/updatecategory";
         }
-       categoryService.save(category);
+        categoryService.save(category);
         return "redirect:/admin/category";
     }
 
@@ -181,6 +198,7 @@ public class AdminController {
 
         return "notFound";
     }
+
     // Update
     @RequestMapping(value = "/editCategory/updateCategory", method = RequestMethod.POST)
     public String updateCategory(@Valid @ModelAttribute("category") CategoryEntity category, BindingResult result, Model model) {
@@ -198,29 +216,75 @@ public class AdminController {
     }
 
     // Delete
-    @RequestMapping(value="/deleteCategory/{id}", method=RequestMethod.GET)
+    @RequestMapping(value = "/deleteCategory/{id}", method = RequestMethod.GET)
     public String deleteCategory(Model model, @PathVariable int id) {
         categoryService.deleteById(id);
-        return"redirect:/admin/category";
+        return "redirect:/admin/category";
 
     }
 
     // BOOKING
     // Show
-    @RequestMapping(value="/booking", method=RequestMethod.GET)
-    public String showBooking(Model model){
+    @RequestMapping(value = "/booking", method = RequestMethod.GET)
+    public String showBooking(Model model) {
         //List<BookingEntity> bookingList = bookingService.findAll();
 
-       // model.addAttribute("bookingList",bookingList);
-        return"admin/booking";
+        // model.addAttribute("bookingList",bookingList);
+        return "admin/booking";
     }
+
     // IMAGE
     // Show
-    @RequestMapping(value="/image", method=RequestMethod.GET)
-    public String showImage(Model model){
-
-        return"admin/image";
+    @RequestMapping(value = "/image")
+    public ModelAndView showImage(ModelAndView model) {
+        List<ImageEntity> imageList = imageService.findAll();
+        model.addObject("imageList", imageList);
+        model.setViewName("admin/image");
+        return model;
 
     }
 
+    // Show add image
+    @RequestMapping(value = "/showImageForm", method = RequestMethod.GET)
+    public String showAddImage(Model model) {
+       //model.addAttribute("image", new ImageEntity());
+        //model.addAttribute("action", "addImage");
+        return "admin/updateimage";
+    }
+
+    @RequestMapping(value = "/addImage",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ModelAndView saveImage(
+                            @RequestParam("image_name") String image_name,
+                            @RequestParam("image_type") String image_type,
+                            @RequestPart("image_url") MultipartFile image_url) {
+        try {
+
+            ImageEntity i = new ImageEntity();
+            i.setImage_name(image_name);
+            i.setImage_type(image_type);
+            i.setUrl(image_url.getBytes());
+
+            imageRepository.save(i);
+            return new ModelAndView( "redirect:/admin/image");
+
+        } catch (Exception e) {
+            return new ModelAndView("admin/image", "msg", "Error: " + e.getMessage());
+
+
+        }
+    }
+
+
+    @RequestMapping(value = "/getImagePhoto/{id}")
+    public void getImagePhoto(HttpServletResponse response, @PathVariable("id") long id) throws Exception {
+        response.setContentType("image/jpeg");
+
+        ImageEntity i = imageRepository.findById(id).get();
+        byte[] ph = i.getUrl();
+        InputStream inputStream = new ByteArrayInputStream(ph);
+        IOUtils.copy(inputStream, response.getOutputStream());
+    }
 }

@@ -141,13 +141,14 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
         <!-- Layout container -->
         <div class="layout-page">
+           <p>${msg}</p>
           <!-- Content wrapper -->
           <div class="content-wrapper">
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4">Azure's Rooms</h4>
-              <a href="addImage">
+              <a href="showImageForm">
                 <button type="button" class="btn btn-sm btn-outline-primary">
                   <i class="bx bx-edit-alt me-1"></i> Add image category
                 </button>
@@ -163,20 +164,19 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
                     <thead>
                       <tr>
                         <th>ID</th>
-                        <th>Category Name</th>
-                        <th>Description</th>
-                        <th>Max Occupancy</th>
-                        <th>Bed Info</th>
-                        <th>Square</th>
-                        <th>Price</th>
+                        <th>Image Name</th>
+                        <th>Image Type</th>
+                        <th>Url</th>
+                        <th>Category ID</th>
+                        <th>Post ID</th>
 
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
                       <c:forEach
-                        var="category"
-                        items="${categoryList}"
+                        var="image"
+                        items="${imageList}"
                         varStatus="index"
                       >
                         <tr>
@@ -184,18 +184,17 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
                             <i
                               class="fab fa-angular fa-lg text-danger me-3"
                             ></i>
-                            <strong>${category.id}</strong>
+                            <strong>${image.id}</strong>
                           </td>
-                          <td>${category.category_name}</td>
-                          <td>${category.description}</td>
-                          <td>${category.max_occupancy}</td>
-                          <td>${category.bed_info}</td>
-                          <td>${category.square}</td>
-                          <td>${category.price}</td>
+                          <td>${image.image_name}</td>
+                          <td>${image.image_type}</td>
+                          <td><img width="100" height="100" src="getImagePhoto/<c:out value='${image.id}'/>"></td>
+                          <td>${image.categoryEntity.id}</td>
+                          <td>${image.postEntity.id}</td>
 
                           <td>
                             <button
-                              onclick="location.href='editCategory/${category.id}'"
+                              onclick="location.href='editImage/${image.id}'"
                               type="button"
                               class="btn btn-sm btn-outline-primary"
                             >
@@ -203,7 +202,7 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
                             </button>
 
                             <button
-                              onclick="location.href='deleteCategory/${category.id}'"
+                              onclick="location.href='deleteImage/${image.id}'"
                               type="button"
                               class="btn btn-sm btn-outline-secondary"
                             >
