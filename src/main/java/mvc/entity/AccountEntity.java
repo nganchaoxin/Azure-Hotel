@@ -59,6 +59,9 @@ public class AccountEntity implements Serializable {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "token")
+    private String token;
+
     @Column(name = "registration_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date registration_date;
@@ -199,4 +202,13 @@ public class AccountEntity implements Serializable {
     public void setBookingCartEntity(BookingCartEntity bookingCartEntity) {
         this.bookingCartEntity = bookingCartEntity;
     }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
 }
