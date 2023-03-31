@@ -4,7 +4,7 @@
 
 
 <head>
-  <meta charset="utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
    <title>Azure Hotel - Profile Management</title>
@@ -218,9 +218,7 @@
             <!-- Basic Bootstrap Table -->
             <div class="card">
               <h5 class="card-header">Your Booking Information
-              <c:if test="${not empty msg}">
                   <div class="alert alert-success">${msg}</div>
-              </c:if>
               </h5>
 
               <div class="table-responsive text-nowrap">

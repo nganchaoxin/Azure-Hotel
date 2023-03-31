@@ -4,6 +4,10 @@ body {
     background-color: #eee;
     font-family: 'Calibri', sans-serif !important;
 }
+main{
+width: 100%;
+height: 80%
+}
 
 .mt-100{
    margin-top:100px;
@@ -49,4 +53,141 @@ body {
 
 .btn-primary:hover {
     background-color: #cca772e4!important;
+}
+
+
+
+
+
+
+header {
+    max-width: 100%;
+    height: 59px;
+    background-color: #cca772;
+    display: flex;
+    padding: 0px 10%;
+    justify-content: center;
+        font-size: 18px;
+            font-family: 'Lato';
+}
+
+.logo_top {
+    width: 15%;
+    height: 100%;
+    border-right: .5px solid rgba(255, 255, 255, 0.59);
+    padding-right: 12em;
+}
+
+.logo_top img {
+    width: auto;
+    height: 90%;
+}
+
+nav {
+    width: 32%;
+    max-height: 59px;
+    line-height: 59px;
+}
+.navbar_nav {
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0px;
+    margin: 0em 2em;
+
+}
+
+.navbar_nav li {
+    list-style: none;
+}
+
+.li_active {
+    height: 59px;
+    border-bottom: 3px solid rgb(255, 255, 255);
+}
+
+
+.navbar_nav li a{
+    color: white;
+    text-decoration: none;
+    list-style: none;
+}
+
+.navbar_nav li a:hover{
+    color: rgba(255, 255, 255, 0.797);
+}
+
+.user_info {
+    display: flex;
+    flex-direction: row;
+    line-height: 59px;
+    padding-left: 20em;
+    color: white;
+    list-style: none;
+}
+.user_ul {
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+        list-style: none;
+        color: white;
+}
+
+.nav_item{
+    margin-right: 2em;
+    color: white;
+}
+
+.nav_link {
+text-decoration: none;
+        list-style: none;
+        color: white;
+}
+
+.nav_link:hover {
+text-decoration: none;
+        list-style: none;
+        color: rgba(255, 255, 255, 0.797);
+}
+
+
+
+
+
+
+
+.footer_cart {
+    width: 100%;
+    height: 40px;
+    background-color: #ffffff98;
+    display: flex;
+    padding: 0px 10%;
+    justify-content: center;
+    border: .2px solid #dbd7d2;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    position: fixed;
+    bottom: 0px;
+    font-size: 16px;
+}
+
+.footer_cart_logo {
+    width: 10%;
+    border-right: .1px solid #c6bcaf;
+    display: flex;
+    justify-content: center;
+}
+
+.footer_cart_content {
+    width: 50%;
+    max-height: 40px;
+    display: flex;
+    align-items: center;
+    padding-left: 2em;
+}
+
+.footer_cart_logo a img {
+   height: 33px;
+   width: auto;
+   margin-right: 2em;
 }

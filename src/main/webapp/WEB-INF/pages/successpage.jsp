@@ -18,9 +18,44 @@
     <link href='<c:url value="/resources/static/images/Logo_icon.svg" />' rel='shortcut icon'>
     <link href='<c:url value="/resources/static/css/successpage.css" />' rel='stylesheet'>
     <script src='<c:url value="/resources/static/js/successpage.js" />'></script>
+        <link href='<c:url value="/resources/static/css/bookingcart.css" />' rel='stylesheet'>
+        <link href='<c:url value="/resources/static/css/footer.css" />' rel='stylesheet'>
     <title>Tanz Hotel</title>
 </head>
 <body>
+<header>
+            <div class="logo_top">
+           <a href="../">
+                     <img src="<c:url value="/resources/static/images/Logo_logo_white.png" />"/>
+
+                   </a>
+            </a></div>
+            <nav>
+                <ul class="navbar_nav">
+                    <li class="li_active"><a href="<c:url value="/bookingcart" />">Avaiability</a></li>
+                    <li><a href="<c:url value="/about" />">About</a></li>
+                    <li><a href="<c:url value="/contact" />">Contact</a></li>
+                    <li><a href="<c:url value="/policy" />">Policies</a></li>
+                  </ul>
+            </nav>
+            <div class="user_info">
+
+                <sec:authorize access="isAuthenticated()">
+                <ul class="user_ul">
+                    <li class="nav_item">
+                          <a href="<c:url value="/user/account" />" class="nav_link" style="font-weight: 500;">
+                            ${accountEntity.username}
+                          </a>
+                     </li>
+                    <li class="nav_item">
+                      <a href="<c:url value="/logout" />" class="nav_link">LogOut</a>
+                    </li>
+                     </ul>
+                </sec:authorize>
+
+            </div>
+        </header>
+
 <c:if test="${status.equals('completed')}">
 <div class="order-status order-success">
   <div class="top-part">
@@ -108,5 +143,13 @@
   </ul>
 </div>
 </c:if>
+<footer class="footer_cart">
+                       <div class="footer_cart_logo">
+                           <a href="<c:url value="/"/>"><img src="<c:url value="/resources/static/images/Logo_logo.png" />" alt=""></a>
+                       </div>
+                       <div class="footer_cart_content">
+                           Website was designed by Thanh Tam and Ngan Pham, please don't copyright.
+                       </div>
+                   </footer>
 </body>
 </html>
