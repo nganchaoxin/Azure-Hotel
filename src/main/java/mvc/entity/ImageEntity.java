@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class ImageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column(name = "image_name")
     private String image_name;
@@ -27,11 +27,11 @@ public class ImageEntity {
     @JoinColumn(name = "post_id")
     private PostEntity postEntity;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
