@@ -6,8 +6,8 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -18,14 +18,42 @@
     <link href='<c:url value="/resources/static/images/Logo_icon.svg" />' rel='shortcut icon'>
     <link href='<c:url value="/resources/static/css/bookingdetail.css" />' rel='stylesheet'>
     <link href='<c:url value="/resources/static/css/bookingcart.css" />' rel='stylesheet'>
+    <link href='<c:url value="/resources/static/css/footer.css" />' rel='stylesheet'>
     <title>Tanz Hotel</title>
 </head>
 
 <body>
     <header>
-        <a href="./"><img src='<c:url value="/resources/static/images/Logo_logo_white.png" />' alt=""
-                style="height: 45px; margin-left: 100px;"></a>
-    </header>
+            <div class="logo_top">
+           <a href="./">
+                     <img src="resources/static/images/Logo_logo_white.png"/>
+                   </a>
+            </a></div>
+            <nav>
+                <ul class="navbar_nav">
+                    <li class="li_active"><a href="./bookingcart">Avaiability</a></li>
+                    <li><a href="./about">About</a></li>
+                    <li><a href="./contact">Contact</a></li>
+                    <li><a href="./policy">Policies</a></li>
+                  </ul>
+            </nav>
+            <div class="user_info">
+
+                <sec:authorize access="isAuthenticated()">
+                <ul class="user_ul">
+                    <li class="nav_item">
+                          <a href="<c:url value="/user/account" />" class="nav_link" style="font-weight: 500;">
+                            ${accountEntity.username}
+                          </a>
+                     </li>
+                    <li class="nav_item">
+                      <a href="<c:url value="/logout" />" class="nav_link">LogOut</a>
+                    </li>
+                     </ul>
+                </sec:authorize>
+
+            </div>
+        </header>
     <main>
             <div class="container">
 
@@ -226,8 +254,12 @@
                             <div class="booking-summary-stay-detail-room-detail-list">
                                 <c:forEach var="cartItem" items="${cartItemList}">
                                     <div class="booking-summary-stay-detail-room-detail">
-                                        <div class="booking-summary-stay-detail-room-detail_name">
-                                            ${cartItem.roomEntity.room_name}</div>
+                                        <div class="booking-summary-stay-detail-room-detail_name" style="display:flex;  justify-content: space-between; flex-direction: row;">
+                                            <div>${cartItem.roomEntity.room_name}</div>
+                                            <div>
+                                            <a href="bookingcart/delete&cartitemid=${cartItem.id}" ><i style="color: black; font-size: 13px;" class="far fa-trash-alt"></i></a>
+                                            </div>
+                                            </div>
                                         <div class="booking-summary-stay-detail-room-detail_info">
                                             <div class="booking-summary-stay-detail-room-detail_info_guest">
                                                 ${cartItem.roomEntity.categoryEntity.max_occupancy} guests</div>
@@ -267,6 +299,14 @@
             </c:if>
             </div>
         </main>
+        <footer class="footer_cart">
+                       <div class="footer_cart_logo">
+                           <a href="./bookingcart"><img src="resources/static/images/Logo_logo.png" alt=""></a>
+                       </div>
+                       <div class="footer_cart_content">
+                           Website was designed by Thanh Tam and Ngan Pham, please don't copyright.
+                       </div>
+                   </footer>
 </body>
 <script>
     $(document).ready(function () {

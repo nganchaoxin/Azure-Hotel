@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
@@ -70,9 +71,9 @@ public class BookingCartController {
             } else {
                 setInfoBookingCart(listBookingCartItemEntity, session);
                 session.setAttribute("cartItemList", listBookingCartItemEntity);
-                AccountBankingEntity accountBanking = accountBankingService.findByAccountId(accountEntity.getId()).get(0);
-                if (accountBanking != null) {
-                    model.addAttribute("accountBanking", accountBanking);
+                List<AccountBankingEntity> accountBankingList = accountBankingService.findByAccountId(accountEntity.getId());
+                if (accountBankingList.size() != 0 || !accountBankingList.isEmpty()) {
+                    model.addAttribute("accountBanking", accountBankingList.get(0));
                     model.addAttribute("payment_status", "payment_available");
                 } else {
                     model.addAttribute("accountBanking", new AccountBankingEntity());
@@ -82,7 +83,6 @@ public class BookingCartController {
         }
         return "bookingcart";
     }
-
     @RequestMapping(value = "/payment", method = POST, produces = "text/plain;charset=UTF-8")
     public String saveNewAccountBanking(@ModelAttribute(name = "accountBanking") AccountBankingEntity accountBanking, HttpSession session) {
         // Get Account
@@ -143,17 +143,18 @@ public class BookingCartController {
         return "successpage";
     }
 
-    @GetMapping("/delete&cartid={id}")
+    @GetMapping("/delete&cartitemid={id}")
     public String deleteCartItem(@PathVariable int id, HttpSession session) {
-        List<BookingCartItemEntity> cartItemEntities = (List<BookingCartItemEntity>) session.getAttribute("listCartItem");
+        List<BookingCartItemEntity> cartItemEntities = (List<BookingCartItemEntity>) session.getAttribute("cartItemList");
         for (BookingCartItemEntity cartItem : cartItemEntities) {
             if (cartItem.getId() == id) {
                 cartItemEntities.remove(cartItem);
+                bookingCartItemService.deleteById(cartItem.getId());
                 break;
             }
         }
-        session.setAttribute("listCartItem", cartItemEntities);
-        return "bookingcart";
+        session.setAttribute("cartItemList", cartItemEntities);
+        return "redirect:/bookingcart";
     }
 
     @GetMapping("/success")
