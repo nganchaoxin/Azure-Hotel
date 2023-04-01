@@ -43,7 +43,7 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
       href='<c:url value="/resources/static/css/search.css" />'
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="resources/template/assets/vendor/css/pages/page-misc.css" />
+    <link rel="stylesheet" href="resources/static/assets/vendor/css/pages/page-misc.css" />
 
   </head>
   <body>
@@ -236,7 +236,7 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
           <a href="./" class="btn btn-primary btn-lg" style="background-color:#cca772; border: none;">Back to home</a>
           <div class="mt-4">
             <img
-              src="resources/template/assets/img/illustrations/girl-doing-yoga-light.png"
+              src="resources/static/assets/img/illustrations/girl-doing-yoga-light.png"
               alt="girl-doing-yoga-light"
               width="500"
               class="img-fluid"

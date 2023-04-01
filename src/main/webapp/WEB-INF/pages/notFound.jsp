@@ -11,7 +11,7 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
   class="light-style"
   dir="ltr"
   data-theme="theme-default"
-  data-assets-path="resources/template/assets/"
+  data-assets-path="resources/static/assets/"
   data-template="vertical-menu-template-free"
 >
   <head>
@@ -29,7 +29,7 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
     <link
       rel="icon"
       type="image/x-icon"
-      href="resources/template/assets/img/favicon/favicon.ico"
+      href="resources/static/assets/img/favicon/favicon.ico"
     />
 
     <!-- Fonts -->
@@ -41,36 +41,36 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="resources/template/assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="resources/static/assets/vendor/fonts/boxicons.css" />
 
     <!-- Core CSS -->
     <link
       rel="stylesheet"
-      href="resources/template/assets/vendor/css/core.css"
+      href="resources/static/assets/vendor/css/core.css"
       class="template-customizer-core-css"
     />
     <link
       rel="stylesheet"
-      href="resources/template/assets/vendor/css/theme-default.css"
+      href="resources/static/assets/vendor/css/theme-default.css"
       class="template-customizer-theme-css"
     />
-    <link rel="stylesheet" href="resources/template/assets/css/demo.css" />
+    <link rel="stylesheet" href="resources/static/assets/css/demo.css" />
 
     <!-- Vendors CSS -->
     <link
       rel="stylesheet"
-      href="resources/template/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css"
+      href="resources/static/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css"
     />
 
     <!-- Page CSS -->
     <!-- Page -->
-    <link rel="stylesheet" href="resources/template/assets/vendor/css/pages/page-misc.css" />
+    <link rel="stylesheet" href="resources/static/assets/vendor/css/pages/page-misc.css" />
     <!-- Helpers -->
-    <script src="resources/template/assets/vendor/js/helpers.js"></script>
+    <script src="resources/static/assets/vendor/js/helpers.js"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="resources/template/assets/js/config.js"></script>
+    <script src="resources/static/assets/js/config.js"></script>
   </head>
 
   <body>
@@ -86,7 +86,7 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
         <a href="index.html" class="btn btn-primary">Back to home</a>
         <div class="mt-3">
           <img
-            src="resources/template/assets/img/illustrations/page-misc-error-light.png"
+            src="resources/static/assets/img/illustrations/page-misc-error-light.png"
             alt="page-misc-error-light"
             width="500"
             class="img-fluid"
@@ -100,29 +100,20 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
 
     <!-- / Content -->
 
-    <div class="buy-now">
-      <a
-        href="https://themeselection.com/products/sneat-bootstrap-html-admin-template/"
-        target="_blank"
-        class="btn btn-danger btn-buy-now"
-        >Upgrade to Pro</a
-      >
-    </div>
-
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="resources/template/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="resources/template/assets/vendor/libs/popper/popper.js"></script>
-    <script src="resources/template/assets/vendor/js/bootstrap.js"></script>
-    <script src="resources/template/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="resources/static/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="resources/static/assets/vendor/libs/popper/popper.js"></script>
+    <script src="resources/static/assets/vendor/js/bootstrap.js"></script>
+    <script src="resources/static/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-    <script src="resources/template/assets/vendor/js/menu.js"></script>
+    <script src="resources/static/assets/vendor/js/menu.js"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
 
     <!-- Main JS -->
-    <script src="resources/template/assets/js/main.js"></script>
+    <script src="resources/static/assets/js/main.js"></script>
 
     <!-- Page JS -->
 
