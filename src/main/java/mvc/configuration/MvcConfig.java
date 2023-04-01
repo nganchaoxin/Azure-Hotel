@@ -5,11 +5,13 @@
  */
 package mvc.configuration;
 
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.unit.DataSize;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -55,4 +57,5 @@ public class MvcConfig implements WebMvcConfigurer {
         factory.setMaxRequestSize(DataSize.ofMegabytes(200L));
         return factory.createMultipartConfig();
     }
+
 }
