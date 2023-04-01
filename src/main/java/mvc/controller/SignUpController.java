@@ -33,11 +33,7 @@ public class SignUpController {
     @Autowired
     AccountService accountService;
     @Autowired
-    RoleRepository roleRepository;
-    @Autowired
     MailSender mailSender;
-    @Autowired
-    BookingCartService bookingCartService;
     @PersistenceContext
     private EntityManager entityManager;
 
