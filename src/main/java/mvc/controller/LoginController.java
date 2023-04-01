@@ -8,9 +8,11 @@ package mvc.controller;
 import mvc.entity.AccountEntity;
 import mvc.entity.BookingCartEntity;
 import mvc.entity.BookingCartItemEntity;
+import mvc.entity.CategoryEntity;
 import mvc.service.AccountService;
 import mvc.service.BookingCartItemService;
 import mvc.service.BookingCartService;
+import mvc.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,6 +36,9 @@ public class LoginController {
     @Autowired
     BookingCartItemService bookingCartItemService;
 
+    @Autowired
+    CategoryService categoryService;
+
     @RequestMapping("/login")
     public String loginPage(Model model, @RequestParam(value = "error", required = false) boolean error) {
 
@@ -43,35 +48,13 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping("/admin/home")
-    public String viewHomeAdmin(Model model, HttpSession session) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = principal.toString();
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails) principal).getUsername();
-            session.setAttribute("userEmail", username);
-        }
-
-        model.addAttribute("message", "Hello Admin: " + username);
-        return "admin/home";
-    }
-
-    @RequestMapping("/user/home")
-    public String viewHomeUser(Model model, HttpSession session) {
-
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = principal.toString();
-
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails) principal).getUsername();
-            session.setAttribute("userEmail", username);
-        }
-        return "user/home";
-    }
-
     @RequestMapping(value = {"/"}, method = RequestMethod.GET)
     public String welcomePage(Model model, HttpSession session) {
+        // Show category list
+        List<CategoryEntity> categoryList = categoryService.findAllCategory();
+        model.addAttribute("categoryList", categoryList);
 
+        // Auth account
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = principal.toString();
 
@@ -81,6 +64,7 @@ public class LoginController {
         }
         AccountEntity accountEntity = accountService.findByEmail(username);
 
+        // Create session
         if (accountEntity != null) {
             session.setAttribute("accountEntity", accountEntity);
 

@@ -1,6 +1,9 @@
 package mvc.controller;
 
-import mvc.entity.*;
+import mvc.entity.AccountEntity;
+import mvc.entity.BookingCartEntity;
+import mvc.entity.BookingCartItemEntity;
+import mvc.entity.RoomEntity;
 import mvc.repository.BookingCartItemRepository;
 import mvc.repository.BookingCartRepository;
 import mvc.repository.CategoryRepository;
@@ -26,33 +29,13 @@ public class SearchController {
     RoomService roomService;
 
     @Autowired
-    AccountService accountService;
-
-    @Autowired
     BookingCartService bookingCartService;
 
     @Autowired
     BookingCartItemService bookingCartItemService;
 
     @Autowired
-    BookingCartRepository bookingCartRepository;
-    @Autowired
-    CategoryRepository categoryRepository;
-
-    @Autowired
-    CategoryService categoryService;
-    @Autowired
-    BookingCartItemRepository bookingCartItemRepository;
-
-    @Autowired
     ImageService imageService;
-
-    @RequestMapping("/")
-    public String index(Model model) {
-        List<CategoryEntity> categoryList = categoryService.findAllCategory();
-        model.addAttribute("categoryList", categoryList);
-        return "index";
-    }
 
     @RequestMapping(value = "/availableRoom", method = RequestMethod.GET)
     public String showAvailableRoom(
