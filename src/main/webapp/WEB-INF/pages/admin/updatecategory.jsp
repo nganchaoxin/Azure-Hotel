@@ -128,13 +128,8 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
                     id="status"
                     name="status"
                   >
-                    <form:option value="" label="---Select---" />
-                    <c:forEach items="${categoryRoomList}" var="categoryRoom">
-                      <form:option
-                        value="${categoryRoom}"
-                        label="${categoryRoom}"
-                      />
-                    </c:forEach>
+                    <form:option value="0" label="---Select---" />
+                    <form:options items="${categoryList}" />
                   </form:select>
                   <small style="color: red">
                     <c:out value="${message}" />

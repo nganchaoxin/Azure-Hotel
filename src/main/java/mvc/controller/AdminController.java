@@ -57,7 +57,7 @@ public class AdminController {
     }
 
     // Add
-    @RequestMapping(value = "/addRoom", method = RequestMethod.GET)
+    @RequestMapping(value = "/addRoom", method = RequestMethod.GET,produces = "text/plain;charset=UTF-8")
     public String showAddRoom(Model model) {
         model.addAttribute("room", new RoomEntity());
         model.addAttribute("action", "addRoom");
@@ -86,7 +86,7 @@ public class AdminController {
     }
 
     // Edit
-    @RequestMapping(value = "/editRoom/{roomId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/editRoom/{roomId}", method = RequestMethod.GET,produces = "text/plain;charset=UTF-8")
     public String showEditRoom(Model model, @PathVariable int roomId) {
         model.addAttribute("room", roomService.findRoomById(roomId));
         model.addAttribute("msg", "Update room information");
@@ -105,7 +105,7 @@ public class AdminController {
     }
 
     // Update
-    @RequestMapping(value = "/editRoom/updateRoom", method = RequestMethod.POST)
+    @RequestMapping(value = "/editRoom/updateRoom", method = RequestMethod.POST,produces = "text/plain;charset=UTF-8")
     public String updateRoom(@Valid @ModelAttribute("room") RoomEntity room, BindingResult result, Model model) {
 
         if (result.hasErrors()) {
@@ -141,7 +141,7 @@ public class AdminController {
     }
 
     // Add
-    @RequestMapping(value = "/addCategory", method = RequestMethod.GET)
+    @RequestMapping(value = "/addCategory", method = RequestMethod.GET,produces = "text/plain;charset=UTF-8")
     public String showAddCatgory(Model model) {
         model.addAttribute("category", new CategoryEntity());
         model.addAttribute("action", "addCategory");
@@ -164,7 +164,7 @@ public class AdminController {
     }
 
     // Edit
-    @RequestMapping(value = "/editCategory/{categoryId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/editCategory/{categoryId}", method = RequestMethod.GET,produces = "text/plain;charset=UTF-8")
     public String showEditCategory(Model model, @PathVariable int categoryId) {
         model.addAttribute("category", categoryService.findById(categoryId));
         model.addAttribute("msg", "Update category information");
@@ -183,7 +183,7 @@ public class AdminController {
     }
 
     // Update
-    @RequestMapping(value = "/editCategory/updateCategory", method = RequestMethod.POST)
+    @RequestMapping(value = "/editCategory/updateCategory", method = RequestMethod.POST,produces = "text/plain;charset=UTF-8")
     public String updateCategory(@Valid @ModelAttribute("category") CategoryEntity category, BindingResult result, Model model) {
 
         if (result.hasErrors()) {
