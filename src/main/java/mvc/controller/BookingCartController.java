@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
@@ -83,6 +82,7 @@ public class BookingCartController {
         }
         return "bookingcart";
     }
+
     @RequestMapping(value = "/payment", method = POST, produces = "text/plain;charset=UTF-8")
     public String saveNewAccountBanking(@ModelAttribute(name = "accountBanking") AccountBankingEntity accountBanking, HttpSession session) {
         // Get Account

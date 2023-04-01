@@ -46,6 +46,7 @@ public class AdminController {
     @Autowired
     ImageRepository imageRepository;
 
+    // ROOM
     // Show
     @RequestMapping(value = "/room", method = RequestMethod.GET)
     public String showRoom(Model model) {
@@ -66,7 +67,7 @@ public class AdminController {
         return "admin/updateroom";
     }
 
-    // Save room add
+    // Save
     @RequestMapping(value = "/addRoom", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     public String saveRoom(@Valid @ModelAttribute("room") RoomEntity room, BindingResult result, Model model) {
         if (result.hasErrors() || room.getCategoryEntity().getId() == 0) {
@@ -139,7 +140,7 @@ public class AdminController {
         return "admin/category";
     }
 
-    // Show add category
+    // Add
     @RequestMapping(value = "/addCategory", method = RequestMethod.GET)
     public String showAddCatgory(Model model) {
         model.addAttribute("category", new CategoryEntity());
@@ -224,7 +225,7 @@ public class AdminController {
         return model;
     }
 
-    // Show add image
+    // Add
     @RequestMapping(value = "/showImageForm", method = RequestMethod.GET)
     public String showAddImage(Model model) {
         setCategoryDropDownList(model);
@@ -232,7 +233,7 @@ public class AdminController {
         return "admin/updateimage";
     }
 
-    // Save image
+    // Save
     @RequestMapping(value = "/addImage",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
@@ -274,7 +275,7 @@ public class AdminController {
         IOUtils.copy(inputStream, response.getOutputStream());
     }
 
-    // Edit image
+    // Edit
     @RequestMapping(value = "/editImage/{imageId}", method = RequestMethod.GET)
     public String showEditImage(Model model, @PathVariable int imageId) {
         model.addAttribute("image", imageService.findById(imageId));
@@ -292,12 +293,16 @@ public class AdminController {
         return "notFound";
     }
 
+    // Delete
     @RequestMapping(value = "/deleteImage/{id}", method = RequestMethod.GET)
     public String deleteImage(Model model, @PathVariable long id) {
         imageService.deleteById(id);
         return "redirect:/admin/image";
 
     }
+
+    // BOOKING
+
 
     // DROP DOWN
     private void setCategoryDropDownList(Model model) {

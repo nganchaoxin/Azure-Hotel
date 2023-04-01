@@ -49,6 +49,8 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     "> <link rel="stylesheet" href="
     <c:url value="/resources/static/css/footer.css" />
     ">
+
+    <link rel="stylesheet" href="<c:url value="/resources/static/css/our_room.css" />">
     <link href='<c:url value="/resources/static/images/Logo_icon.svg" />' rel='shortcut icon'>
   </head>
   <body>
@@ -255,49 +257,34 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
       </div>
     </section>
 
-    <section class="ftco-section bg-light">
-      <div class="container">
-        <div class="row justify-content-center mb-5 pb-3">
-          <div class="col-md-7 heading-section text-center ftco-animate">
-            <h2 class="mb-4">Our Rooms</h2>
+    <section class="section-margin">
+        <div class="container">
+          <div class="section-intro text-center pb-80px">
+            <div class="section-intro__style">
+              <img src="img/home/bed-icon.png" alt="">
+            </div>
+            <h2>Explore Our Rooms</h2>
+          </div>
+
+          <div class="row">
+            <c:forEach items="${categoryList}" var="category" varStatus="index">
+                <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+                    <div class="card card-explore">
+                      <div class="card-explore__img">
+                        <img class="card-img" src="resources/static/images/rooms/room-1.jpg" alt="">
+                      </div>
+                      <div class="card-body">
+                        <h3 class="card-explore__price">${category.price}<sub>/ Per Night</sub></h3>
+                        <h4 class="card-explore__title"><a href="#">${category.category_name}</a></h4>
+                        <p>${category.description}</p>
+                        <a class="card-explore__link" href="#">Book Now <i class="ti-arrow-right"></i></a>
+                      </div>
+                    </div>
+                  </div>
+            </c:forEach>
           </div>
         </div>
-        <div class="row">
-          <c:forEach var="category" items="${categoryList}" varStatus="index">
-            <div class="col-sm col-md-6 col-lg-4 ftco-animate">
-              <div class="room">
-                <a
-                  href="rooms.html"
-                  class="img d-flex justify-content-center align-items-center"
-                  style="
-                    background-image: url(resources/static/images/rooms/room-1.jpg);
-                  "
-                >
-                  <div
-                    class="icon d-flex justify-content-center align-items-center"
-                  >
-                    <span class="icon-search2"></span>
-                  </div>
-                </a>
-                <div class="text p-3 text-center">
-                  <h3 class="mb-3">
-                    <a href="rooms.html">${category.category_name}</a>
-                  </h3>
-
-                  <hr />
-                  <p class="pt-1">
-                    <a href="room-single.html" class="btn-custom"
-                      >View Room Details
-                      <span class="icon-long-arrow-right"></span
-                    ></a>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </c:forEach>
-        </div>
-      </div>
-    </section>
+      </section>
 
     <div class="facilities">
       <div class="row mx-0">

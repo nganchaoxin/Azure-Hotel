@@ -20,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 import static mvc.enums.Role.ROLE_USER;
 
@@ -50,6 +53,7 @@ public class SignUpController {
 
     @PostMapping("signup")
     public String signUp(@ModelAttribute(name = "newAccount") AccountEntity accountEntity, Model model, @RequestParam String password_two) {
+        // Check password
         AccountEntity accountTest = accountService.findByEmail(accountEntity.getEmail());
         if (!accountEntity.getPassword().equals(password_two) || accountTest != null) {
             return "signup";
@@ -75,8 +79,6 @@ public class SignUpController {
 
         // Send email
         int id = accountEntity.getId();
-
-
         sendEmail(email, "Azure Hotel -Signup new account", "This is your activation link: http://localhost:8080/Azure-Hotel/activate?token=" + encodedString);
         model.addAttribute("accountEntity", accountEntity);
         return "login";
@@ -89,16 +91,15 @@ public class SignUpController {
         if (accountEntity != null) {
             accountEntity.setStatus(UserStatus.ACTIVE);
             accountEntity.setToken("");
+
             // New Cart
             BookingCartEntity bookingCart = new BookingCartEntity();
             accountEntity.setBookingCartEntity(bookingCart);
             bookingCart.setAccountEntity(accountEntity);
 
             accountService.save(accountEntity);
-            // add any necessary attributes to the model
             return "login";
         } else {
-            // add any necessary attributes to the model
             return "notFound";
         }
     }
