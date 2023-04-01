@@ -99,6 +99,7 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
 
               <form:form
                 action="addImage"
+                modelAttribute="image"
                 id="formAuthentication"
                 class="mb-3"
                 method="POST"

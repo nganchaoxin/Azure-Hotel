@@ -280,6 +280,7 @@ public class AdminController {
         model.addAttribute("image", imageService.findById(imageId));
         model.addAttribute("msg", "Update image information");
         model.addAttribute("type", "update");
+        model.addAttribute("action", "addImage");
 
         setCategoryDropDownList(model);
 
@@ -290,6 +291,20 @@ public class AdminController {
         }
 
         return "notFound";
+    }
+
+    @RequestMapping(value = "/editImage/addImage", method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ModelAndView updateImage(Model model,
+                                    @ModelAttribute("image") ImageEntity image
+    ) {
+
+        imageRepository.save(image);
+
+        setCategoryDropDownList(model);
+        return new ModelAndView("redirect:/admin/image");
+
     }
 
     @RequestMapping(value = "/deleteImage/{id}", method = RequestMethod.GET)
