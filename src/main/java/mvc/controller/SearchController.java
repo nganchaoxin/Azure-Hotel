@@ -44,6 +44,9 @@ public class SearchController {
     @Autowired
     BookingCartItemRepository bookingCartItemRepository;
 
+    @Autowired
+    ImageService imageService;
+
     @RequestMapping("/")
     public String index(Model model) {
         List<CategoryEntity> categoryList = categoryService.findAllCategory();
@@ -69,6 +72,7 @@ public class SearchController {
         session.setAttribute("check_out", checkout);
         model.addAttribute("availableRoomList", availableRoomList);
 
+        //List<ImageEntity> imageEntityList = imageService.finAllImageByCategory(roomType);
         return "available_rooms";
     }
 

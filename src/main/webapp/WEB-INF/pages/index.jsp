@@ -112,6 +112,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                         class="form-control"
                         placeholder="Check-in date"
                         id="date-input-checkin"
+                        required
                       />
                     </div>
                   </div>
@@ -128,6 +129,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                         class="form-control"
                         placeholder="Check-out date"
                         id="date-input-checkout"
+                        required
                       />
                     </div>
                   </div>
@@ -143,7 +145,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                           <div class="icon">
                             <span class="ion-ios-arrow-down"></span>
                           </div>
-                          <select name="roomType" id="" class="form-control">
+                          <select name="roomType" id="" class="form-control" required>
 
                             <option value="Standard">Standard</option>
                             <option value="Family">Family</option>
@@ -164,7 +166,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                           <div class="icon">
                             <span class="ion-ios-arrow-down"></span>
                           </div>
-                          <select name="guests" id="" class="form-control">
+                          <select name="guests" id="" class="form-control" required>
                             <option value="1">1 Adult</option>
                             <option value="2">2 Adult</option>
                             <option value="3">3 Adult</option>
