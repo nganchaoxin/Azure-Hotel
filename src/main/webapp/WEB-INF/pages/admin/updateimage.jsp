@@ -16,7 +16,7 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
   data-template="vertical-menu-template-free"
 >
   <head>
-    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
@@ -97,20 +97,19 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
               <!-- /Logo -->
               <h4 class="mb-2">Edit and Add Image Category Here 🚀</h4>
 
-              <form
+              <form:form
                 action="addImage"
-
                 id="formAuthentication"
                 class="mb-3"
                 method="POST"
                 enctype="multipart/form-data"
               >
 
-
                 <div class="mb-3">
                   <label for="email" class="form-label">Image Name</label>
                   <input
                     name="image_name"
+                    value="${image.image_name}"
                     type="text"
                     class="form-control"
                   />
@@ -119,26 +118,40 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
                   <label for="email" class="form-label">Image Type</label>
                   <input
                     name="image_type"
+                    value="${image.image_type}"
                     type="text"
                     class="form-control"
-
                   />
                 </div>
                 <div class="mb-3">
                   <label for="email" class="form-label">Url</label>
                   <input
                     name="image_url"
+                    value="${image.url}"
+
                     type="file"
                     class="form-control"
-
                   />
                 </div>
+                <div class="mb-3">
+                  <label for="username" class="form-label">Category name</label>
+                  <select
+                    name="category_name"
+                    class="form-control"
+                    value="${image.categoryEntity.category_name}"
 
+                  >
+                    <option value="" label="---Select---" />
+                    <c:forEach items="${categoryList}" var="category">
+                        <option value="${category.value}">${category.value}</option>
+                    </c:forEach>
+                  </select>
+                </div>
 
                 <button type="submit" value="Submit" class="btn btn-primary d-grid w-100">
                   Save
                 </button>
-              </form>
+              </form:form>
             </div>
           </div>
           <!-- Register Card -->
