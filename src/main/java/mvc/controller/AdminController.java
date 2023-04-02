@@ -153,16 +153,20 @@ public class AdminController {
     // Save
     @RequestMapping(value = "/addCategory", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     public String saveCategory(@Valid @ModelAttribute("category") CategoryEntity category, BindingResult result, Model model) {
-        if (result.hasErrors()) {
+        if (result.hasErrors() || category.getCategory_name() == null) {
             model.addAttribute("type", "update");
             setCategoryDropDownList(model);
+
+            if (category.getCategory_name() == null) {
+                model.addAttribute("type", "update");
+                model.addAttribute("message", "Plz input category");
+            }
 
             return "admin/updatecategory";
         }
         categoryService.save(category);
         return "redirect:/admin/category";
     }
-
     // Edit
     @RequestMapping(value = "/editCategory/{categoryId}", method = RequestMethod.GET,produces = "text/plain;charset=UTF-8")
     public String showEditCategory(Model model, @PathVariable int categoryId) {
