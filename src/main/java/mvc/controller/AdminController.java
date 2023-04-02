@@ -246,13 +246,14 @@ public class AdminController {
             Model model,
             @ModelAttribute("image") ImageEntity image,
             @RequestParam("image_name") String image_name,
+            @RequestParam("image_type") String image_type,
             @RequestPart("image_url") MultipartFile image_url,
             @RequestParam("category_name") String category_name) {
         try {
 
             ImageEntity i = new ImageEntity();
             i.setImage_name(image_name);
-            //i.setImage_type(image_type);
+            i.setImage_type(image_type);
             i.setUrl(image_url.getBytes());
 
             CategoryEntity category = categoryService.findByCategoryName(category_name);
