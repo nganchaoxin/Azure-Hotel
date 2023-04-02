@@ -167,10 +167,8 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
                       <tr>
                         <th>ID</th>
                         <th>Image Name</th>
-                        <th>Image Type</th>
                         <th>Url</th>
-                        <th>Category ID</th>
-                        <th>Post ID</th>
+                        <th>Category Name</th>
 
                         <th>Action</th>
                       </tr>
@@ -189,10 +187,8 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
                             <strong>${image.id}</strong>
                           </td>
                           <td>${image.image_name}</td>
-                          <td>${image.image_type}</td>
                           <td><img width="100" height="100" src="getImagePhoto/<c:out value='${image.id}'/>"></td>
-                          <td>${image.categoryEntity.id}</td>
-                          <td>${image.postEntity.id}</td>
+                          <td>${image.categoryEntity.category_name}</td>
 
                           <td>
                             <button
