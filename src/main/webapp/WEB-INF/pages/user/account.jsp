@@ -231,16 +231,17 @@
                 <div class="card mb-4">
                   <h5 class="card-header">Profile Details</h5>
                   <!-- Account -->
+                  <form:form action="account" method="POST" enctype="multipart/form-data" modelAttribute="accountEntity">
                   <div class="card-body">
                     <div class="d-flex align-items-start align-items-sm-center gap-4">
-                      <img src='<c:url value="/resources/static/assets/img/avatars/1.png" />' alt="user-avatar" class="d-block rounded" height="100"
+                      <img src="getImagePhoto/<c:out value='${accountEntity.id}'/>" alt="user-avatar" class="d-block rounded" height="100"
 
                         width="100" id="uploadedAvatar" />
                       <div class="button-wrapper">
                         <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                           <span class="d-none d-sm-block">Upload new photo</span>
                           <i class="bx bx-upload d-block d-sm-none"></i>
-                          <input type="file" id="upload" class="account-file-input" hidden
+                          <input name="photo" type="file" id="upload" class="account-file-input" hidden
                             accept="image/png, image/jpeg" />
                         </label>
                         <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
@@ -254,7 +255,7 @@
                   </div>
                   <hr class="my-0" />
                   <div class="card-body">
-                    <form action="account" method="POST"">
+
                       <div class="row">
                         <div class="mb-3 col-md-6">
                           <label for="firstName" class="form-label">First Name</label>
@@ -288,20 +289,20 @@
                         </div>
                         <div class="mb-3 col-md-6">
                           <label for="state" class="form-label">Gender</label>
-                          <select name="gender" class="form-control" id="gender">
-                                <option value="${accountEntity.gender}" label="${accountEntity.gender}"/>
+                          <form:select path="gender" class="form-control" id="gender">
+                                <form:option value="${accountEntity.gender}" label="${accountEntity.gender}"/>
                                 <c:forEach items="${genderList}" var="gender">
-                                    <option value="${gender}" label="${gender}"/>
+                                    <form:option value="${gender}" label="${gender}"/>
                                 </c:forEach>
-                          </select>
+                          </form:select>
                         </div>
                         <div class="mb-3 col-md-6">
                           <label for="zipCode" class="form-label">Birth Date</label>
-                            <input type="text" class="form-label" name="birth_date" <fmt:formatDate value="${accountEntity.birth_date}" pattern="yyyy-MM-dd" />/>
+                            <form:input type="Date" class="form-control" path="birth_date" />
                         </div>
                       </div>
                       <button type="submit" class="btn btn-primary me-2">Save</button>
-                    </form>
+                    </form:form>
                   </div>
                   <!-- /Account -->
                 </div>
