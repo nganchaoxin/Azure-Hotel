@@ -22,7 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -223,10 +222,11 @@ public class AdminController {
     // IMAGE
     // Show
     @RequestMapping(value = "/image")
-    public String showImage(Model model) {
+    public ModelAndView showImage(ModelAndView model) {
         List<ImageEntity> imageList = imageService.findAll();
-        model.addAttribute("imageList", imageList);
-        return "admin/image";
+        model.addObject("imageList", imageList);
+        model.setViewName("admin/image");
+        return model;
     }
 
     // Add
@@ -242,12 +242,13 @@ public class AdminController {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String saveImage(
+    public ModelAndView saveImage(
             Model model,
             @ModelAttribute("image") ImageEntity image,
             @RequestParam("image_name") String image_name,
             @RequestPart("image_url") MultipartFile image_url,
-            @RequestParam("category_name") String category_name) throws IOException {
+            @RequestParam("category_name") String category_name) {
+        try {
 
             ImageEntity i = new ImageEntity();
             i.setImage_name(image_name);
@@ -259,8 +260,11 @@ public class AdminController {
             imageRepository.save(i);
 
             setCategoryDropDownList(model);
-            return "redirect:/admin/image";
+            return new ModelAndView("redirect:/admin/image");
 
+        } catch (Exception e) {
+            return new ModelAndView("admin/image", "msg", "Error: " + e.getMessage());
+        }
     }
 
     // Get image to table

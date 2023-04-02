@@ -49,10 +49,6 @@ public class AccountEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @Column(name = "photo")
-    @Lob
-    private byte[] photo;
-
     @Column(name = "birth_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birth_date;
@@ -215,11 +211,4 @@ public class AccountEntity implements Serializable {
         this.token = token;
     }
 
-    public byte[] getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
-    }
 }
