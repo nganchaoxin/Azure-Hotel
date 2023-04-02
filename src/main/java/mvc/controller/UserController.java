@@ -4,9 +4,11 @@ import mvc.entity.*;
 import mvc.enums.BookingStatus;
 import mvc.enums.Gender;
 import mvc.service.*;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.MediaType;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,9 +16,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,16 +52,19 @@ public class UserController {
     @Autowired
     PaymentService paymentService;
 
-    @RequestMapping(value = "/account", method = GET)
-    public String userHome(Model model, HttpSession session) {
-        AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
+    @GetMapping(value = "/account")
+    public String showImage(Model model, HttpSession session) {
+        AccountEntity accountEntity = accountService.findByEmail(((AccountEntity) session.getAttribute("accountEntity")).getEmail());
         model.addAttribute("accountEntity", accountEntity);
         setGenderDropDownList(model);
         return "user/account";
     }
 
-    @RequestMapping(value = "/account", method = POST, produces = "text/plain;charset=UTF-8")
-    public String saveUser(@ModelAttribute("accountEntity") AccountEntity account,
+    @RequestMapping(value = "/account", method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String saveUser(
+                           @RequestPart(name="photo") MultipartFile photo,
                            @RequestParam(name = "first_name") String first_name,
                            @RequestParam(name = "last_name") String last_name,
                            @RequestParam(name = "address") String address,
@@ -61,9 +72,10 @@ public class UserController {
                            @RequestParam(name = "phone_number") String phone_number,
                            @RequestParam(name = "gender") Gender gender,
                            @RequestParam(name = "birth_date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date birth_date,
-                           HttpSession session, Model model) {
-        AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
+                           HttpSession session, Model model) throws IOException {
+        AccountEntity accountEntity = accountService.findByEmail(((AccountEntity) session.getAttribute("accountEntity")).getEmail());
         accountEntity.setFirst_name(first_name);
+        accountEntity.setPhoto(photo.getBytes());
         accountEntity.setLast_name(last_name);
         accountEntity.setAddress(address);
         accountEntity.setUsername(username);
@@ -72,7 +84,8 @@ public class UserController {
         accountEntity.setBirth_date(birth_date);
         accountService.save(accountEntity);
         setGenderDropDownList(model);
-        return "user/account";
+        session.setAttribute("accountEntity", accountEntity);
+        return "redirect:/user/account";
     }
 
     @GetMapping("/forgotpassword")
@@ -120,10 +133,10 @@ public class UserController {
     public String paymentCard(HttpSession session, Model model) {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         List<AccountBankingEntity> accountBankingEntityList = accountBankingService.findByAccountId(accountEntity.getId());
-        if(accountBankingEntityList == null || accountBankingEntityList.isEmpty()) {
+        if (accountBankingEntityList == null || accountBankingEntityList.isEmpty()) {
             model.addAttribute("status", "noCard");
             model.addAttribute("accountBankingEntity", new AccountBankingEntity());
-        }else {
+        } else {
             AccountBankingEntity accountBankingEntity = accountBankingEntityList.get(0);
             model.addAttribute("accountBankingEntity", accountBankingEntity);
             model.addAttribute("status", "haveCard");
@@ -143,9 +156,9 @@ public class UserController {
     public String paymentHistory(HttpSession session, Model model) {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         List<AccountBankingEntity> accountBankingEntityList = accountBankingService.findByAccountId(accountEntity.getId());
-        if(accountBankingEntityList == null || accountBankingEntityList.isEmpty()) {
+        if (accountBankingEntityList == null || accountBankingEntityList.isEmpty()) {
             model.addAttribute("status", "paymentNull");
-        }else {
+        } else {
             List<PaymentEntity> paymentEntityList = paymentService.findByAccountBankingId(accountBankingEntityList.get(0).getId());
             model.addAttribute("paymentEntityList", paymentEntityList);
             model.addAttribute("status", "paymentNull");
@@ -162,7 +175,7 @@ public class UserController {
     }
 
     @PostMapping("/cancelbooking&id={id}")
-    public String cancelBooking(@PathVariable int id, RedirectAttributes redirectAttributes, HttpSession session, Model model){
+    public String cancelBooking(@PathVariable int id, RedirectAttributes redirectAttributes, HttpSession session, Model model) {
         BookingEntity bookingEntity = bookingService.findById(id);
         bookingEntity.setBooking_status(BookingStatus.CANCEL);
         bookingService.save(bookingEntity);
@@ -202,5 +215,14 @@ public class UserController {
         genderList.add(Gender.FEMALE);
 
         model.addAttribute("genderList", genderList);
+    }
+
+    @RequestMapping(value = "/getImagePhoto/{id}")
+    public void getImagePhoto(HttpServletResponse response, @PathVariable("id") int id) throws Exception {
+        response.setContentType("image/jpeg");
+        AccountEntity accountEntity = accountService.findById(id);
+        byte[] ph = accountEntity.getPhoto();
+        InputStream inputStream = new ByteArrayInputStream(ph);
+        IOUtils.copy(inputStream, response.getOutputStream());
     }
 }
