@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.ByteArrayInputStream;
@@ -29,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -53,9 +55,8 @@ public class UserController {
     PaymentService paymentService;
 
     @GetMapping(value = "/account")
-    public String showImage(Model model, HttpSession session) {
-        AccountEntity accountEntity = accountService.findByEmail(((AccountEntity) session.getAttribute("accountEntity")).getEmail());
-        model.addAttribute("accountEntity", accountEntity);
+    public String account(Model model, HttpSession session) {
+        model.addAttribute("accountEntity",(AccountEntity) session.getAttribute("accountEntity"));
         setGenderDropDownList(model);
         return "user/account";
     }
@@ -75,7 +76,14 @@ public class UserController {
                            HttpSession session, Model model) throws IOException {
         AccountEntity accountEntity = accountService.findByEmail(((AccountEntity) session.getAttribute("accountEntity")).getEmail());
         accountEntity.setFirst_name(first_name);
-        accountEntity.setPhoto(photo.getBytes());
+
+        if(photo.getOriginalFilename() == "") {
+            byte[] ph = accountEntity.getPhoto();
+            accountEntity.setPhoto(ph);
+        }else {
+            accountEntity.setPhoto(photo.getBytes());
+        }
+
         accountEntity.setLast_name(last_name);
         accountEntity.setAddress(address);
         accountEntity.setUsername(username);
@@ -105,27 +113,41 @@ public class UserController {
             model.addAttribute("page", "password");
         } else {
             model.addAttribute("page", "sendEmailSuccess");
+            String encodedString = UUID.randomUUID().toString();
+            accountEntity.setToken(encodedString);
+            accountService.save(accountEntity);
+            sendEmail(email, "Azure Hotel Account - Forgot your password", "You have been send a request forgot your password, please click here to set new pass word:"+"http://localhost:8080/Azure-Hotel/user/forgotpassword&id="+accountEntity.getId());
         }
-//        sendEmail(email, "Azure Hotel Account - Forgot your password", "You have been send a request forgot your password, please click here to set new pass word:"+"http://localhost:8080/Azure-Hotel/user/forgotpassword&id="+accountEntity.getId());}
         return "user/forgot_password";
     }
 
     @GetMapping("/forgotpassword&id={id}")
-    public String changePassWord(Model model) {
-        model.addAttribute("page", "changePassword");
-        return "user/forgot_password";
+    public String changePassWord(Model model, @PathVariable int id) {
+        AccountEntity accountEntity = accountService.findById(id);
+        if(accountEntity.getToken() == "" || accountEntity.getToken() == null) {
+            return "notFound";
+        }else {
+            model.addAttribute("page", "changePassword");
+            return "user/forgot_password";
+        }
     }
 
     @PostMapping("/forgotpassword&id={id}")
-    public String saveNewPassword(@PathVariable int id, @RequestParam String password, @RequestParam String password_two, HttpSession session, Model model) {
+    public String saveNewPassword(@PathVariable("id") int id, @RequestParam String password, @RequestParam String password_two, HttpSession session, Model model) {
         AccountEntity accountEntity = accountService.findById(id);
-        if (password.equals(password_two)) {
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            accountEntity.setPassword(encoder.encode(password));
-            accountService.save(accountEntity);
-        }
-        model.addAttribute("page", "changePasswordSuccess");
-        session.setAttribute("accountEntity", accountEntity);
+            boolean passwordMatches = encoder.matches(password, accountEntity.getPassword());
+            if (passwordMatches == false && password.equals(password_two)) {
+                accountEntity.setPassword(encoder.encode(password));
+                accountEntity.setToken(null);
+                accountService.save(accountEntity);
+                model.addAttribute("page", "changePasswordSuccess");
+                session.setAttribute("accountEntity", accountEntity);
+            } else {
+                model.addAttribute("page", "changePassword");
+                model.addAttribute("type", "wrong");
+                model.addAttribute("msg", "Password was existing or password repeat not same!");
+            }
         return "user/forgot_password";
     }
 
@@ -175,11 +197,11 @@ public class UserController {
     }
 
     @PostMapping("/cancelbooking&id={id}")
-    public String cancelBooking(@PathVariable int id, RedirectAttributes redirectAttributes, HttpSession session, Model model) {
+    public String cancelBooking(@PathVariable int id, HttpSession session, Model model, HttpServletRequest request) {
         BookingEntity bookingEntity = bookingService.findById(id);
         bookingEntity.setBooking_status(BookingStatus.CANCEL);
         bookingService.save(bookingEntity);
-        redirectAttributes.addFlashAttribute("Cancel Booking Successfully!", "msg");
+        request.setAttribute("msg", "Cancel Booking Successfully!");
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         List<BookingEntity> bookingEntityList = bookingService.findByAccountId(accountEntity.getId());
         model.addAttribute("bookingEntityList", bookingEntityList);
