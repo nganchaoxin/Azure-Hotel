@@ -1,11 +1,13 @@
 package mvc.controller;
 
-import mvc.entity.*;
-import mvc.service.BookingCartItemService;
-import mvc.service.BookingCartService;
-import mvc.service.ImageService;
-import mvc.service.RoomService;
-import org.apache.commons.io.IOUtils;
+import mvc.entity.AccountEntity;
+import mvc.entity.BookingCartEntity;
+import mvc.entity.BookingCartItemEntity;
+import mvc.entity.RoomEntity;
+import mvc.repository.BookingCartItemRepository;
+import mvc.repository.BookingCartRepository;
+import mvc.repository.CategoryRepository;
+import mvc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,10 +17,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,7 +39,6 @@ public class SearchController {
 
     @RequestMapping(value = "/availableRoom", method = RequestMethod.GET)
     public String showAvailableRoom(
-            HttpServletRequest request,
             @RequestParam("checkin") @DateTimeFormat(pattern = "yyyy-MM-dd") Date checkin,
             @RequestParam("checkout") @DateTimeFormat(pattern = "yyyy-MM-dd") Date checkout,
             @RequestParam("roomType") String roomType,
@@ -57,23 +55,8 @@ public class SearchController {
         session.setAttribute("check_out", checkout);
         model.addAttribute("availableRoomList", availableRoomList);
 
-        List<ImageEntity> imageList = imageService.findAllImageByCategory(roomType);
-        model.addAttribute("imageList", imageList);
-
-        List<BookingCartItemEntity> cartItemSessionList = (List<BookingCartItemEntity>) request.getSession().getAttribute("cartItemList");
-        request.getSession().setAttribute("cartItemList", cartItemSessionList);
-
+        //List<ImageEntity> imageEntityList = imageService.finAllImageByCategory(roomType);
         return "available_rooms";
-    }
-
-    @RequestMapping(value = "/getImagePhoto/{id}")
-    public void getImagePhoto(HttpServletResponse response, @PathVariable("id") long id) throws Exception {
-        response.setContentType("image/jpeg");
-
-        ImageEntity i = imageService.findById(id);
-        byte[] ph = i.getUrl();
-        InputStream inputStream = new ByteArrayInputStream(ph);
-        IOUtils.copy(inputStream, response.getOutputStream());
     }
 
     @RequestMapping(value = "/addToCart/room={roomId}", method = RequestMethod.GET)

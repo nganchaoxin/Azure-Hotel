@@ -3,9 +3,9 @@ pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="mvc" uri="http://www.springframework.org/tags/form" %> <%@
 taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ taglib
-prefix="form" uri="http://www.springframework.org/tags/form" %> <%@ page
-import="java.text.SimpleDateFormat" %> <%@ taglib prefix="fmt"
-uri="http://java.sun.com/jsp/jstl/fmt" %>
+prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +24,9 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     />
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
     <link
       href='<c:url value="/resources/static/images/Logo_icon.svg" />'
@@ -37,15 +39,11 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
       integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
       crossorigin="anonymous"
     />
-
     <link
       href='<c:url value="/resources/static/css/search.css" />'
       rel="stylesheet"
     />
-    <link
-      rel="stylesheet"
-      href="resources/template/assets/vendor/css/pages/page-misc.css"
-    />
+    <link rel="stylesheet" href="resources/static/assets/vendor/css/pages/page-misc.css" />
 
   </head>
   <body>
@@ -73,7 +71,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav align-items-center pt-2">
+            <div class="navbar-nav">
               <a
                 class="nav-link active"
                 style="color: white"
@@ -81,17 +79,9 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
                 href="#"
                 >Availability</a
               >
-
-              <sec:authorize access="isAuthenticated()">
-                  <sec:authorize access="hasRole('ROLE_USER')">
-                      <a class="nav-link d-flex align-items-center  "style="color: white" href="<c:url value="/bookingcart" />">My Cart
-                        <span class="cart-basket d-flex align-items-center justify-content-center" style="height: 1.4em;border-radius: 50%;width: 1.4em;background-color: #fff700b8;position: relative;top: -18px;left:0px;font-size: 105%;color: #a67f01;font-weight: 500">
-                          ${cartItemList.size()}
-                        </span>
-                       </a>
-                  </sec:authorize>
-              </sec:authorize>
-
+              <a class="nav-link" style="color: white" href="./myCart/cartId=1"
+                >My Cart</a
+              >
               <a class="nav-link" style="color: white" href="./">Home</a>
               <a class="nav-link" style="color: white" href="#">Contact</a>
               <a class="nav-link" style="color: white" href="#">Policies</a>
@@ -111,173 +101,157 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
         "
       >
         <div class="row">
-
-            <div class="room-card">
-              <div class="row">
-
-                <div class="col-6 px-0">
-                  <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                    <!-- Indicators -->
-                    <ol class="carousel-indicators">
-                        <c:forEach items="${imageList}" var="image" varStatus="status">
-                            <li data-target="#myCarousel" data-slide-to="${status.index}" class="${status.index == 0 ? 'active' : ''}"></li>
-                        </c:forEach>
-                    </ol>
-
-                    <!-- Wrapper for slides -->
-                    <div class="carousel-inner" role="listbox">
-                        <c:forEach items="${imageList}" var="image" varStatus="status">
-                            <div class="item ${status.index == 0 ? 'active' : ''}">
-                                <img style="
-                                   width: 400px;
-                                   height: 220px;
-                                   border-radius: 10px 10px 10px 10px;
-                                 " src="getImagePhoto/${image.id}" />
-                            </div>
-                        </c:forEach>
-                    </div>
-
-                    <!-- Controls -->
-                    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
-                </div>
-                <div class="col-6 py-4 ">
-                  <div class="card-body">
-                    <h1>
-                      ${availableRoomList[0].categoryEntity.category_name}
-                    </h1>
-                    <div class="room-info">
-                      <div class="room-number_of_bed">
-                        <i class="fas fa-user"></i> Max
-                        ${availableRoomList[0].categoryEntity.max_occupancy}
-                        guests
-                      </div>
-                      <div class="room-number_of_double_bed">
-                        <i class="fas fa-bed"></i>
-                        ${availableRoomList[0].categoryEntity.bed_info} Bed(s)
-                      </div>
-                      <div class="room-number_of_bathroom">
-                        <i class="fas fa-bath"></i> 1 Bathroom
-                      </div>
-                    </div>
-                    <div class="room-info-special">
-                      <div class="room-square">
-                        ${availableRoomList[0].categoryEntity.square} m&#178;
-                      </div>
-                      <div class="heart_icon">
-                        <i class="fas fa-map-marker"></i>
-                      </div>
-                      <div class="room-smoking">Non-smoking</div>
-                      <div class="heart_icon">
-                        <i class="fas fa-map-marker"></i>
-                      </div>
-                      <div class="room-views">
-                        ${availableRoomList[0].position}
-                      </div>
-                    </div>
-
-
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="container" style="padding-left: 1%; padding-right: 2%;">
-              <c:forEach items="${availableRoomList}" var="room">
-              <div class="room-card-2 px-4 py-4">
-                <h1>${room.room_name}</h1>
-                <div class="room-cost ">
-                    <div class="col-6 text-end">
-                      <div class="cost-before">
-                        <fmt:formatNumber
-                          value="${availableRoomList[0].categoryEntity.price*1.2}"
-                          pattern="#,###.##"
-                        />
-                        VND
-                      </div>
-                      <div class="cost-after">
-                        <fmt:formatNumber
-                          value="${availableRoomList[0].categoryEntity.price}"
-                          pattern="#,###.##"
-                        />
-                        VND
-                      </div>
-                    </div>
-
-
-                  <div style="margin-left: 10px; padding-top: 10px;">
-                    <button
-                      style="
-                        background-color: #cca772;
-                        border: none;
-                        --bs-btn-font-size: 18px;
-                      "
-                      onclick="location.href='addToCart/room=${room.id}'"
-                      href="#"
-                      class="btn btn-primary btn-lg float-end"
+          <div class="">
+            <c:forEach
+              var="room"
+              items="${availableRoomList}"
+              varStatus="index"
+            >
+              <div class="room-card">
+                <div class="row">
+                  <div class="col-6">
+                    <!-- <img style="width: 250px; height: auto;" src="../images/room-1.jpg" class="card-img-top" alt="..."> -->
+                    <div
+                      id="carouselExampleFade"
+                      class="carousel slide carousel-fade my-auto"
                     >
-                      I'll reserve
-                    </button>
+                      <div class="carousel-inner my-auto mx-auto">
+                        <div class="carousel-item active">
+                          <img
+                            style="
+                              width: 250px;
+                              height: 220px;
+                              border-radius: 20px 20px 20px 20px;
+                            "
+                            src='<c:url value="/resources/static/images/rooms/room-1.jpg" />'
+                            class="d-block w-100"
+                            alt="..."
+                          />
+                        </div>
+
+                        <div class="carousel-item">
+                          <img
+                            style="
+                              width: 250px;
+                              height: 220px;
+                              border-radius: 20px 20px 20px 20px;
+                            "
+                            src='<c:url value="/resources/static/images/rooms/room-2.jpg" />'
+                            class="d-block w-100"
+                            alt="..."
+                          />
+                        </div>
+                        <div class="carousel-item">
+                          <img
+                            style="
+                              width: 250px;
+                              height: 220px;
+                              border-radius: 20px 20px 20px 20px;
+                            "
+                            src='<c:url value="/resources/static/images/rooms/room-3.jpg" />'
+                            class="d-block w-100"
+                            alt="..."
+                          />
+                        </div>
+                      </div>
+                      <button
+                        class="carousel-control-prev"
+                        type="button"
+                        data-bs-target="#carouselExampleFade"
+                        data-bs-slide="prev"
+                      >
+                        <span
+                          class="carousel-control-prev-icon"
+                          aria-hidden="true"
+                        ></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button
+                        class="carousel-control-next"
+                        type="button"
+                        data-bs-target="#carouselExampleFade"
+                        data-bs-slide="next"
+                      >
+                        <span
+                          class="carousel-control-next-icon"
+                          aria-hidden="true"
+                        ></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-6 py-4">
+                    <div class="card-body">
+                        <h1>${room.categoryEntity.category_name} | ${room.room_name}</h1>
+                      <div class="room-info">
+                        <div class="room-number_of_bed">
+                          <i class="fas fa-user"></i> Max ${room.categoryEntity.max_occupancy} guests
+                        </div>
+                        <div class="room-number_of_double_bed">
+                          <i class="fas fa-bed"></i> ${room.categoryEntity.bed_info} Bed(s)
+                        </div>
+                        <div class="room-number_of_bathroom">
+                          <i class="fas fa-bath"></i> 1 Bathroom
+                        </div>
+                      </div>
+                      <div class="room-info-special">
+                        <div class="room-square">${room.categoryEntity.square} m&#178;</div>
+                        <div class="heart_icon">
+                          <i class="fas fa-map-marker"></i>
+                        </div>
+                        <div class="room-smoking">Non-smoking</div>
+                        <div class="heart_icon">
+                          <i class="fas fa-map-marker"></i>
+                        </div>
+                        <div class="room-views">${room.position}</div>
+                      </div>
+                      <div class="room-cost">
+                        <div class="cost-before"><fmt:formatNumber value="${room.categoryEntity.price*1.2}" pattern="#,###.##" /> VND</div>
+                        <div class="cost-after"><fmt:formatNumber value="${room.categoryEntity.price}" pattern="#,###.##" /> VND</div>
+                      </div>
+                      <div style="padding-right:25px; padding-top: 10px;">
+                        <button
+                           style="background-color: #cca772; border:none; --bs-btn-font-size: 18px;"
+                          onclick="location.href='addToCart/room=${room.id}'"
+                          href="#"
+                          class="btn btn-primary btn-lg float-end "
+                        >
+                          I'll reserve
+                        </button>
+                      </div>
+
+                    </div>
                   </div>
                 </div>
               </div>
             </c:forEach>
-            </div>
-
-
+          </div>
         </div>
       </div>
     </c:if>
-
     <c:if test="${empty availableRoomList}">
-      <div class="misc-wrapper">
-        <h2 class="mx-2">No available rooms found!</h2>
-        <p class="mb-4 mx-2">Sorry for the inconvenience</p>
-        <a
-          href="./"
-          class="btn btn-primary btn-lg"
-          style="background-color: #cca772; border: none"
-          >Back to home</a
-        >
-        <div class="mt-4">
-          <img
-            src="resources/template/assets/img/illustrations/girl-doing-yoga-light.png"
-            alt="girl-doing-yoga-light"
-            width="500"
-            class="img-fluid"
-            data-app-dark-img="illustrations/girl-doing-yoga-dark.png"
-            data-app-light-img="illustrations/girl-doing-yoga-light.png"
-          />
+        <div class="misc-wrapper">
+          <h2 class=" mx-2">No available rooms found!</h2>
+          <p class="mb-4 mx-2">Sorry for the inconvenience</p>
+          <a href="./" class="btn btn-primary btn-lg" style="background-color:#cca772; border: none;">Back to home</a>
+          <div class="mt-4">
+            <img
+              src="resources/static/assets/img/illustrations/girl-doing-yoga-light.png"
+              alt="girl-doing-yoga-light"
+              width="500"
+              class="img-fluid"
+              data-app-dark-img="illustrations/girl-doing-yoga-dark.png"
+              data-app-light-img="illustrations/girl-doing-yoga-light.png"
+            />
+          </div>
         </div>
-      </div>
     </c:if>
 
-     <script>
-          $(document).ready(function () {
-              // Activate the first slide
-              $('.carousel-inner .item:first-child').addClass('active');
-
-              // Loop through each slide
-              $('.carousel').carousel({
-                  interval: 2000 // Change the interval time here
-              });
-          });
-      </script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
       crossorigin="anonymous"
     ></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="js/main.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </body>
 </html>

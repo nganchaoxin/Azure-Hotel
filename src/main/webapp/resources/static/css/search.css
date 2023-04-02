@@ -12,8 +12,8 @@ body {
     height: auto;
     flex-direction: row;
     background-color: rgb(255, 255, 255);
-    border-radius: 10px;
-    margin-bottom: 0px;
+    border-radius: 20px;
+    margin-bottom: 20px;
     border: 1px solid #cca77288;
     font-size: 87.5%;
 }
@@ -49,8 +49,9 @@ body {
 .room-cost {
     display: flex;
     flex-direction: row;
+    gap: 5px;
     width: 100%;
-
+    padding-right: 25px;
     justify-content: right;
     margin-top: 20px;
     font-size: 120%;
@@ -66,53 +67,4 @@ body {
     font-size: 130%;
     font-weight: bold;
 }
-
-.room-card-2 {
-    max-width: 100%;
-    height: auto;
-    flex-direction: row;
-    background-color: rgb(255, 255, 255);
-    border-radius: 20px;
-    margin-bottom: 0px;
-    border: 1px solid #cca77288;
-    font-size: 87.5%;
-    padding: 10px 10px 10px 10px;
-}
-.carousel-control.left {
-    background-image: none !important;
-    background-image: none !important;
-     background-image: none !important;
-     background-image:none !important;
-    filter: none !important;
-    background-repeat: repeat-x;
-}
-.carousel-control.right {
-    background-image: none !important;
-    background-image: none !important;
-     background-image: none !important;
-     background-image:none !important;
-    filter: none !important;
-    background-repeat: repeat-x;
-}
-.nav-link.active,
-.nav-link[aria-current="page"] {
-  position: relative;
-}
-
-.nav-link.active:after,
-.nav-link[aria-current="page"]:after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: white;
-  transform: scaleY(1);
-  transform-origin: bottom;
-}
-a:focus, a:hover {
-    text-decoration: none;
-}
-
 

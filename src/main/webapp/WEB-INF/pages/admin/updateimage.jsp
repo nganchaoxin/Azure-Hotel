@@ -114,7 +114,15 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
                     class="form-control"
                   />
                 </div>
-
+                <div class="mb-3">
+                  <label for="email" class="form-label">Image Type</label>
+                  <input
+                    name="image_type"
+                    value="${image.image_type}"
+                    type="text"
+                    class="form-control"
+                  />
+                </div>
                 <div class="mb-3">
                   <label for="email" class="form-label">Url</label>
                   <input
