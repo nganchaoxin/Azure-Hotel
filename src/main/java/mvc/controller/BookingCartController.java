@@ -8,6 +8,7 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ import java.util.List;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
+@Transactional
 @RequestMapping("/bookingcart")
 public class BookingCartController {
     @Autowired
@@ -94,52 +96,11 @@ public class BookingCartController {
     }
 
     @RequestMapping(value = "/checkout", method = POST, produces = "text/plain;charset=UTF-8")
-    public String checkOut(HttpSession session, Model model) {
+    public String checkOut(HttpSession session, Model model) throws Exception {
         // Get account
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         AccountBankingEntity accountBanking = accountBankingService.findByAccountId(accountEntity.getId()).get(0);
-        if (accountBanking.getBalance() > (Double) session.getAttribute("totalPrices")) {
-            //// Create new booking entity
-            BookingEntity newBookingEntity = new BookingEntity();
-            newBookingEntity.setBooking_date(new Date());
-            newBookingEntity.setBooking_status(BookingStatus.COMPLETED);
-            newBookingEntity.setAccountEntity(accountEntity);
-            newBookingEntity.setTotal_price((Double) session.getAttribute("totalPrices"));
-            bookingService.save(newBookingEntity);
-
-            //Create new booking detail
-            List<BookingCartItemEntity> cartItems = (List<BookingCartItemEntity>) session.getAttribute("cartItemList");
-            for (BookingCartItemEntity cartItem : cartItems) {
-                bookingDetailService.createNewBookingDetail(cartItem, newBookingEntity);
-            }
-            // Create new Payment
-            PaymentEntity newPayment = new PaymentEntity();
-            newPayment.setBookingEntity(newBookingEntity);
-            newPayment.setPayment_date(new Date());
-            newPayment.setAmount((Double) session.getAttribute("totalPrices"));
-            newPayment.setAccountBankingEntity(accountBankingService.findByAccountId(accountEntity.getId()).get(0));
-            paymentService.save(newPayment);
-
-            // Update balance of account Banking
-            double newBalance = accountBanking.getBalance() - (Double) session.getAttribute("totalPrices");
-            accountBanking.setBalance(newBalance);
-            accountBankingService.save(accountBanking);
-
-            // Clear Session List and Database
-            removeSession(session);
-
-            BookingCartEntity bookingCartEntity = bookingCartService.findByAccountId(accountEntity.getId()).get(0);
-            List<BookingCartItemEntity> bookingCartItemEntities = bookingCartItemService.findAllByBookingCartId(bookingCartEntity.getId());
-            bookingCartItemService.deleteAll(bookingCartItemEntities);
-            // Send email success booking new
-            String email = accountEntity.getEmail();
-            sendEmail(email, "Azure Hotel - New Booking Successfully", "Your Booking has been create successfully!");
-            model.addAttribute("status", "completed");
-            model.addAttribute("newBookingEntity", newBookingEntity);
-        } else {
-            model.addAttribute("status", "dismiss");
-            model.addAttribute("accountEntity", accountEntity);
-        }
+        bookingCartService.checkOut(accountEntity, accountBanking, session, model);
         return "successpage";
     }
 
@@ -184,19 +145,5 @@ public class BookingCartController {
         session.setAttribute("totalPrices", totalPrices);
     }
 
-    public void removeSession(HttpSession session) {
-        session.removeAttribute("cartItemList");
-        session.removeAttribute("totalPrices");
-        session.removeAttribute("totalGuests");
-        session.removeAttribute("totalDays");
-    }
 
-    public void sendEmail(String to, String subject, String content) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(to);
-        mailMessage.setSubject(subject);
-        mailMessage.setText(content);
-
-        mailSender.send(mailMessage);
-    }
 }
