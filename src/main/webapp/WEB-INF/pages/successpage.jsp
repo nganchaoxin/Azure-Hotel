@@ -76,11 +76,11 @@
     </li>
     <li>
       <div>Check In:</div>
-      <div><fmt:formatDate value="${newBookingEntity.getBookingDetailEntities().get(0).getBooking_check_in()}" pattern="dd/MM/yyyy" /></div>
+      <div><fmt:formatDate value="${bookingDetailEntity.getBooking_check_in()}" pattern="dd/MM/yyyy" /></div>
     </li>
     <li>
       <div>Check Out:</div>
-      <div><fmt:formatDate value="${newBookingEntity.getBookingDetailEntities().get(0).getBooking_check_out()}" pattern="dd/MM/yyyy" /></div>
+      <div><fmt:formatDate value="${bookingDetailEntity.getBooking_check_out()}" pattern="dd/MM/yyyy" /></div>
     </li>
     <li>
       <div>Total Price:</div>
@@ -103,10 +103,9 @@
     <i class="far fa-times-circle"></i>
     <h3>
        Payment Failed
-      <span>Order #: 22</span>
     </h3>
       <small>
-        An account error occurs. Procedure. Check whether the account balance is sufficient for the calling party.
+        ${errorMessage}
       </small>
   </div>
   <ul>
