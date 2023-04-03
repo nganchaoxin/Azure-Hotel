@@ -3,12 +3,9 @@ pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="mvc" uri="http://www.springframework.org/tags/form" %> <%@
 taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ taglib
-prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-
+prefix="form" uri="http://www.springframework.org/tags/form" %> <%@ page
+import="java.text.SimpleDateFormat" %> <%@ taglib prefix="fmt"
+uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -47,11 +44,10 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
     />
     <link
       rel="stylesheet"
-      href="resources/static/assets/vendor/css/pages/page-misc.css"
+      href="resources/template/assets/vendor/css/pages/page-misc.css"
     />
 
   </head>
-
   <body>
     <header>
       <nav class="navbar navbar-expand-lg bg-body-tertiary py-0">
@@ -233,26 +229,14 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
               </div>
             </c:forEach>
             </div>
-        </div>
 
-        <div class="pagination">
-            <ul class="pagination justify-content-center">
-                <c:if test="${currentPage > 0}">
-                    <li class="page-item"><a class="page-link" href="?checkin=${param.checkin}&checkout=${param.checkout}&roomType=${param.roomType}&guests=${param.guests}&page=${currentPage - 1}">&laquo;</a></li>
-                </c:if>
-                <c:forEach begin="0" end="${totalPages - 1}" var="i">
-                    <li class="page-item ${currentPage == i ? 'active' : ''}"><a class="page-link" href="?checkin=${param.checkin}&checkout=${param.checkout}&roomType=${param.roomType}&guests=${param.guests}&page=${i}">${i + 1}</a></li>
-                </c:forEach>
-                <c:if test="${currentPage < totalPages - 1}">
-                    <li class="page-item"><a class="page-link" href="?checkin=${param.checkin}&checkout=${param.checkout}&roomType=${param.roomType}&guests=${param.guests}&page=${currentPage + 1}">&raquo;</a></li>
-                </c:if>
-            </ul>
-        </div>
 
+        </div>
+      </div>
     </c:if>
 
     <c:if test="${empty availableRoomList}">
-      <div class="misc-wrapper " >
+      <div class="misc-wrapper">
         <h2 class="mx-2">No available rooms found!</h2>
         <p class="mb-4 mx-2">Sorry for the inconvenience</p>
         <a
@@ -263,7 +247,7 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
         >
         <div class="mt-4">
           <img
-            src="resources/static/assets/img/illustrations/girl-doing-yoga-light.png"
+            src="resources/template/assets/img/illustrations/girl-doing-yoga-light.png"
             alt="girl-doing-yoga-light"
             width="500"
             class="img-fluid"
