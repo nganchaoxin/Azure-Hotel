@@ -8,6 +8,9 @@ import mvc.service.RoomService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,21 +48,31 @@ public class SearchController {
             @RequestParam("checkout") @DateTimeFormat(pattern = "yyyy-MM-dd") Date checkout,
             @RequestParam("roomType") String roomType,
             @RequestParam("guests") int guests,
+            @RequestParam(name = "page", defaultValue = "0") int pageNumber,
+            @RequestParam(name = "size", defaultValue = "2") int pageSize,
             Model model,
             HttpSession session) {
-
+        // Check checkin date < checkout date
         if (checkout.compareTo(checkin) < 0) {
             return "notFound";
         }
-        List<RoomEntity> availableRoomList = roomService.getAvailableRooms(checkin, checkout, roomType, guests);
+
+        // Pageable for room list
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
+        Page<RoomEntity> availableRoomPage = roomService.getAvailableRooms(checkin, checkout, roomType, guests, pageRequest);
 
         session.setAttribute("check_in", checkin);
         session.setAttribute("check_out", checkout);
-        model.addAttribute("availableRoomList", availableRoomList);
+        model.addAttribute("availableRoomList", availableRoomPage.getContent());
+        model.addAttribute("currentPage", availableRoomPage.getNumber());
+        model.addAttribute("totalPages", availableRoomPage.getTotalPages());
+        model.addAttribute("totalItems", availableRoomPage.getTotalElements());
 
+        // List all image in category
         List<ImageEntity> imageList = imageService.findAllImageByCategory(roomType);
         model.addAttribute("imageList", imageList);
 
+        // Booking cart noti
         List<BookingCartItemEntity> cartItemSessionList = (List<BookingCartItemEntity>) request.getSession().getAttribute("cartItemList");
         request.getSession().setAttribute("cartItemList", cartItemSessionList);
 
