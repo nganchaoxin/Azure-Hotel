@@ -10,6 +10,8 @@ import mvc.service.BookingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Date;
@@ -34,6 +38,9 @@ public class SignUpController {
     AccountService accountService;
     @Autowired
     MailSender mailSender;
+
+    @Autowired
+    JavaMailSender javaMailSender;
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -75,7 +82,11 @@ public class SignUpController {
 
         // Send email
         int id = accountEntity.getId();
-        sendEmail(email, "Azure Hotel -Signup new account", "This is your activation link: http://localhost:8080/Azure-Hotel/activate?token=" + encodedString);
+        String body = "<h1>Verify your email address</h1>\n" +
+                "<p>To continue setting up your Azure account, please verify that this is your email address.</p>\n" +
+                "<a href=http://localhost:8080/Azure-Hotel/activate?token="+encodedString+" class=\"btn btn-primary\" type=\"button\">Verify email address</a>\n" +
+                "<p>Best regards,<br>The Azure Hotel team</p>";
+        sendEmail(email, "Azure Hotel -Signup new account", body);
         model.addAttribute("accountEntity", accountEntity);
         return "login";
     }
@@ -100,12 +111,25 @@ public class SignUpController {
         }
     }
 
-    public void sendEmail(String to, String subject, String content) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(to);
-        mailMessage.setSubject(subject);
-        mailMessage.setText(content);
+//    public void sendEmail(String to, String subject, String content) {
+//        SimpleMailMessage mailMessage = new SimpleMailMessage();
+//        mailMessage.setTo(to);
+//        mailMessage.setSubject(subject);
+//        mailMessage.setText(content);
+//
+//        mailSender.send(mailMessage);
+//    }
 
-        mailSender.send(mailMessage);
+    public void sendEmail(String recipient, String subject, String body) {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(recipient);
+            helper.setSubject(subject);
+            helper.setText(body, true);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        javaMailSender.send(message);
     }
 }
