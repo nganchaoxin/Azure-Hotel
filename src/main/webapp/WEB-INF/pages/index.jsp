@@ -186,6 +186,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                       value="Check Availability"
                       class="btn btn-primary py-3 px-4 align-self-stretch"
                     />
+
                   </div>
                 </div>
               </div>
