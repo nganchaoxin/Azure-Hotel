@@ -234,21 +234,21 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
             </c:forEach>
             </div>
         </div>
-
-        <div class="pagination">
-            <ul class="pagination justify-content-center">
-                <c:if test="${currentPage > 0}">
-                    <li class="page-item"><a class="page-link" href="?checkin=${param.checkin}&checkout=${param.checkout}&roomType=${param.roomType}&guests=${param.guests}&page=${currentPage - 1}">&laquo;</a></li>
-                </c:if>
-                <c:forEach begin="0" end="${totalPages - 1}" var="i">
-                    <li class="page-item ${currentPage == i ? 'active' : ''}"><a class="page-link" href="?checkin=${param.checkin}&checkout=${param.checkout}&roomType=${param.roomType}&guests=${param.guests}&page=${i}">${i + 1}</a></li>
-                </c:forEach>
-                <c:if test="${currentPage < totalPages - 1}">
-                    <li class="page-item"><a class="page-link" href="?checkin=${param.checkin}&checkout=${param.checkout}&roomType=${param.roomType}&guests=${param.guests}&page=${currentPage + 1}">&raquo;</a></li>
-                </c:if>
-            </ul>
-        </div>
-
+        <c:if test="${totalPages > 1}">
+            <div class="pagination">
+                <ul class="pagination justify-content-center">
+                    <c:if test="${currentPage > 0}">
+                        <li class="page-item"><a class="page-link" href="?checkin=${param.checkin}&checkout=${param.checkout}&roomType=${param.roomType}&guests=${param.guests}&page=${currentPage - 1}">&laquo;</a></li>
+                    </c:if>
+                    <c:forEach begin="0" end="${totalPages - 1}" var="i">
+                        <li class="page-item ${currentPage == i ? 'active' : ''}"><a class="page-link" href="?checkin=${param.checkin}&checkout=${param.checkout}&roomType=${param.roomType}&guests=${param.guests}&page=${i}">${i + 1}</a></li>
+                    </c:forEach>
+                    <c:if test="${currentPage < totalPages - 1}">
+                        <li class="page-item"><a class="page-link" href="?checkin=${param.checkin}&checkout=${param.checkout}&roomType=${param.roomType}&guests=${param.guests}&page=${currentPage + 1}">&raquo;</a></li>
+                    </c:if>
+                </ul>
+            </div>
+        </c:if>
     </c:if>
 
     <c:if test="${empty availableRoomList}">

@@ -57,8 +57,9 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
       href='<c:url value="/resources/static/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />'
       rel="stylesheet"
     />
-    <link href='<c:url value="/resources/static/css/delete.css" />' rel='stylesheet'>
 
+    <script src='<c:url value="/resources/static/assets/vendor/js/helpers.js" />'></script>
+    <script src='<c:url value="/resources/static/assets/js/config.js" />'></script>
   </head>
 
   <body>
@@ -108,7 +109,7 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
               <span class="menu-header-text">Category Management</span>
             </li>
             <!-- Cards -->
-            <li class="menu-item ">
+            <li class="menu-item">
               <a href="category" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Manage category</div>
@@ -126,16 +127,16 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
               </a>
             </li>
             <!-- Components -->
-                <li class="menu-header small text-uppercase">
-                  <span class="menu-header-text">Image Management</span>
-                </li>
-                <!-- Cards -->
-                <li class="menu-item">
-                  <a href="image" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-collection"></i>
-                    <div data-i18n="Basic">Manage image</div>
-                  </a>
-                </li>
+            <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">Image Management</span>
+            </li>
+            <!-- Cards -->
+            <li class="menu-item">
+              <a href="image" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Manage image</div>
+              </a>
+            </li>
           </ul>
         </aside>
         <!-- / Menu -->
@@ -147,81 +148,65 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4">Azure's Booking</h4>
-
-                <c:if test="${not empty msg}">
-                  <div class="alert alert-success" id="success-msg">${msg}</div>
-                </c:if>
-
-              <a href="addBooking">
+              <h4 class="fw-bold py-3 mb-4">Azure's Booking Detail</h4>
+              <a href="<c:url value="/admin/booking" />">
                 <button type="button" class="btn btn-sm btn-outline-primary">
-                  <i class="bx bx-edit-alt me-1"></i> Add booking room
+                   Back to booking
                 </button>
               </a>
 
               <hr class="my-5" />
 
               <!-- Hoverable Table rows -->
+              <c:if test="${not empty bookingDetailList}">
               <div class="card">
-                <h5 class="card-header">Booking</h5>
+                <h5 class="card-header">Booking Detail</h5>
                 <div class="table-responsive text-nowrap">
+
                   <table class="table table-hover">
                     <thead>
                       <tr>
-                        <th>ID</th>
-                        <th>Account Name</th>
-                        <th>Booking Date</th>
-                        <th>Booking Status</th>
-                        <th>Total Price</th>
-
-                        <th>Action</th>
+                        <th>Room</th>
+                        <th>Check In</th>
+                        <th>Check Out</th>
+                        <th>Adult</th>
+                        <th>Children</th>
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                      <c:forEach
-                        var="booking"
-                        items="${bookingList}"
-                        varStatus="index"
-                      >
-                        <tr>
-                          <td>
-                            <i
-                              class="fab fa-angular fa-lg text-danger me-3"
-                            ></i>
-                            <strong>${booking.id}</strong>
-                          </td>
-                          <td>${booking.accountEntity.email}</td>
-                          <td><fmt:formatDate value="${booking.booking_date}" pattern="dd-MM-yyyy" /></td>
-                          <td>${booking.booking_status}</td>
-                          <td>${booking.total_price} VND</td>
 
-                          <td>
-                            <button
-                              onclick="location.href='viewBookingDetail/${booking.id}'"
-                              type="button"
-                              class="btn btn-sm btn-outline-primary"
-                            >
-                              <i class="bx bx-edit-alt me-1"></i> View Detail
-                            </button>
-                            <c:if test="${booking.booking_status == 'COMPLETED'}">
-                                <button
-                                    onclick="location.href='cancelBooking/${booking.id}'"
-                                    type="button"
-                                    class="btn btn-sm btn-outline-secondary"
-                                  >
-                                    <i class="bx bx-trash me-1"></i> Cancel
-                                  </button>
-                            </c:if>
+                        <c:forEach
+                            var="bookingDetail"
+                            items="${bookingDetailList}"
+                            varStatus="index"
+                          >
+                            <tr>
+                              <td>${bookingDetail.roomEntity.room_name}</td>
+                              <td>
+                                <fmt:formatDate
+                                  value="${bookingDetail.booking_check_in}"
+                                  pattern="dd-MM-yyyy"
+                                />
+                              </td>
+                              <td>
+                                <fmt:formatDate
+                                  value="${bookingDetail.booking_check_out}"
+                                  pattern="dd-MM-yyyy"
+                                />
+                              </td>
 
-
-                          </td>
-                        </tr>
-                      </c:forEach>
-
+                              <td>${bookingDetail.number_of_adult}</td>
+                              <td>${bookingDetail.number_of_children}</td>
+                            </tr>
+                          </c:forEach>
                     </tbody>
                   </table>
                 </div>
               </div>
+              </c:if>
+              <c:if test="${empty bookingDetailList}">
+                  <h3>No booking detail </h3>
+                </c:if>
               <!--/ Hoverable Table rows -->
             </div>
 
@@ -254,11 +239,6 @@ prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     <!-- / Layout wrapper -->
 
     <!-- Core JS -->
-    <script src='<c:url value="/resources/static/assets/vendor/js/helpers.js" />'></script>
-    <script src='<c:url value="/resources/static/assets/js/config.js" />'></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <!-- build:js assets/vendor/js/core.js -->
     <script src='<c:url value="/resources/static/assets/vendor/libs/jquery/jquery.js" />'></script>
     <script src='<c:url value="/resources/static/assets/vendor/libs/popper/popper.js" />'></script>

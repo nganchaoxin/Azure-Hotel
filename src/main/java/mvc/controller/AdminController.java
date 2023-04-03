@@ -1,14 +1,10 @@
 package mvc.controller;
 
-import mvc.entity.CategoryEntity;
-import mvc.entity.ImageEntity;
-import mvc.entity.RoomEntity;
+import mvc.entity.*;
+import mvc.enums.BookingStatus;
 import mvc.enums.RoomStatus;
 import mvc.repository.ImageRepository;
-import mvc.service.BookingService;
-import mvc.service.CategoryService;
-import mvc.service.ImageService;
-import mvc.service.RoomService;
+import mvc.service.*;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -17,8 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
@@ -47,6 +43,9 @@ public class AdminController {
     @Autowired
     ImageRepository imageRepository;
 
+    @Autowired
+    BookingDetailService bookingDetailService;
+
     // ROOM
     // Show
     @RequestMapping(value = "/room", method = RequestMethod.GET)
@@ -58,7 +57,7 @@ public class AdminController {
     }
 
     // Add
-    @RequestMapping(value = "/addRoom", method = RequestMethod.GET,produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = "/addRoom", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
     public String showAddRoom(Model model) {
         model.addAttribute("room", new RoomEntity());
         model.addAttribute("action", "addRoom");
@@ -87,7 +86,7 @@ public class AdminController {
     }
 
     // Edit
-    @RequestMapping(value = "/editRoom/{roomId}", method = RequestMethod.GET,produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = "/editRoom/{roomId}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
     public String showEditRoom(Model model, @PathVariable int roomId) {
         model.addAttribute("room", roomService.findRoomById(roomId));
         model.addAttribute("msg", "Update room information");
@@ -106,7 +105,7 @@ public class AdminController {
     }
 
     // Update
-    @RequestMapping(value = "/editRoom/updateRoom", method = RequestMethod.POST,produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = "/editRoom/updateRoom", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     public String updateRoom(@Valid @ModelAttribute("room") RoomEntity room, BindingResult result, Model model) {
 
         if (result.hasErrors()) {
@@ -142,7 +141,7 @@ public class AdminController {
     }
 
     // Add
-    @RequestMapping(value = "/addCategory", method = RequestMethod.GET,produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = "/addCategory", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
     public String showAddCatgory(Model model) {
         model.addAttribute("category", new CategoryEntity());
         model.addAttribute("action", "addCategory");
@@ -168,8 +167,9 @@ public class AdminController {
         categoryService.save(category);
         return "redirect:/admin/category";
     }
+
     // Edit
-    @RequestMapping(value = "/editCategory/{categoryId}", method = RequestMethod.GET,produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = "/editCategory/{categoryId}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
     public String showEditCategory(Model model, @PathVariable int categoryId) {
         model.addAttribute("category", categoryService.findById(categoryId));
         model.addAttribute("msg", "Update category information");
@@ -188,7 +188,7 @@ public class AdminController {
     }
 
     // Update
-    @RequestMapping(value = "/editCategory/updateCategory", method = RequestMethod.POST,produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = "/editCategory/updateCategory", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     public String updateCategory(@Valid @ModelAttribute("category") CategoryEntity category, BindingResult result, Model model) {
 
         if (result.hasErrors()) {
@@ -211,13 +211,34 @@ public class AdminController {
     }
 
     // BOOKING
-    // Show
+    // Show booking
     @RequestMapping(value = "/booking", method = RequestMethod.GET)
     public String showBooking(Model model) {
-        //List<BookingEntity> bookingList = bookingService.findAll();
+        List<BookingEntity> bookingList = bookingService.findAll();
 
-        // model.addAttribute("bookingList",bookingList);
+        model.addAttribute("bookingList", bookingList);
         return "admin/booking";
+    }
+
+
+    // View booking detail
+    @RequestMapping(value = "/viewBookingDetail/{id}", method = RequestMethod.GET)
+    public String viewBookingDetail(Model model, @PathVariable(name = "id") int id) {
+        List<BookingDetailEntity> bookingDetailList = bookingDetailService.findByBookingId(id);
+        model.addAttribute("bookingDetailList", bookingDetailList);
+
+        return "admin/bookingdetail";
+    }
+
+    // Cancel booking
+    @RequestMapping(value = "/cancelBooking/{id}", method = RequestMethod.GET)
+    public String cancelBooking(HttpServletRequest request, Model model, @PathVariable(name = "id") int id) {
+        BookingEntity bookingEntity = bookingService.findById(id);
+        bookingEntity.setBooking_status(BookingStatus.CANCEL);
+        bookingService.save(bookingEntity);
+        request.setAttribute("msg", "Cancel Booking Successfully!");
+
+        return "redirect:/booking";
     }
 
     // IMAGE
@@ -249,17 +270,17 @@ public class AdminController {
             @RequestPart("image_url") MultipartFile image_url,
             @RequestParam("category_name") String category_name) throws IOException {
 
-            ImageEntity i = new ImageEntity();
-            i.setImage_name(image_name);
-            //i.setImage_type(image_type);
-            i.setUrl(image_url.getBytes());
+        ImageEntity i = new ImageEntity();
+        i.setImage_name(image_name);
+        //i.setImage_type(image_type);
+        i.setUrl(image_url.getBytes());
 
-            CategoryEntity category = categoryService.findByCategoryName(category_name);
-            i.setCategoryEntity(category);
-            imageRepository.save(i);
+        CategoryEntity category = categoryService.findByCategoryName(category_name);
+        i.setCategoryEntity(category);
+        imageRepository.save(i);
 
-            setCategoryDropDownList(model);
-            return "redirect:/admin/image";
+        setCategoryDropDownList(model);
+        return "redirect:/admin/image";
 
     }
 
@@ -299,9 +320,6 @@ public class AdminController {
         return "redirect:/admin/image";
 
     }
-
-    // BOOKING
-
 
     // DROP DOWN
     private void setCategoryDropDownList(Model model) {

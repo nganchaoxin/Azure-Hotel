@@ -21,9 +21,6 @@ public class BookingDetailEntity {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date booking_check_out;
 
-    @Column(name = "total_price")
-    private double total_price;
-
     @Column(name = "number_of_person")
     private int number_of_person;
 
@@ -63,14 +60,6 @@ public class BookingDetailEntity {
 
     public void setBooking_check_out(Date booking_check_out) {
         this.booking_check_out = booking_check_out;
-    }
-
-    public double getTotal_price() {
-        return total_price;
-    }
-
-    public void setTotal_price(double total_price) {
-        this.total_price = total_price;
     }
 
     public int getNumber_of_person() {
