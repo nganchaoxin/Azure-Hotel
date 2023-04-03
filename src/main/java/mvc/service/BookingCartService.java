@@ -6,10 +6,14 @@ import mvc.repository.BookingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -19,6 +23,9 @@ import java.util.List;
 public class BookingCartService {
     @Autowired
     MailSender mailSender;
+
+    @Autowired
+    JavaMailSender javaMailSender;
     @Autowired
     BookingCartRepository bookingCartRepository;
 
@@ -93,7 +100,36 @@ public class BookingCartService {
                 bookingCartItemService.deleteAll(bookingCartItemEntities);
                 // Send email success booking new
                 String email = accountEntity.getEmail();
-                sendEmail(email, "Azure Hotel - New Booking Successfully", "Your Booking has been create successfully!");
+                List<BookingDetailEntity> bookingDetailEntities = bookingDetailService.findByBookingId(newBookingEntity.getId());
+                String body = "<h1>Azure Hotel - New Booking Successfully</h1>\n" +
+                        "<p>Woo hoo! Your order is on its way. Your order details can be found below.</p>\n" +
+                        "<p>Order #: "+newBookingEntity.getId()+"</p>\n" +
+                        "<p>Order Date: "+newBookingEntity.getBooking_date()+"</p>\n" +
+                        "<p>Order Total: "+newBookingEntity.getTotal_price()+"</p>\n" +
+                        "<p>Your Booking Details:</p>\n" +
+                        "<table>\n" +
+                        "  <tr>\n" +
+                        "    <th>Room</th>\n" +
+                        "    <th>Check In</th>\n" +
+                        "    <th>Check Out</th>\n" +
+                        "    <th>Price</th>\n" +
+                        "  </tr>\n" +
+                        "  <tr>\n" +
+                        "    <td>Phong Sieu Pham</td>\n" +
+                        "    <td>21/02/2022</td>\n" +
+                        "    <td>22/02/2022</td>\n" +
+                        "    <td>300.000 VND</td>\n" +
+                        "  </tr>\n" +
+                        "  <tr>\n" +
+                        "    <td>Phong Tong Thong</td>\n" +
+                        "    <td>21/02/2022</td>\n" +
+                        "    <td>22/02/2022</td>\n" +
+                        "    <td>500.000 CND</td>\n" +
+                        "  </tr>\n" +
+                        "</table>\n" +
+                        "<p>Best regards,<br>The Azure Hotel team</p>";
+
+                sendEmail(email, "Azure Hotel - New Booking Successfully", body);
                 model.addAttribute("status", "completed");
                 model.addAttribute("newBookingEntity", newBookingEntity);
                 model.addAttribute("bookingDetailEntity", bookingDetailService.findByBookingId(newBookingEntity.getId()).get(0));
@@ -114,12 +150,16 @@ public class BookingCartService {
         session.removeAttribute("totalDays");
     }
 
-    public void sendEmail(String to, String subject, String content) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(to);
-        mailMessage.setSubject(subject);
-        mailMessage.setText(content);
-
-        mailSender.send(mailMessage);
+    public void sendEmail(String recipient, String subject, String body) {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(recipient);
+            helper.setSubject(subject);
+            helper.setText(body, true);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        javaMailSender.send(message);
     }
 }
