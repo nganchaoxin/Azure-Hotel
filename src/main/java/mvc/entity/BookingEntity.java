@@ -42,6 +42,8 @@ public class BookingEntity {
     @OneToMany(mappedBy = "bookingEntity", cascade = CascadeType.ALL)
     private List<PaymentEntity> paymentEntities;
 
+
+
     public int getId() {
         return id;
     }

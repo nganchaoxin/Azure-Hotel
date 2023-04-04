@@ -19,7 +19,8 @@
     <link href='<c:url value="/resources/static/css/successpage.css" />' rel='stylesheet'>
     <script src='<c:url value="/resources/static/js/successpage.js" />'></script>
         <link href='<c:url value="/resources/static/css/bookingcart.css" />' rel='stylesheet'>
-        <link href='<c:url value="/resources/static/css/footer.css" />' rel='stylesheet'>
+        <link href='<c:url value="/resources/static/css/bookingdetail.css" />' rel='stylesheet'>
+
     <title>Tanz Hotel</title>
 </head>
 <body>
@@ -55,9 +56,9 @@
 
             </div>
         </header>
-
+<main>
 <c:if test="${status.equals('completed')}">
-<div class="order-status order-success">
+<div class="order-status order-success" style="height: 510px;">
   <div class="top-part">
     <i class="far fa-check-circle"></i>
     <h3>
@@ -98,7 +99,7 @@
 </div>
 </c:if>
 <c:if test="${status.equals('dismiss')}">
-<div class="order-status order-error">
+<div class="order-status order-error" style="height: 510px;">
   <div class="top-part">
     <i class="far fa-times-circle"></i>
     <h3>
@@ -142,13 +143,15 @@
   </ul>
 </div>
 </c:if>
-<footer class="footer_cart">
-                       <div class="footer_cart_logo">
-                           <a href="<c:url value="/"/>"><img src="<c:url value="/resources/static/images/Logo_logo.png" />" alt=""></a>
+</main>
+<footer class="footer_cart" style="bottom:0px;">
+                       <div class="footer_cart_logo" style="width: 10%;">
+                           <a href="./bookingcart"><img src='<c:url value="/resources/static/images/Logo_logo.png" />' alt=""></a>
                        </div>
                        <div class="footer_cart_content">
                            Website was designed by Thanh Tam and Ngan Pham, please don't copyright.
                        </div>
-                   </footer>
+    </footer>
 </body>
+
 </html>

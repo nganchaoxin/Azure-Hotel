@@ -74,7 +74,9 @@
                 </div>
             </c:if>
             <c:if test="${cartItemList.size() > 0}">
+
                 <div class="main-content-left">
+                <div class="room-card-list">
                     <c:forEach var="cartItem" items="${cartItemList}">
                         <div class="room-card">
                             <div class="room-card-image">
@@ -104,6 +106,7 @@
                             </div>
                         </div>
                     </c:forEach>
+                    </div>
 
                     <div class="customer-dtails">
                         <div id="customer-detail">
@@ -113,29 +116,34 @@
                                 <div class="dropbtn-icon"><i class="fas fa-chevron-down"></i></div>
                             </div>
                         </div>
-                        <div id="customer-detail-content">
+                        <div id="customer-detail-content" style="font-family: inherit;">
                             <div class="customer-info">
-                                <div class="customer-info_detail">
-                                    <div class="customer-info_heading">Full Name:</div>
-                                    <div class="customer-info_content">${accountEntity.last_name}
-                                        ${accountEntity.first_name}</div>
+                            <form:form class="form-horizontal" action="bookingcart/saveuserinfo" modelAttribute="accountEntity">
+                                <div class="form-group row" style="display: flex; align-items: center; width: 97%; margin-bottom: 1.3em;">
+                                    <label class="col-sm-4 col-form-label" style="font-size: 16px;">First Name:</label>
+                                    <form:input path="first_name" type="text" class="input" placeholder="First Name" style="text-align: left;height: 40px;"/>
                                 </div>
-                                <div class="customer-info_detail">
-                                    <div class="customer-info_heading">Birth Date</div>
-                                    <div class="customer-info_content"><fmt:formatDate value="${accountEntity.birth_date}" pattern="dd/MM/yyyy" /></div>
+                                <div class="form-group row" style="display: flex; align-items: center; width: 97%; margin-bottom: 1.3em;">
+                                    <label for="inputEmail" class="col-sm-4 col-form-label" style="font-size: 16px;">Last Name:</label>
+                                    <form:input path="last_name" type="text" class="input" placeholder="Last Name" style="text-align: left;height: 40px;"/>
                                 </div>
-                                <div class="customer-info_detail">
-                                    <div class="customer-info_heading">Phone Number:</div>
-                                    <div class="customer-info_content">${accountEntity.phone_number}</div>
+                                <div class="form-group row" style="display: flex; align-items: center; width: 97%; margin-bottom: 1.3em;">
+                                    <label class="col-sm-4 col-form-label" style="font-size: 16px;">Email:</label>
+                                    <form:input path="email" type="text" class="input" placeholder="Email" style="text-align: left;height: 40px;" readonly="true"/>
                                 </div>
-                                <div class="customer-info_detail">
-                                    <div class="customer-info_heading">Gender</div>
-                                    <div class="customer-info_content">${accountEntity.gender}</div>
+                                <div class="form-group row" style="display: flex; align-items: center; width: 97%;margin-bottom: 1.3em;">
+                                    <label class="col-sm-4 col-form-label" style="font-size: 16px;">Phone Number:</label>
+                                    <form:input path="phone_number" type="text" class="input" placeholder="Phone Number" style="text-align: left;height: 40px;"/>
                                 </div>
-                                <div class="customer-info_detail">
-                                    <div class="customer-info_heading">Address</div>
-                                    <div class="customer-info_content">${accountEntity.address}</div>
+                                <div class="form-group row" style="display: flex; align-items: center; width: 97%; ">
+                                    <label class="col-sm-4 col-form-label" style="font-size: 16px;">Address:</label>
+                                    <form:input path="address" type="text" class="input" placeholder="Address" style="text-align: left;height: 40px;"/>
                                 </div>
+                                <div class="form-group row" style="display: flex; align-items: center; width: 97%;">
+                                    <label class="col-sm-4 col-form-label" style="font-size: 16px;"></label>
+                                    <button class="btn_submit_payment" type="submit" style="height: 45px;">Save</button>
+                                </div>
+                              </form:form>
                             </div>
                         </div>
                     </div>
@@ -237,15 +245,12 @@
                                 <div class="room-p_total">total</div>
                             </div>
                             <div class="booking-summary-date_and_staynight">
-                                <div class="booking_checkin"><fmt:formatDate value="${cartItemList.get(0).getCheck_in()}" pattern="dd MMM yy"/></div>
-                                <div class="booking-to" style="margin:0px .1em;">-</div>
-                                <div class="booking_checkout"><fmt:formatDate value="${cartItemList.get(0).getCheck_out()}" pattern="dd MMM yy"/></div>
+                                <div class="booking-summary-accupancy-room">
+                                    <div class="booking-summary-accupancy-number_of_room">${cartItemList.size()} room,</div>
+                                    <div class="booking-summary-accupancy-number_of_guest">${totalGuests} guests</div>
+                                </div>
                                 <div class="booking_space"></div>
                                 <div class="booking_staynight">${totalDays} night</div>
-                            </div>
-                            <div class="booking-summary-accupancy-room">
-                                <div class="booking-summary-accupancy-number_of_room">${cartItemList.size()} room,</div>
-                                <div class="booking-summary-accupancy-number_of_guest">${totalGuests} guests</div>
                             </div>
                             <div class="booking-summary-room_info"></div>
                         </div>
@@ -260,14 +265,23 @@
                                             <a href="bookingcart/delete&cartitemid=${cartItem.id}" ><i style="color: black; font-size: 13px;" class="far fa-trash-alt"></i></a>
                                             </div>
                                             </div>
+
                                         <div class="booking-summary-stay-detail-room-detail_info">
                                             <div class="booking-summary-stay-detail-room-detail_info_guest">
                                                 ${cartItem.roomEntity.categoryEntity.max_occupancy} guests</div>
-                                            <div class="booking-summary-stay-detail-room-detail_info_staynight">1 night
+                                            <div class="booking-summary-stay-detail-room-detail_info_staynight">${cartItem.getTotal_night()} night
                                             </div>
                                             <div class="booking-summary-stay-detail-room-detail_info_space"></div>
+                                            <div class="booking_staynight"></div>
+                                        </div>
+                                        <div class="booking-summary-date_and_staynight">
+                                            <div class="booking_checkin"><fmt:formatDate value="${cartItem.getCheck_in()}" pattern="dd MMM yy"/></div>
+                                            <div class="booking-to" style="margin:0px .1em;">-</div>
+                                            <div class="booking_checkout"><fmt:formatDate value="${cartItem.getCheck_out()}" pattern="dd MMM yy"/></div>
+                                            <div class="booking_space"></div>
+
                                             <div class="booking-summary-stay-detail-room-detail_info_price">VND
-                                                <fmt:formatNumber value="${cartItem.roomEntity.categoryEntity.price}"
+                                                <fmt:formatNumber value="${cartItem.roomEntity.categoryEntity.price*cartItem.total_night}"
                                                     pattern="#,###.##" />
                                             </div>
                                         </div>
@@ -283,15 +297,13 @@
                             </div>
                         </div>
                         <c:if test="${payment_status.equals('payment_available')}">
+                        <form:form action="bookingcart/checkout" method="POST">
                             <div class="customer_note">
-                                <input name="checkout_note" class="input_note" type='text' placeholder='Enter your note...' />
+                                <input name="note" class="input_note" type='text' placeholder='Enter your note...' />
                             </div>
                             <div class="button_checkout">
-
-                                <form:form action="bookingcart/checkout" method="POST">
                                     <button type="submit" class="btn_checkout">Check Out</button>
                                 </form:form>
-
                             </div>
                         </c:if>
                     </div>
@@ -299,7 +311,7 @@
             </c:if>
             </div>
         </main>
-        <footer class="footer_cart">
+        <footer class="footer_cart" style="top:1471px;">
                        <div class="footer_cart_logo">
                            <a href="./bookingcart"><img src="resources/static/images/Logo_logo.png" alt=""></a>
                        </div>

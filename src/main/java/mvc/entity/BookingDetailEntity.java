@@ -30,6 +30,9 @@ public class BookingDetailEntity {
     @Column(name = "number_of_children")
     private int number_of_children;
 
+    @Column(name = "total_night")
+    private int total_night;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "booking_id")
     private BookingEntity bookingEntity;
@@ -100,5 +103,13 @@ public class BookingDetailEntity {
 
     public void setRoomEntity(RoomEntity roomEntity) {
         this.roomEntity = roomEntity;
+    }
+
+    public int getTotal_night() {
+        return total_night;
+    }
+
+    public void setTotal_night(int total_night) {
+        this.total_night = total_night;
     }
 }

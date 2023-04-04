@@ -52,6 +52,8 @@ public class BookingCartController {
         // Check null account
         String userMail = (String) session.getAttribute("userEmail");
         AccountEntity accountEntity = accountService.findByEmail(userMail);
+        String role = accountEntity.getUserRoles().iterator().next().getRole().name();
+        model.addAttribute("accountEntity", accountEntity);
         if (accountEntity == null) {
             return "login";
         }
@@ -85,6 +87,17 @@ public class BookingCartController {
         return "bookingcart";
     }
 
+    @PostMapping(value="/saveuserinfo", produces = "text/plain;charset=UTF-8")
+    public String saveUserInfo(@ModelAttribute("accountEntity") AccountEntity account) {
+        AccountEntity accountEntity = accountService.findByEmail(account.getEmail());
+        accountEntity.setFirst_name(account.getFirst_name());
+        accountEntity.setLast_name(account.getLast_name());
+        accountEntity.setAddress(account.getAddress());
+        accountEntity.setPhone_number((account.getPhone_number()));
+        accountService.save(accountEntity);
+        return "redirect:/bookingcart";
+    }
+
     @RequestMapping(value = "/payment", method = POST, produces = "text/plain;charset=UTF-8")
     public String saveNewAccountBanking(@ModelAttribute(name = "accountBanking") AccountBankingEntity accountBanking, HttpSession session) {
         // Get Account
@@ -96,11 +109,11 @@ public class BookingCartController {
     }
 
     @RequestMapping(value = "/checkout", method = POST, produces = "text/plain;charset=UTF-8")
-    public String checkOut(HttpSession session, Model model) throws Exception {
+    public String checkOut(HttpSession session, Model model, @RequestParam("note") String note) throws Exception {
         // Get account
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         AccountBankingEntity accountBanking = accountBankingService.findByAccountId(accountEntity.getId()).get(0);
-        bookingCartService.checkOut(accountEntity, accountBanking, session, model);
+        bookingCartService.checkOut(accountEntity, accountBanking, session, model, note);
         return "successpage";
     }
 
@@ -133,13 +146,13 @@ public class BookingCartController {
     public void setInfoBookingCart(List<BookingCartItemEntity> listBookingCartItemEntity, HttpSession session) {
         int totalGuests = 0;
         double totalPrices = 0;
+        int totalDays = 0;
         for (BookingCartItemEntity cartItem : listBookingCartItemEntity) {
-            totalPrices += cartItem.getRoomEntity().getCategoryEntity().getPrice();
+            totalPrices += cartItem.getRoomEntity().getCategoryEntity().getPrice()*cartItem.getTotal_night();
             totalGuests += cartItem.getRoomEntity().getCategoryEntity().getMax_occupancy();
+            totalDays += cartItem.getTotal_night();
         }
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        int differenceInMillis = (int) (listBookingCartItemEntity.get(0).getCheck_out().getTime() - listBookingCartItemEntity.get(0).getCheck_in().getTime());
-        int totalDays = differenceInMillis / (1000 * 60 * 60 * 24);
+
         session.setAttribute("totalDays", totalDays);
         session.setAttribute("totalGuests", totalGuests);
         session.setAttribute("totalPrices", totalPrices);
