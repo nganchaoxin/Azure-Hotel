@@ -63,13 +63,14 @@ public class BookingCartService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void checkOut(AccountEntity accountEntity, AccountBankingEntity accountBanking, HttpSession session, Model model) throws Exception {
+    public void checkOut(AccountEntity accountEntity, AccountBankingEntity accountBanking, HttpSession session, Model model, String note) throws Exception {
         try {
             if (accountBanking.getBalance() > (Double) session.getAttribute("totalPrices")) {
                 //// Create new booking entity
                 BookingEntity newBookingEntity = new BookingEntity();
                 newBookingEntity.setBooking_date(new Date());
                 newBookingEntity.setBooking_status(BookingStatus.COMPLETED);
+                newBookingEntity.setNote(note);
                 newBookingEntity.setAccountEntity(accountEntity);
                 newBookingEntity.setTotal_price((Double) session.getAttribute("totalPrices"));
                 bookingService.save(newBookingEntity);
@@ -84,6 +85,8 @@ public class BookingCartService {
                 newPayment.setBookingEntity(newBookingEntity);
                 newPayment.setPayment_date(new Date());
                 newPayment.setAmount((Double) session.getAttribute("totalPrices"));
+                String paymentNote = ("Payment for booking with id = "+newBookingEntity.getId()+ "date: "+newBookingEntity.getBooking_date());
+                newPayment.setNote(paymentNote);
                 newPayment.setAccountBankingEntity(accountBankingService.findByAccountId(accountEntity.getId()).get(0));
                 paymentService.save(newPayment);
 

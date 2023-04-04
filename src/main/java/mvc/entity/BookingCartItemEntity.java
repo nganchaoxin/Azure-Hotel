@@ -24,6 +24,9 @@ public class BookingCartItemEntity {
     @JoinColumn(name = "room_id")
     private RoomEntity roomEntity;
 
+    @Column(name="total_night")
+    private int total_night;
+
     public int getId() {
         return id;
     }
@@ -62,5 +65,13 @@ public class BookingCartItemEntity {
 
     public void setCheck_out(Date check_out) {
         this.check_out = check_out;
+    }
+
+    public int getTotal_night() {
+        return total_night;
+    }
+
+    public void setTotal_night(int total_night) {
+        this.total_night = total_night;
     }
 }

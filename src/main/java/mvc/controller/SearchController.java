@@ -102,10 +102,16 @@ public class SearchController {
         List<BookingCartItemEntity> cartItemSessionList = (List<BookingCartItemEntity>) request.getSession().getAttribute("cartItemList");
         List<BookingCartItemEntity> bookingCartItemDatabase = bookingCartItemService.findAllByBookingCartId(bookingCartList.get(0).getId());
 
+        Date check_in = (Date) session.getAttribute("check_in");
+        Date check_out = (Date) session.getAttribute("check_out");
         // Set new cart item
         BookingCartItemEntity cartItem = new BookingCartItemEntity();
-        cartItem.setCheck_in((Date) session.getAttribute("check_in"));
-        cartItem.setCheck_out((Date) session.getAttribute("check_out"));
+        cartItem.setCheck_in(check_in);
+        cartItem.setCheck_out(check_out);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        int differenceInMillis = (int) (cartItem.getCheck_out().getTime() - cartItem.getCheck_in().getTime());
+        int total_night = differenceInMillis / (1000 * 60 * 60 * 24);
+        cartItem.setTotal_night(total_night);
         cartItem.setRoomEntity(room);
         cartItem.setBookingCartEntity(bookingCartList.get(0));
 
@@ -140,6 +146,7 @@ public class SearchController {
                 return i;
             }
         }
+
         return -1;
     }
 

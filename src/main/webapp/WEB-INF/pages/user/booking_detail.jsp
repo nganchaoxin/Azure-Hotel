@@ -211,8 +211,7 @@
                       <th>Room</th>
                       <th>Check In</th>
                       <th>Check Out</th>
-                      <th>Adult</th>
-                      <th>Children</th>
+                      <th>Total night</th>
                       <th>Price</th>
                     </tr>
                   </thead>
@@ -222,8 +221,8 @@
                       <td><strong>${item.roomEntity.room_name}</strong></td>
                       <td><fmt:formatDate value="${item.booking_check_in}" pattern="dd-MM-yyyy" /></td>
                       <td><fmt:formatDate value="${item.booking_check_out}" pattern="dd-MM-yyyy" /></td>
-                      <td>${item.number_of_adult}</td>
-                      <td>${item.number_of_children}</td>
+                      <td>${item.total_night}</td>
+                      <td><fmt:formatNumber value="${item.roomEntity.categoryEntity.price*item.total_night}"/> VND</td>
                     </tr>
                   </c:forEach>
                   </tbody>
