@@ -13,6 +13,6 @@ public interface CategoryRepository extends CrudRepository<CategoryEntity, Integ
 
     CategoryEntity findById(int id);
 
-    @Query(value="select category.* from category where category_name = ?", nativeQuery = true)
+    @Query(value = "select category.* from category where category_name = ?", nativeQuery = true)
     CategoryEntity findByCategoryName(String categoryName);
 }

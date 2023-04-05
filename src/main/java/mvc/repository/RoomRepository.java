@@ -4,7 +4,6 @@ import mvc.entity.RoomEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -40,7 +39,6 @@ public interface RoomRepository extends PagingAndSortingRepository<RoomEntity, I
             countQuery = "SELECT COUNT(*) FROM room LEFT JOIN category ON category.id = room.category_id WHERE category.category_name = :roomType AND :guests <= category.max_occupancy",
             nativeQuery = true)
     Page<RoomEntity> getAvailableRooms(@Param("checkin") Date checkin, @Param("checkout") Date checkout, @Param("roomType") String roomType, @Param("guests") int guests, Pageable pageable);
-
 
 
 }

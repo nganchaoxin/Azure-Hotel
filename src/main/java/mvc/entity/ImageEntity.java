@@ -23,9 +23,6 @@ public class ImageEntity {
     @JoinColumn(name = "category_id")
     private CategoryEntity categoryEntity;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "post_id")
-    private PostEntity postEntity;
 
     public long getId() {
         return id;
@@ -67,12 +64,5 @@ public class ImageEntity {
         this.categoryEntity = categoryEntity;
     }
 
-    public PostEntity getPostEntity() {
-        return postEntity;
-    }
-
-    public void setPostEntity(PostEntity postEntity) {
-        this.postEntity = postEntity;
-    }
 
 }

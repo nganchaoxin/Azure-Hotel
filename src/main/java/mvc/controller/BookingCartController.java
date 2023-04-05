@@ -1,12 +1,13 @@
 package mvc.controller;
 
-import mvc.entity.*;
-import mvc.enums.BookingStatus;
+import mvc.entity.AccountBankingEntity;
+import mvc.entity.AccountEntity;
+import mvc.entity.BookingCartEntity;
+import mvc.entity.BookingCartItemEntity;
 import mvc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -87,7 +88,7 @@ public class BookingCartController {
         return "bookingcart";
     }
 
-    @PostMapping(value="/saveuserinfo", produces = "text/plain;charset=UTF-8")
+    @PostMapping(value = "/saveuserinfo", produces = "text/plain;charset=UTF-8")
     public String saveUserInfo(@ModelAttribute("accountEntity") AccountEntity account) {
         AccountEntity accountEntity = accountService.findByEmail(account.getEmail());
         accountEntity.setFirst_name(account.getFirst_name());
@@ -148,7 +149,7 @@ public class BookingCartController {
         double totalPrices = 0;
         int totalDays = 0;
         for (BookingCartItemEntity cartItem : listBookingCartItemEntity) {
-            totalPrices += cartItem.getRoomEntity().getCategoryEntity().getPrice()*cartItem.getTotal_night();
+            totalPrices += cartItem.getRoomEntity().getCategoryEntity().getPrice() * cartItem.getTotal_night();
             totalGuests += cartItem.getRoomEntity().getCategoryEntity().getMax_occupancy();
             totalDays += cartItem.getTotal_night();
         }

@@ -43,7 +43,6 @@ public class BookingEntity {
     private List<PaymentEntity> paymentEntities;
 
 
-
     public int getId() {
         return id;
     }

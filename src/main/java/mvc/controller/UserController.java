@@ -17,8 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,7 +54,7 @@ public class UserController {
 
     @GetMapping(value = "/account")
     public String account(Model model, HttpSession session) {
-        model.addAttribute("accountEntity",(AccountEntity) session.getAttribute("accountEntity"));
+        model.addAttribute("accountEntity", session.getAttribute("accountEntity"));
         setGenderDropDownList(model);
         return "user/account";
     }
@@ -65,22 +63,22 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String saveUser(
-                           @RequestPart(name="photo") MultipartFile photo,
-                           @RequestParam(name = "first_name") String first_name,
-                           @RequestParam(name = "last_name") String last_name,
-                           @RequestParam(name = "address") String address,
-                           @RequestParam(name = "username") String username,
-                           @RequestParam(name = "phone_number") String phone_number,
-                           @RequestParam(name = "gender") Gender gender,
-                           @RequestParam(name = "birth_date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date birth_date,
-                           HttpSession session, Model model) throws IOException {
+            @RequestPart(name = "photo") MultipartFile photo,
+            @RequestParam(name = "first_name") String first_name,
+            @RequestParam(name = "last_name") String last_name,
+            @RequestParam(name = "address") String address,
+            @RequestParam(name = "username") String username,
+            @RequestParam(name = "phone_number") String phone_number,
+            @RequestParam(name = "gender") Gender gender,
+            @RequestParam(name = "birth_date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date birth_date,
+            HttpSession session, Model model) throws IOException {
         AccountEntity accountEntity = accountService.findByEmail(((AccountEntity) session.getAttribute("accountEntity")).getEmail());
         accountEntity.setFirst_name(first_name);
 
-        if(photo.getOriginalFilename() == "") {
+        if (photo.getOriginalFilename() == "") {
             byte[] ph = accountEntity.getPhoto();
             accountEntity.setPhoto(ph);
-        }else {
+        } else {
             accountEntity.setPhoto(photo.getBytes());
         }
 
@@ -116,7 +114,7 @@ public class UserController {
             String encodedString = UUID.randomUUID().toString();
             accountEntity.setToken(encodedString);
             accountService.save(accountEntity);
-            sendEmail(email, "Azure Hotel Account - Forgot your password", "You have been send a request forgot your password, please click here to set new pass word:"+"http://localhost:8080/Azure-Hotel/user/forgotpassword&id="+accountEntity.getId());
+            sendEmail(email, "Azure Hotel Account - Forgot your password", "You have been send a request forgot your password, please click here to set new pass word:" + "http://localhost:8080/Azure-Hotel/user/forgotpassword&id=" + accountEntity.getId());
         }
         return "user/forgot_password";
     }
@@ -124,9 +122,9 @@ public class UserController {
     @GetMapping("/forgotpassword&id={id}")
     public String changePassWord(Model model, @PathVariable int id) {
         AccountEntity accountEntity = accountService.findById(id);
-        if(accountEntity.getToken() == "" || accountEntity.getToken() == null) {
-            return "notFound";
-        }else {
+        if (accountEntity.getToken() == "" || accountEntity.getToken() == null) {
+            return "not_found";
+        } else {
             model.addAttribute("page", "changePassword");
             return "user/forgot_password";
         }
@@ -135,19 +133,19 @@ public class UserController {
     @PostMapping("/forgotpassword&id={id}")
     public String saveNewPassword(@PathVariable("id") int id, @RequestParam String password, @RequestParam String password_two, HttpSession session, Model model) {
         AccountEntity accountEntity = accountService.findById(id);
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            boolean passwordMatches = encoder.matches(password, accountEntity.getPassword());
-            if (passwordMatches == false && password.equals(password_two)) {
-                accountEntity.setPassword(encoder.encode(password));
-                accountEntity.setToken(null);
-                accountService.save(accountEntity);
-                model.addAttribute("page", "changePasswordSuccess");
-                session.setAttribute("accountEntity", accountEntity);
-            } else {
-                model.addAttribute("page", "changePassword");
-                model.addAttribute("type", "wrong");
-                model.addAttribute("msg", "Password was existing or password repeat not same!");
-            }
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        boolean passwordMatches = encoder.matches(password, accountEntity.getPassword());
+        if (!passwordMatches && password.equals(password_two)) {
+            accountEntity.setPassword(encoder.encode(password));
+            accountEntity.setToken(null);
+            accountService.save(accountEntity);
+            model.addAttribute("page", "changePasswordSuccess");
+            session.setAttribute("accountEntity", accountEntity);
+        } else {
+            model.addAttribute("page", "changePassword");
+            model.addAttribute("type", "wrong");
+            model.addAttribute("msg", "Password was existing or password repeat not same!");
+        }
         return "user/forgot_password";
     }
 

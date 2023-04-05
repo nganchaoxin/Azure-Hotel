@@ -5,7 +5,6 @@ import mvc.enums.BookingStatus;
 import mvc.repository.BookingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,6 @@ import org.springframework.ui.Model;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
@@ -85,7 +83,7 @@ public class BookingCartService {
                 newPayment.setBookingEntity(newBookingEntity);
                 newPayment.setPayment_date(new Date());
                 newPayment.setAmount((Double) session.getAttribute("totalPrices"));
-                String paymentNote = ("Payment for booking with id = "+newBookingEntity.getId()+ "date: "+newBookingEntity.getBooking_date());
+                String paymentNote = ("Payment for booking with id = " + newBookingEntity.getId() + "date: " + newBookingEntity.getBooking_date());
                 newPayment.setNote(paymentNote);
                 newPayment.setAccountBankingEntity(accountBankingService.findByAccountId(accountEntity.getId()).get(0));
                 paymentService.save(newPayment);
@@ -106,9 +104,9 @@ public class BookingCartService {
                 List<BookingDetailEntity> bookingDetailEntities = bookingDetailService.findByBookingId(newBookingEntity.getId());
                 String body = "<h1>Azure Hotel - New Booking Successfully</h1>\n" +
                         "<p>Woo hoo! Your order is on its way. Your order details can be found below.</p>\n" +
-                        "<p>Order #: "+newBookingEntity.getId()+"</p>\n" +
-                        "<p>Order Date: "+newBookingEntity.getBooking_date()+"</p>\n" +
-                        "<p>Order Total: "+newBookingEntity.getTotal_price()+"</p>\n" +
+                        "<p>Order #: " + newBookingEntity.getId() + "</p>\n" +
+                        "<p>Order Date: " + newBookingEntity.getBooking_date() + "</p>\n" +
+                        "<p>Order Total: " + newBookingEntity.getTotal_price() + "</p>\n" +
                         "<p>Your Booking Details:</p>\n" +
                         "<table>\n" +
                         "  <tr>\n" +
@@ -140,12 +138,13 @@ public class BookingCartService {
             } else {
                 throw new Exception("An account error occurs. Procedure. Check whether the account balance is sufficient for the calling party.");
             }
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             model.addAttribute("status", "dismiss");
             model.addAttribute("errorMessage", ex.getMessage());
             model.addAttribute("accountEntity", accountEntity);
         }
     }
+
     public void removeSession(HttpSession session) {
         session.removeAttribute("cartItemList");
         session.removeAttribute("totalPrices");

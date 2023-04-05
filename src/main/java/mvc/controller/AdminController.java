@@ -64,7 +64,7 @@ public class AdminController {
         setCategoryDropDownList(model);
         setStatusDropDownList(model);
 
-        return "admin/updateroom";
+        return "admin/update_room";
     }
 
     // Save
@@ -79,7 +79,7 @@ public class AdminController {
                 model.addAttribute("type", "update");
                 model.addAttribute("message", "Plz input category");
             }
-            return "admin/updateroom";
+            return "admin/update_room";
         }
         roomService.saveRoom(room);
         return "redirect:/admin/room";
@@ -96,12 +96,12 @@ public class AdminController {
         setStatusDropDownList(model);
 
         if (roomService.findRoomById(roomId) != null) {
-            return "admin/updateroom";
+            return "admin/update_room";
         } else {
             model.addAttribute("id", roomId);
         }
 
-        return "notFound";
+        return "not_found";
     }
 
     // Update
@@ -113,7 +113,7 @@ public class AdminController {
             setCategoryDropDownList(model);
             setStatusDropDownList(model);
 
-            return "admin/updateroom";
+            return "admin/update_room";
         }
 
         roomService.saveRoom(room);
@@ -147,7 +147,7 @@ public class AdminController {
         model.addAttribute("action", "addCategory");
         setCategoryDropDownList(model);
 
-        return "admin/updatecategory";
+        return "admin/update_category";
     }
 
     // Save
@@ -162,7 +162,7 @@ public class AdminController {
                 model.addAttribute("message", "Plz input category");
             }
 
-            return "admin/updatecategory";
+            return "admin/update_category";
         }
         categoryService.save(category);
         return "redirect:/admin/category";
@@ -179,12 +179,12 @@ public class AdminController {
         setStatusDropDownList(model);
 
         if (categoryService.findById(categoryId) != null) {
-            return "admin/updatecategory";
+            return "admin/update_category";
         } else {
             model.addAttribute("id", categoryId);
         }
 
-        return "notFound";
+        return "not_found";
     }
 
     // Update
@@ -195,7 +195,7 @@ public class AdminController {
             model.addAttribute("type", "update");
             setCategoryDropDownList(model);
 
-            return "admin/updateroom";
+            return "admin/update_room";
         }
         categoryService.save(category);
         return "redirect:/admin/category";
@@ -227,7 +227,7 @@ public class AdminController {
         List<BookingDetailEntity> bookingDetailList = bookingDetailService.findByBookingId(id);
         model.addAttribute("bookingDetailList", bookingDetailList);
 
-        return "admin/bookingdetail";
+        return "admin/booking_detail";
     }
 
     // Cancel booking
@@ -255,7 +255,7 @@ public class AdminController {
     public String showAddImage(Model model) {
         setCategoryDropDownList(model);
 
-        return "admin/updateimage";
+        return "admin/update_image";
     }
 
     // Save
@@ -305,12 +305,12 @@ public class AdminController {
         setCategoryDropDownList(model);
 
         if (imageService.findById(imageId) != null) {
-            return "admin/updateimage";
+            return "admin/update_image";
         } else {
             model.addAttribute("id", imageId);
         }
 
-        return "notFound";
+        return "not_found";
     }
 
     // Delete

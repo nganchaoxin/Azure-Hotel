@@ -4,12 +4,9 @@ import mvc.entity.AccountEntity;
 import mvc.entity.BookingCartEntity;
 import mvc.entity.RoleEntity;
 import mvc.enums.UserStatus;
-import mvc.repository.RoleRepository;
 import mvc.service.AccountService;
-import mvc.service.BookingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -59,11 +56,11 @@ public class SignUpController {
         // Check password
         AccountEntity accountTest = accountService.findByEmail(accountEntity.getEmail());
         if (!accountEntity.getPassword().equals(password_two)) {
-            model.addAttribute("message","Password repeat is not correct!");
+            model.addAttribute("message", "Password repeat is not correct!");
             model.addAttribute("type", "wrongEmail");
             return "signup";
-        }else if(accountTest != null){
-            model.addAttribute("message","Email has been signed up!");
+        } else if (accountTest != null) {
+            model.addAttribute("message", "Email has been signed up!");
             model.addAttribute("type", "wrongPass");
             return "signup";
         }
@@ -90,7 +87,7 @@ public class SignUpController {
         int id = accountEntity.getId();
         String body = "<h1>Verify your email address</h1>\n" +
                 "<p>To continue setting up your Azure account, please verify that this is your email address.</p>\n" +
-                "<a href=http://localhost:8080/Azure-Hotel/activate?token="+encodedString+" class=\"btn btn-primary\" type=\"button\">Verify email address</a>\n" +
+                "<a href=http://localhost:8080/Azure-Hotel/activate?token=" + encodedString + " class=\"btn btn-primary\" type=\"button\">Verify email address</a>\n" +
                 "<p>Best regards,<br>The Azure Hotel team</p>";
         sendEmail(email, "Azure Hotel -Signup new account", body);
         model.addAttribute("accountEntity", accountEntity);
@@ -113,7 +110,7 @@ public class SignUpController {
             accountService.save(accountEntity);
             return "login";
         } else {
-            return "notFound";
+            return "not_found";
         }
     }
 
