@@ -30,8 +30,9 @@ public class CategoryEntity {
 
     @Column(name = "price")
     private double price;
-
-
+    @Column(name="image_represent")
+    @Lob
+    private  byte[] image_represent;
     @OneToMany(mappedBy = "categoryEntity")
     private List<RoomEntity> roomEntities;
 
@@ -111,4 +112,11 @@ public class CategoryEntity {
         this.imageEntities = imageEntities;
     }
 
+    public byte[] getImage_represent() {
+        return image_represent;
+    }
+
+    public void setImage_represent(byte[] image_represent) {
+        this.image_represent = image_represent;
+    }
 }

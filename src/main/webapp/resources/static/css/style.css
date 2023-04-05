@@ -10193,7 +10193,7 @@ h5,
   height: inherit !important;
 }
 .booking-form .btn-primary {
-  background: #7b6233;
+  background: #cca772;
   border: none !important;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -10245,7 +10245,7 @@ h5,
 }
 @media (min-width: 768px) {
   .wrap-about {
-    padding-left: 6em;
+    padding-left: 0em;
   }
 }
 
@@ -11843,6 +11843,7 @@ textarea.form-control {
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
   padding: 20px;
   text-align: center;
+
 }
 
 .card img {
@@ -11898,3 +11899,155 @@ textarea.form-control {
   max-width: 100%;
   margin-bottom: 10px;
 }
+/*scroll*/
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #000;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: #F5F5F5;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #000;
+  border-radius: 10px;
+}
+::-webkit-scrollbar {
+  width: 5px;
+  height: 10px;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #000;
+  border-radius: 10px;
+}
+.scrollable {
+  scrollbar-color: #000 #F5F5F5;
+}
+/**/
+.services-wrap {
+  width: 100%;
+  display: block;
+  height: 250px;
+  position: relative;
+  z-index: 0; }
+  .services-wrap:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+    background: #000000;
+    opacity: 0;
+    z-index: -1;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s; }
+  .services-wrap .text {
+    width: 100%; }
+    .services-wrap .text h3 {
+      font-family: "Poppins", Arial, sans-serif;
+      font-size: 16px;
+      text-transform: uppercase;
+      color: #fff;
+      font-weight: 500; }
+    .services-wrap .text span {
+      display: block;
+      color: rgba(255, 255, 255, 0.7); }
+    .services-wrap .text .icon {
+      width: 30px;
+      height: 30px;
+      background: #cca772;
+      display: block;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      -ms-border-radius: 50%;
+      border-radius: 50%; }
+      .services-wrap .text .icon span {
+        color: #fff; }
+  .services-wrap.services-overlay:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+    background: #000000;
+    opacity: .3;
+    z-index: -1;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s; }
+  .services-wrap:hover:after {
+    opacity: .5; }
+/*service*/
+.services {
+  width: 100%;
+  background: #f8f9fa;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  border-radius: 2px; }
+  .services .icon {
+    line-height: 1.3;
+    position: relative;
+    width: 100px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    border-radius: 50%; }
+    .services .icon span {
+      font-size: 54px;
+      color: #cca772; }
+  .services .media-body h3 {
+    font-size: 20px; }
+
+  .services:hover {
+    background: #cca772; }
+    .services:hover .icon span {
+      color: #cca772; }
+    .services:hover h3 {
+        color: #fff;
+    }
+
+/*=================== special section end ====================*/
+.card-special {
+  padding: 45px 35px;
+  border: 0;
+  border-radius: 0;
+  transition: all .4s ease; }
+  .card-special__icon {
+    font-size: 24px;
+    color: #cca772;
+    margin-right: 13px; }
+  .card-special__title {
+    margin: 0;
+    font-weight: 400;
+    transition: all .4s ease; }
+  .card-special .card-body {
+    padding: 0; }
+    .card-special .card-body p {
+      margin-bottom: 0; }
+  .card-special:hover {
+    background: #cca772;
+    color: #fff; }
+.card-special:hover .card-special__icon, .card-special:hover .card-special__title  {
+    color: #fff; }
+
+
+
+/*=================== special section start ====================*/
+

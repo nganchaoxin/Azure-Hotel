@@ -39,4 +39,8 @@ public class ImageService {
 
         return imageList;
     }
+
+    public ImageEntity findByCategoryId(long id) {
+        return imageRepository.findByCategoryId(id);
+    }
 }

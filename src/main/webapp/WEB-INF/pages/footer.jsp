@@ -3,6 +3,7 @@ pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="mvc" uri="http://www.springframework.org/tags/form" %> <%@
 taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
     <footer>
       <div class="footer-content-top">
         <div class="footer-content-top-tag">
@@ -57,24 +58,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                 <i class="fas fa-paper-plane" style="color: white"></i>
               </button>
             </div>
-            <div class="footer-heading">Follow us</div>
-            <div class="social-icons">
-              <div class="icon-social">
-                <a href=""
-                  ><i class="fab fa-twitter" style="color: white"></i
-                ></a>
-              </div>
-              <div class="icon-social">
-                <a href=""
-                  ><i class="fab fa-facebook-f" style="color: white"></i
-                ></a>
-              </div>
-              <div class="icon-social">
-                <a href=""
-                  ><i class="fab fa-instagram" style="color: white"></i
-                ></a>
-              </div>
-            </div>
+
           </div>
         </div>
       </div>

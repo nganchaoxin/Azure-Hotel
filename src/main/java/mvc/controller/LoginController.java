@@ -5,25 +5,20 @@
  */
 package mvc.controller;
 
-import mvc.entity.AccountEntity;
-import mvc.entity.BookingCartEntity;
-import mvc.entity.BookingCartItemEntity;
-import mvc.entity.CategoryEntity;
-import mvc.service.AccountService;
-import mvc.service.BookingCartItemService;
-import mvc.service.BookingCartService;
-import mvc.service.CategoryService;
+import mvc.entity.*;
+import mvc.service.*;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.List;
 
 @Controller
@@ -40,6 +35,9 @@ public class LoginController {
     @Autowired
     CategoryService categoryService;
 
+    @Autowired
+    ImageService imageService;
+
     @RequestMapping("/login")
     public String loginPage(Model model, @RequestParam(value = "error", required = false) boolean error) {
 
@@ -54,6 +52,10 @@ public class LoginController {
         // Show category list
         List<CategoryEntity> categoryList = categoryService.findAllCategory();
         model.addAttribute("categoryList", categoryList);
+
+        // Show category image list
+        List<ImageEntity> imageList = imageService.findAll();
+        model.addAttribute("imageList", imageList);
 
         // Auth account
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -85,6 +87,15 @@ public class LoginController {
         return "index";
     }
 
+    @RequestMapping(value = "/getImagePhotoByCategory/{id}")
+    public void getImagePhoto(HttpServletResponse response, @PathVariable long id) throws Exception {
+        response.setContentType("image/jpeg");
+
+        ImageEntity i = imageService.findByCategoryId(id);
+        byte[] ph = i.getUrl();
+        InputStream inputStream = new ByteArrayInputStream(ph);
+        IOUtils.copy(inputStream, response.getOutputStream());
+    }
     @GetMapping(value = "/about")
     public String aboutPage() {
         return "aboutpage";
