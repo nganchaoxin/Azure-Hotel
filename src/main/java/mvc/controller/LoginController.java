@@ -42,10 +42,10 @@ public class LoginController {
 
     @RequestMapping("/login")
     public String loginPage(Model model, @RequestParam(value = "error", required = false) boolean error) {
-
         if (error) {
-            model.addAttribute("message", "Login Fail!!!");
+            model.addAttribute("message", "Login failll");
         }
+
         return "login";
     }
 

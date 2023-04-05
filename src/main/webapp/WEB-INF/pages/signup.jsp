@@ -49,6 +49,9 @@
                     <a href="https://www.facebook.com/themoon.eec/" target="_blank"
                         class="social"><i class="fab fa-facebook"></i></a>
 				</div>
+				<c:if test="${message != null && message != ''}">
+                				<p style="color:red; margin: 1em auto;">${message}</p>
+                				</c:if>
 
 				<!-- Login Error -->
 				<!-- <div th:if="${param.error}"
@@ -63,6 +66,7 @@
 				<!-- Email  -->
 				<span>Become a member of Azure Hotel! Sign Up Now!</span>
 				<input type="email" placeholder="Email" name="email" required />
+
 				<input type="text" placeholder="Username" name="username" required />
 				<input type="text" placeholder="Phone Number" name="phone_number" required />
 

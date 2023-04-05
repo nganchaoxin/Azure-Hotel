@@ -214,7 +214,7 @@
 					<h2 class="font-weight-bold heading text-primary mb-4 mb-md-0">The Team</h2>
 				</div>
 				<div class="col-md-6 text-md-end">
-					<div id="testimonial-nav">
+					<div id="testimonial-nav" style="text-align:right;">
 						<span class="prev" data-controls="prev">Prev</span>
 
 						<span class="next" data-controls="next">Next</span>
