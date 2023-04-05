@@ -6,7 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
@@ -109,7 +109,7 @@
               <span class="menu-header-text">Category Management</span>
             </li>
             <!-- Cards -->
-            <li class="menu-item ">
+            <li class="menu-item">
               <a href="category" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Manage category</div>
@@ -120,7 +120,7 @@
               <span class="menu-header-text">Booking Management</span>
             </li>
             <!-- Cards -->
-            <li class="menu-item">
+            <li class="menu-item active">
               <a href="booking" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Manage booking</div>
@@ -131,7 +131,7 @@
               <span class="menu-header-text">Image Management</span>
             </li>
             <!-- Cards -->
-            <li class="menu-item active">
+            <li class="menu-item">
               <a href="image" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Manage image</div>
@@ -143,76 +143,70 @@
 
         <!-- Layout container -->
         <div class="layout-page">
-           <p>${msg}</p>
           <!-- Content wrapper -->
           <div class="content-wrapper">
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4">Azure's Rooms</h4>
-              <a href="showImageForm">
+              <h4 class="fw-bold py-3 mb-4">Azure's Booking Detail</h4>
+              <a href="<c:url value="/admin/booking" />">
                 <button type="button" class="btn btn-sm btn-outline-primary">
-                  <i class="bx bx-edit-alt me-1"></i> Add image category
+                   Back to booking
                 </button>
               </a>
 
               <hr class="my-5" />
 
               <!-- Hoverable Table rows -->
+              <c:if test="${not empty bookingDetailList}">
               <div class="card">
-                <h5 class="card-header">Image Category</h5>
+                <h5 class="card-header">Booking Detail</h5>
                 <div class="table-responsive text-nowrap">
+
                   <table class="table table-hover">
                     <thead>
                       <tr>
-                        <th>ID</th>
-                        <th>Image Name</th>
-                        <th>Url</th>
-                        <th>Category Name</th>
-
-                        <th>Action</th>
+                        <th>Room</th>
+                        <th>Check In</th>
+                        <th>Check Out</th>
+                        <th>Adult</th>
+                        <th>Children</th>
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                      <c:forEach
-                        var="image"
-                        items="${imageList}"
-                        varStatus="index"
-                      >
-                        <tr>
-                          <td>
-                            <i
-                              class="fab fa-angular fa-lg text-danger me-3"
-                            ></i>
-                            <strong>${image.id}</strong>
-                          </td>
-                          <td>${image.image_name}</td>
-                          <td><img width="100" height="100" src="getImagePhoto/<c:out value='${image.id}'/>"></td>
-                          <td>${image.categoryEntity.category_name}</td>
 
-                          <td>
-                            <button
-                              onclick="location.href='editImage/${image.id}'"
-                              type="button"
-                              class="btn btn-sm btn-outline-primary"
-                            >
-                              <i class="bx bx-edit-alt me-1"></i> Edit
-                            </button>
+                        <c:forEach
+                            var="bookingDetail"
+                            items="${bookingDetailList}"
+                            varStatus="index"
+                          >
+                            <tr>
+                              <td>${bookingDetail.roomEntity.room_name}</td>
+                              <td>
+                                <fmt:formatDate
+                                  value="${bookingDetail.booking_check_in}"
+                                  pattern="dd-MM-yyyy"
+                                />
+                              </td>
+                              <td>
+                                <fmt:formatDate
+                                  value="${bookingDetail.booking_check_out}"
+                                  pattern="dd-MM-yyyy"
+                                />
+                              </td>
 
-                            <button
-                              onclick="location.href='deleteImage/${image.id}'"
-                              type="button"
-                              class="btn btn-sm btn-outline-secondary"
-                            >
-                              <i class="bx bx-trash me-1"></i> Delete
-                            </button>
-                          </td>
-                        </tr>
-                      </c:forEach>
+                              <td>${bookingDetail.number_of_adult}</td>
+                              <td>${bookingDetail.number_of_children}</td>
+                            </tr>
+                          </c:forEach>
                     </tbody>
                   </table>
                 </div>
               </div>
+              </c:if>
+              <c:if test="${empty bookingDetailList}">
+                  <h3>No booking detail </h3>
+                </c:if>
               <!--/ Hoverable Table rows -->
             </div>
 

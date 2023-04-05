@@ -42,9 +42,7 @@ public class JPAConfig {
         final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource());
         entityManagerFactoryBean.setPackagesToScan(
-                new String[]{
-                        "mvc.entity"
-                });
+                "mvc.entity");
         final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         entityManagerFactoryBean.setJpaVendorAdapter(vendorAdapter);
         entityManagerFactoryBean.setJpaProperties(additionalProperties());

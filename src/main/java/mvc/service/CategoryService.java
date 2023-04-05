@@ -15,11 +15,12 @@ public class CategoryService {
     public List<CategoryEntity> findAllCategory() {
         return categoryRepository.findAll();
     }
-    public void save(CategoryEntity category){
+
+    public void save(CategoryEntity category) {
         categoryRepository.save(category);
     }
 
-    public CategoryEntity findById(int categoryId){
+    public CategoryEntity findById(int categoryId) {
         return categoryRepository.findById(categoryId);
 
     }

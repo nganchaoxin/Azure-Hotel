@@ -40,6 +40,7 @@ public class AccountService {
         return accountRepository.findByUsername(username);
     }
 
-    public AccountEntity findByToken(String token) { return accountRepository.findByToken(token);
+    public AccountEntity findByToken(String token) {
+        return accountRepository.findByToken(token);
     }
 }

@@ -24,7 +24,7 @@ public class BookingCartItemEntity {
     @JoinColumn(name = "room_id")
     private RoomEntity roomEntity;
 
-    @Column(name="total_night")
+    @Column(name = "total_night")
     private int total_night;
 
     public int getId() {

@@ -92,18 +92,19 @@ public class LoginController {
         InputStream inputStream = new ByteArrayInputStream(ph);
         IOUtils.copy(inputStream, response.getOutputStream());
     }
+
     @GetMapping(value = "/about")
     public String aboutPage() {
-        return "aboutpage";
+        return "about";
     }
 
-    @GetMapping(value="/restaurant")
-    public String restaurantPage(){
+    @GetMapping(value = "/restaurant")
+    public String restaurantPage() {
         return "restaurant";
     }
 
-    @GetMapping(value="/rooms")
-    public String roomPage(Model model){
+    @GetMapping(value = "/rooms")
+    public String roomPage(Model model) {
         // Show category list
         List<CategoryEntity> categoryList = categoryService.findAllCategory();
         model.addAttribute("categoryList", categoryList);

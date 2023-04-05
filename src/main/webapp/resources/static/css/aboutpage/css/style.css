@@ -11,7 +11,7 @@
 
 body {
   margin: 0;
-  font-family: var(--bs-body-font-family);
+
   font-size: var(--bs-body-font-size);
   font-weight: var(--bs-body-font-weight);
   line-height: var(--bs-body-line-height);
@@ -147,7 +147,7 @@ pre,
 code,
 kbd,
 samp {
-  font-family: var(--bs-font-monospace);
+
   font-size: 1em;
   direction: ltr /* rtl:ignore */;
   unicode-bidi: bidi-override; }
@@ -1583,7 +1583,7 @@ html {
   overflow-x: hidden; }
 
 body {
-  font-family: "Work Sans", sans-serif;
+
   font-weight: 400;
   font-size: 14px; }
   body:before {
@@ -1605,7 +1605,7 @@ body {
     visibility: visible; }
 
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, .logo {
-  font-family: "Work Sans", sans-serif;
+
   color: #00204a; }
 
 a {

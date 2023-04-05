@@ -33,6 +33,7 @@ public class BookingCartItemService {
         bookingCartItemRepository.deleteAll(bookingCartItemEntities);
     }
 
-    public List<BookingCartItemEntity> listCartItemCheck(Date check_in, Date check_out) { return bookingCartItemRepository.listCartCheck(check_in, check_out);
+    public List<BookingCartItemEntity> listCartItemCheck(Date check_in, Date check_out) {
+        return bookingCartItemRepository.listCartCheck(check_in, check_out);
     }
 }

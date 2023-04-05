@@ -12,10 +12,11 @@ public interface ImageRepository extends CrudRepository<ImageEntity, Long> {
     List<ImageEntity> findAll();
 
     ImageEntity findById(long id);
-    @Query(value="select image.* from image join category on image.category_id = category.id where category.category_name = ?;",nativeQuery = true)
+
+    @Query(value = "select image.* from image join category on image.category_id = category.id where category.category_name = ?;", nativeQuery = true)
     List<ImageEntity> findAllImageByCategory(String roomType);
 
 
-    @Query(value="select image.* from image join category on image.category_id = category.id where category.id = ? LIMIT 1;",nativeQuery = true)
+    @Query(value = "select image.* from image join category on image.category_id = category.id where category.id = ? LIMIT 1;", nativeQuery = true)
     ImageEntity findByCategoryId(long id);
 }

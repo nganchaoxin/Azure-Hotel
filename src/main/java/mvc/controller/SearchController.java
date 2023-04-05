@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,7 +53,7 @@ public class SearchController {
             HttpSession session) {
         // Check checkin date < checkout date
         if (checkout.compareTo(checkin) < 0) {
-            return "notFound";
+            return "not_found";
         }
 
         // Pageable for room list
@@ -140,7 +139,7 @@ public class SearchController {
         return "redirect:/bookingcart";
     }
 
-    private int exists(int roomId,Date check_in, Date check_out) {
+    private int exists(int roomId, Date check_in, Date check_out) {
         List<BookingCartItemEntity> cartItemEntityList = bookingCartItemService.listCartItemCheck(check_in, check_out);
         for (int i = 0; i < cartItemEntityList.size(); i++) {
             if (cartItemEntityList.get(i).getRoomEntity().getId() == roomId) {
