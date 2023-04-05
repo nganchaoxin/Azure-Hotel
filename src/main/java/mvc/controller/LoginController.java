@@ -53,10 +53,6 @@ public class LoginController {
         List<CategoryEntity> categoryList = categoryService.findAllCategory();
         model.addAttribute("categoryList", categoryList);
 
-        // Show category image list
-        List<ImageEntity> imageList = imageService.findAll();
-        model.addAttribute("imageList", imageList);
-
         // Auth account
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = principal.toString();
@@ -99,5 +95,19 @@ public class LoginController {
     @GetMapping(value = "/about")
     public String aboutPage() {
         return "aboutpage";
+    }
+
+    @GetMapping(value="/restaurant")
+    public String restaurantPage(){
+        return "restaurant";
+    }
+
+    @GetMapping(value="/rooms")
+    public String roomPage(Model model){
+        // Show category list
+        List<CategoryEntity> categoryList = categoryService.findAllCategory();
+        model.addAttribute("categoryList", categoryList);
+
+        return "rooms";
     }
 }
