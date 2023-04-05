@@ -122,7 +122,7 @@ public class SearchController {
             request.getSession().setAttribute("cartItemList", cartItemSessionList);
             return "redirect:/bookingcart";
         } else {
-            int indexSession = this.exists(roomId, cartItemSessionList);
+            int indexSession = this.exists(roomId, check_in, check_out);
             // If room not exist
             if (indexSession == -1) {
                 cartItemSessionList.add(cartItem);
@@ -140,9 +140,10 @@ public class SearchController {
         return "redirect:/bookingcart";
     }
 
-    private int exists(int roomId, List<BookingCartItemEntity> cartItem) {
-        for (int i = 0; i < cartItem.size(); i++) {
-            if (cartItem.get(i).getRoomEntity().getId() == roomId) {
+    private int exists(int roomId,Date check_in, Date check_out) {
+        List<BookingCartItemEntity> cartItemEntityList = bookingCartItemService.listCartItemCheck(check_in, check_out);
+        for (int i = 0; i < cartItemEntityList.size(); i++) {
+            if (cartItemEntityList.get(i).getRoomEntity().getId() == roomId) {
                 return i;
             }
         }

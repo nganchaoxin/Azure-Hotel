@@ -5,6 +5,7 @@ import mvc.repository.BookingCartItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -32,4 +33,6 @@ public class BookingCartItemService {
         bookingCartItemRepository.deleteAll(bookingCartItemEntities);
     }
 
+    public List<BookingCartItemEntity> listCartItemCheck(Date check_in, Date check_out) { return bookingCartItemRepository.listCartCheck(check_in, check_out);
+    }
 }

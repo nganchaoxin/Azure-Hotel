@@ -9589,8 +9589,7 @@ html {
 body {
   font-family: "Work Sans", sans-serif;
   font-weight: 400;
-  font-size: 14px;
-  overflow-x: hidden; }
+  font-size: 14px; }
   body:before {
     content: "";
     position: fixed;
