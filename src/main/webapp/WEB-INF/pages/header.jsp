@@ -30,13 +30,13 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
               <a href="./" class="nav-link">Home</a>
             </li>
             <li class="nav-item">
-              <a href="rooms.html" class="nav-link">Rooms</a>
+              <a href="<c:url value="/rooms" />" class="nav-link">Rooms</a>
             </li>
             <li class="nav-item">
-              <a href="restaurant.html" class="nav-link">Restaurant</a>
+              <a href="<c:url value="/restaurant" />" class="nav-link">Restaurant</a>
             </li>
             <li class="nav-item">
-              <a href="about.html" class="nav-link">About</a>
+              <a href="<c:url value="/about" />" class="nav-link">About</a>
             </li>
             <li class="nav-item">
               <a href="contact.html" class="nav-link">Contact</a>
@@ -58,7 +58,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                      </li>
                 </sec:authorize>
                 <li class="nav-item">
-                      <a href="<c:url value="/user/account" />" class="nav-link" style="font-weight: 500;">
+                      <a href="${pageContext.request.contextPath}/restaurant" class="nav-link" style="font-weight: 500;">
                         ${accountEntity.username}
                       </a>
                  </li>

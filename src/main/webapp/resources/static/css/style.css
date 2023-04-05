@@ -12047,7 +12047,48 @@ textarea.form-control {
 .card-special:hover .card-special__icon, .card-special:hover .card-special__title  {
     color: #fff; }
 
+/**/
+.hero-wrap {
+  width: 100%;
+  height: 600px;
+  position: relative; }
 
-
-/*=================== special section start ====================*/
+.hero-wrap .overlay {
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+content: '';
+opacity: .2;
+background: #000000;
+}
+  .hero-wrap .slider-text {
+    color: #fff;
+    height: 600px; }
+    .hero-wrap .slider-text .breadcrumbs {
+      text-transform: uppercase;
+      font-size: 13px;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+      z-index: 99; }
+      .hero-wrap .slider-text .breadcrumbs span {
+        border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.7); }
+        .hero-wrap .slider-text .breadcrumbs span a {
+          color: #fff; }
+    .hero-wrap .slider-text .bread {
+      font-weight: 700;
+      color: #fff;
+      font-size: 60px;
+      font-family: "Poppins", Arial, sans-serif; }
+    .hero-wrap .slider-text .btn-primary {
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      -webkit-border-radius: 30px;
+      -moz-border-radius: 30px;
+      -ms-border-radius: 30px;
+      border-radius: 30px; }
+      .hero-wrap .slider-text .btn-primary:hover, .hero-wrap .slider-text .btn-primary:focus {
+        background: #fff !important;
+        color: #000000; }
 
