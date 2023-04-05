@@ -38,16 +38,10 @@
                         <a href="https://www.facebook.com/themoon.eec/" target="_blank"
                             class="social"><i class="fab fa-facebook"></i></a>
                     </div>
-
+                    <c:if test="${message != null && message != ''}">
+                        <div class="alert alert-danger col-xs-offset-1 col-xs-10">${message}</div>
+                       </c:if>
                     <!-- Login Error -->
-                    <!-- <div th:if="${param.error}"
-                        class="alert alert-danger col-xs-offset-1 col-xs-10">Invalid
-                        username and password.</div> -->
-
-                    <!-- Logout notify -->
-                    <!-- <div th:if="${param.logout}"
-                        class="alert alert-success col-xs-offset-1 col-xs-10">You
-                        have been logged out.</div> -->
 
                     <!-- Email  -->
                     <span>Welcome to Azure Hotel Website? Log In Now!</span>

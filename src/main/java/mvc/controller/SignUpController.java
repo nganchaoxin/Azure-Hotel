@@ -58,7 +58,13 @@ public class SignUpController {
     public String signUp(@ModelAttribute(name = "newAccount") AccountEntity accountEntity, Model model, @RequestParam String password_two) {
         // Check password
         AccountEntity accountTest = accountService.findByEmail(accountEntity.getEmail());
-        if (!accountEntity.getPassword().equals(password_two) || accountTest != null) {
+        if (!accountEntity.getPassword().equals(password_two)) {
+            model.addAttribute("message","Password repeat is not correct!");
+            model.addAttribute("type", "wrongEmail");
+            return "signup";
+        }else if(accountTest != null){
+            model.addAttribute("message","Email has been signed up!");
+            model.addAttribute("type", "wrongPass");
             return "signup";
         }
         // Encoder password
