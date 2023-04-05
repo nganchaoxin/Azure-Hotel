@@ -4,6 +4,8 @@ pageEncoding="UTF-8"%>
 <%@ taglib prefix="mvc" uri="http://www.springframework.org/tags/form" %> <%@
 taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib
+prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
   <head>
     <title>Azure Hotel | Hotel in Da Nang</title>
@@ -151,6 +153,10 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
                             <option value="Standard">Standard</option>
                             <option value="Family">Family</option>
+                            <option value="Business">Business</option>
+                            <option value="Studio">Studio</option>
+                            <option value="Cozy">Cozy</option>
+                            <option value="Luxury">Luxury</option>
                           </select>
                         </div>
                       </div>
@@ -195,90 +201,193 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         </div>
       </div>
     </section>
-
-    <section class="ftco-section ftc-no-pb ftc-no-pt">
-      <div class="container">
-        <div class="row">
-          <div
-            class="col-md-5 p-md-5 img img-2 d-flex justify-content-center align-items-center"
-            style="background-image: url(resources/static/images/hero_2.jpg)"
-          >
-            <a
-              href="https://www.youtube.com/watch?v=ism1XqnZJEg"
-              class="icon popup-vimeo d-flex justify-content-center align-items-center"
-            >
-              <span class="icon-play"></span>
-            </a>
-          </div>
-          <div class="col-md-7 py-5 wrap-about pb-md-5 ftco-animate">
-            <div
-              class="heading-section heading-section-wo-line pt-md-5 pl-md-5 mb-5"
-            >
-              <div class="ml-md-0">
-                <span class="subheading">Welcome to Azure Hotel</span>
-                <h2 class="mb-4">Welcome To Our Hotel</h2>
+    <section class="ftco-section  ftc-no-pt">
+        <div class="container">
+            <div class="row no-gutters">
+                <div class="col-md-3">
+                    <a href="#" class="services-wrap img align-items-end d-flex" style="background-image: url(resources/static/images/room-3.jpg);">
+                        <div class="text text-center pb-2">
+                            <h3>Special Rooms</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="#" class="services-wrap img align-items-end d-flex" style="background-image: url(resources/static/images/swimming-pool.jpg);">
+                        <div class="text text-center pb-2">
+                            <h3>Swimming Pool</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="#" class="services-wrap img align-items-end d-flex" style="background-image: url(resources/static/images/resto.jpg);">
+                        <div class="text text-center pb-2">
+                            <h3>Restaurant</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <div class="services-wrap services-overlay img align-items-center d-flex" style="background-image: url(resources/static/images/sleep.jpg);">
+                        <div class="text text-center pb-2">
+                            <h3 class="mb-0">Suites &amp; Rooms</h3>
+                            <span>Special Rooms</span>
+                            <div class="d-flex mt-2 justify-content-center">
+                            <div class="icon">
+                                <a href="#"><span class="ion-ios-arrow-forward"></span></a>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container">
+          	<div class="row justify-content-center mb-5 pb-3">
+              <div class="col-md-7 heading-section text-center ftco-animate">
+              	<span class="subheading">Welcome to Azure Hotel</span>
+                <h2 class="mb-4">A New Vision of Luxury Hotel</h2>
               </div>
             </div>
-            <div class="pb-md-5">
-              <p>
-                On her way she met a copy. The copy warned the Little Blind
-                Text, that where it came from it would have been rewritten a
-                thousand times and everything that was left from its origin
-                would be the word "and" and the Little Blind Text should turn
-                around and return to its own, safe country. But nothing the copy
-                said could convince her and so it didn’t take long until a few
-                insidious Copy Writers ambushed her, made her drunk with Longe
-                and Parole and dragged her into their agency, where they abused
-                her for their.
-              </p>
-              <p>
-                When she reached the first hills of the Italic Mountains, she
-                had a last view back on the skyline of her hometown
-                Bookmarksgrove, the headline of Alphabet Village and the subline
-                of her own road, the Line Lane. Pityful a rethoric question ran
-                over her cheek, then she continued her way.
-              </p>
-              <ul class="ftco-social d-flex">
-                <li class="ftco-animate">
-                  <a href="#"><span class="icon-twitter"></span></a>
-                </li>
-                <li class="ftco-animate">
-                  <a href="#"><span class="icon-facebook"></span></a>
-                </li>
-                <li class="ftco-animate">
-                  <a href="#"><span class="icon-google-plus"></span></a>
-                </li>
-                <li class="ftco-animate">
-                  <a href="#"><span class="icon-instagram"></span></a>
-                </li>
-              </ul>
+            <div class="row d-flex">
+              <div class="col-md pr-md-1 d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services py-4 d-block text-center">
+                  <div class="d-flex justify-content-center">
+                  	<div class="icon d-flex align-items-center justify-content-center">
+                  		<span class="flaticon-reception-bell"></span>
+                  	</div>
+                  </div>
+                  <div class="media-body">
+                    <h3 class="heading mb-3">Friendly Service</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md px-md-1 d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services active py-4 d-block text-center">
+                  <div class="d-flex justify-content-center">
+                  	<div class="icon d-flex align-items-center justify-content-center">
+                  		<span class="flaticon-serving-dish"></span>
+                  	</div>
+                  </div>
+                  <div class="media-body">
+                    <h3 class="heading mb-3">Get Breakfast</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md px-md-1 d-flex align-sel Searchf-stretch ftco-animate">
+                <div class="media block-6 services py-4 d-block text-center">
+                  <div class="d-flex justify-content-center">
+                  	<div class="icon d-flex align-items-center justify-content-center">
+                  		<span class="flaticon-car"></span>
+                  	</div>
+                  </div>
+                  <div class="media-body">
+                    <h3 class="heading mb-3">Transfer Services</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md px-md-1 d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services py-4 d-block text-center">
+                  <div class="d-flex justify-content-center">
+                  	<div class="icon d-flex align-items-center justify-content-center">
+                  		<span class="flaticon-spa"></span>
+                  	</div>
+                  </div>
+                  <div class="media-body">
+                    <h3 class="heading mb-3">Suits &amp; SPA</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md pl-md-1 d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services py-4 d-block text-center">
+                  <div class="d-flex justify-content-center">
+                  	<div class="icon d-flex align-items-center justify-content-center">
+                  		<span class="ion-ios-bed"></span>
+                  	</div>
+                  </div>
+                  <div class="media-body">
+                    <h3 class="heading mb-3">Cozy Rooms</h3>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+    <section class="ftco-section ftc-no-pb">
+        <div class="container">
+
+
+                <div class="col special-img pl-0 ">
+                  <img style="height: 500px; width: 100%;" class="img-fluid" src="resources/static/images/bg_3.jpg" alt="">
+                </div>
+                <div class="col py-5 wrap-about pb-md-5 ftco-animate">
+                    <div class="heading-section heading-section-wo-line  mb-5">
+                        <div class="ml-md-0">
+                            <span class="subheading">The first resort hotel in Vietnam</span>
+                            <h2 class="mb-4">AZURE HOTEL - MADE BY ORIGINALS</h2>
+                        </div>
+                    </div>
+                    <div class="pb-md-5">
+                        <p>
+                            On her way she met a copy. The copy warned the Little Blind
+                            Text, that where it came from it would have been rewritten a
+                            thousand times and everything that was left from its origin
+                            would be the word "and" and the Little Blind Text should turn
+                            around and return to its own, safe country. But nothing the copy
+                            said could convince her and so it didn’t take long until a few
+                            insidious Copy Writers ambushed her, made her drunk with Longe
+                            and Parole and dragged her into their agency, where they abused
+                            her for their.
+                        </p>
+                        <p>
+                            When she reached the first hills of the Italic Mountains, she
+                            had a last view back on the skyline of her hometown
+                            Bookmarksgrove, the headline of Alphabet Village and the subline
+                            of her own road, the Line Lane. Pityful a rethoric question ran
+                            over her cheek, then she continued her way.
+                        </p>
+                        <ul class="ftco-social d-flex">
+                            <li class="ftco-animate">
+                                <a href="#"><span class="icon-twitter"></span></a>
+                            </li>
+                            <li class="ftco-animate">
+                                <a href="#"><span class="icon-facebook"></span></a>
+                            </li>
+                            <li class="ftco-animate">
+                                <a href="#"><span class="icon-google-plus"></span></a>
+                            </li>
+                            <li class="ftco-animate">
+                                <a href="#"><span class="icon-instagram"></span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
         </div>
-      </div>
     </section>
 
     <section class="section-margin">
-        <div class="container">
-          <div class="section-intro text-center pb-80px">
-            <div class="section-intro__style">
-              <img src="img/home/bed-icon.png" alt="">
+        <div class="row justify-content-center mb-5 pb-3 px-0 mx-0">
+            <div class="col-md-7 heading-section text-center ftco-animate justify-item-center">
+                <span class="subheading">Azure Rooms</span>
+              <h2 class="mb-4">Hotel Master's Rooms</h2>
             </div>
-            <h2>Explore Our Rooms</h2>
-          </div>
+        </div>
+
+        <div class="container">
+
 
           <div class="row">
             <c:forEach items="${categoryList}" var="category" varStatus="index">
                 <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
                     <div class="card card-explore">
-                      <div class="card-explore__img">
-                        <img class="card-img" src="resources/static/images/rooms/room-1.jpg" alt="">
-                      </div>
+                        <div class="card-explore__img">
+                            <img style="height: 250px;" class="card-img" src="getImagePhotoByCategory/${category.id}" alt="">
+                          </div>
                       <div class="card-body">
-                        <h3 class="card-explore__price">${category.price}<sub>/ Per Night</sub></h3>
-                        <h4 class="card-explore__title"><a href="#">${category.category_name}</a></h4>
+                        <h3 class="card-explore__price font-weight-bold">$ <fmt:formatNumber value="${category.price}" pattern="#,###.##" /><sub>/ Per Night</sub></h3>
+
+                        <h4 class="card-explore__title font-weight-bold"><a href="#">${category.category_name}</a></h4>
                         <p>${category.description}</p>
-                        <a class="card-explore__link" href="#">Book Now <i class="ti-arrow-right"></i></a>
+                        <a class="card-explore__link font-weight-bold" href="#">Book Now <i class="ti-arrow-right"></i></a>
                       </div>
                     </div>
                   </div>
@@ -287,43 +396,71 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         </div>
       </section>
 
-    <div class="facilities">
-      <div class="row mx-0">
-        <div class="tabs">
-          <button class="tab-button active" data-tab="pool">Pool</button>
-          <button class="tab-button" data-tab="gym">Gym</button>
-          <button class="tab-button" data-tab="spa">Spa</button>
-        </div>
-      </div>
-      <div class="row mx-0">
-        <div class="tab-content">
-          <div class="tab-item active" data-tab="pool">
-            <img src="resources/static/images/rooms/room-1.jpg" alt="Pool" />
-            <p>
-              Our outdoor pool is open year-round and features a water slide and
-              hot tub.
-            </p>
+     <section class="section-padding bg-porcelain">
+
+             <div class="row justify-content-center mb-5 pb-3 px-0 mx-0">
+                 <div class="col-md-7 heading-section text-center ftco-animate justify-item-center">
+                   <h2 class="mb-4">Special Facilities</h2>
+                 </div>
+             </div>
+          <div class="container">
+
+            <div class="special-img mb-30px">
+              <img class="img-fluid" src="https://images.unsplash.com/photo-1533377437229-5ca96ecbcd78?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" alt="">
+            </div>
+
+            <div class="row" style="margin-top: 30px; margin-bottom: 30px;" >
+              <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+                <div class="card card-special">
+                  <div class="media align-items-center mb-1">
+                    <span class="card-special__icon"><i class="ti-home"></i></span>
+                    <div class="media-body">
+                      <h4 class="card-special__title">Conference Room</h4>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <p>Built purse maids cease her ham new seven among and. Pulled coming wooded tended it answer remain</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+                <div class="card card-special">
+                  <div class="media align-items-center mb-1">
+                    <span class="card-special__icon"><i class="ti-bell"></i></span>
+                    <div class="media-body">
+                      <h4 class="card-special__title">Swimming Pool</h4>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <p>Built purse maids cease her ham new seven among and. Pulled coming wooded tended it answer remain</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+                <div class="card card-special">
+                  <div class="media align-items-center mb-1">
+                    <span class="card-special__icon"><i class="ti-car"></i></span>
+                    <div class="media-body">
+                      <h4 class="card-special__title">Sports Culb</h4>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <p>Built purse maids cease her ham new seven among and. Pulled coming wooded tended it answer remain</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="tab-item" data-tab="gym">
-            <img src="resources/static/images/rooms/room-1.jpg" alt="Gym" />
-            <p>
-              Our gym is fully equipped with free weights, cardio machines, and
-              strength-training equipment.
-            </p>
-          </div>
-          <div class="tab-item" data-tab="spa">
-            <img src="resources/static/images/rooms/room-1.jpg" alt="Spa" />
-            <p>
-              Relax and rejuvenate with our full-service spa offering massages,
-              facials, and body treatments.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+        </section>
     <section class="why-choose-us">
+        <div class="row justify-content-center mb-5 pb-3 mx-0 px-0">
+             <div class="col-md-7 heading-section text-center ftco-animate justify-item-center">
+               <h2 class="mb-4">Why Choose Us?</h2>
+             </div>
+         </div>
       <div class="container">
-        <h2 class="section-title">Why Choose Us?</h2>
         <div class="container">
           With a fresh modern design and a surprising concept, À La Carte Da
           Nang Beach is comprised of vibrant and spacious sea-view suites at
@@ -336,7 +473,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
           <div class="col-md-4">
             <div class="card">
               <img
-                src="resources/static/images/rooms/room-1.jpg"
+                src="https://images.unsplash.com/photo-1584132915807-fd1f5fbc078f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
                 alt="Image 1"
               />
               <h3>Comfortable Rooms</h3>
@@ -346,7 +483,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
           <div class="col-md-4">
             <div class="card">
               <img
-                src="resources/static/images/rooms/room-1.jpg"
+                src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1174&q=80"
                 alt="Image 2"
               />
               <h3>Excellent Service</h3>
@@ -356,7 +493,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
           <div class="col-md-4">
             <div class="card">
               <img
-                src="resources/static/images/rooms/room-1.jpg"
+                src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
                 alt="Image 3"
               />
               <h3>Convenient Location</h3>
@@ -580,7 +717,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                 href="blog-single.html"
                 class="block-20"
                 style="
-                  background-image: url('resources/static/images/rooms/room-1.jpg');
+                  background-image: url('https://images.unsplash.com/photo-1560624052-449f5ddf0c31?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80');
                 "
               >
               </a>
@@ -609,7 +746,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                 href="blog-single.html"
                 class="block-20"
                 style="
-                  background-image: url('resources/static/images/rooms/room-1.jpg');
+                  background-image: url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80');
                 "
               >
               </a>
@@ -638,7 +775,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                 href="blog-single.html"
                 class="block-20"
                 style="
-                  background-image: url('resources/static/images/rooms/room-1.jpg');
+                  background-image: url('https://images.unsplash.com/photo-1531088009183-5ff5b7c95f91?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80');
                 "
               >
               </a>
@@ -667,7 +804,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                 href="blog-single.html"
                 class="block-20"
                 style="
-                  background-image: url('resources/static/images/rooms/room-1.jpg');
+                  background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');
                 "
               >
               </a>

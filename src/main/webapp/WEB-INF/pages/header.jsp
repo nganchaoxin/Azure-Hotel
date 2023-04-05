@@ -7,10 +7,10 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link href='<c:url value="/resources/static/css/header.css" />' rel='stylesheet'>
   <header>
     <nav
-      class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+      class="navbar navbar-expand-lg fixed-top px-0 mx-0" id="">
       <div class="container">
         <a class="navbar-brand" href="./">
-          <img width="200" height="auto" src="resources/static/images/Logo_logo.png"/>
+          <img class="navbar-logo" width="200" height="auto" src="resources/static/images/Logo_logo.png"/>
         </a>
         <button
           class="navbar-toggler"
@@ -37,9 +37,6 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
             </li>
             <li class="nav-item">
               <a href="about.html" class="nav-link">About</a>
-            </li>
-            <li class="nav-item">
-              <a href="blog.html" class="nav-link">Blog</a>
             </li>
             <li class="nav-item">
               <a href="contact.html" class="nav-link">Contact</a>
