@@ -49,7 +49,7 @@
               </li>
             </sec:authorize>
             <li class="nav-item">
-              <a href="${pageContext.request.contextPath}/restaurant" class="nav-link" style="font-weight: 500;">
+              <a href="${pageContext.request.contextPath}/user/account" class="nav-link" style="font-weight: 500;">
                 ${accountEntity.username}
               </a>
             </li>

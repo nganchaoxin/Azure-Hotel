@@ -48,7 +48,7 @@ public class SearchController {
             @RequestParam("roomType") String roomType,
             @RequestParam("guests") int guests,
             @RequestParam(name = "page", defaultValue = "0") int pageNumber,
-            @RequestParam(name = "size", defaultValue = "2") int pageSize,
+            @RequestParam(name = "size", defaultValue = "6") int pageSize,
             Model model,
             HttpSession session) {
         // Check checkin date < checkout date
