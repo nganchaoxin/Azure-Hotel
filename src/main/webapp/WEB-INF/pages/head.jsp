@@ -28,7 +28,6 @@
 <link rel="stylesheet" href="<c:url value='/resources/static/css/icomoon.css' />" />
 <link rel="stylesheet" href="<c:url value='/resources/static/css/style.css' />" />
 <link rel="stylesheet" href="<c:url value='/resources/static/css/footer.css' />" />
-<link rel="stylesheet" href="<c:url value='/resources/static/css/our_room.css' />" />
 
 <link href='<c:url value="/resources/static/images/Logo_icon.svg" />' rel='shortcut icon'>
 

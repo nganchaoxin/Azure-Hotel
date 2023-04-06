@@ -5025,8 +5025,8 @@ input[type="button"].btn-block {
 .page-item.active .page-link {
   z-index: 1;
   color: #fff;
-  background-color: #78d5ef;
-  border-color: #78d5ef;
+  background-color: #005555;
+
 }
 
 .page-item.disabled .page-link {
@@ -10050,7 +10050,7 @@ h5,
 .btn.btn-primary:hover {
   border: 1px solid #cca772;
   background: transparent;
-  color: #cca772;
+  color: #fff;
 }
 .btn.btn-primary.btn-outline-primary {
   border: 1px solid #cca772;
@@ -12375,6 +12375,7 @@ body {
   justify-content: center;
 }
 
+
 .custom-pagination a {
 margin-right: 5px;
   display: inline-block;
@@ -12386,6 +12387,7 @@ margin-right: 5px;
   background: #cca772;
   color: white;
   text-align: center;
+  decoration: none;
 }
 
 .custom-pagination a:hover,

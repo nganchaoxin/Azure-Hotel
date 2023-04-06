@@ -23,7 +23,7 @@
       <div class="overlay"></div>
       <div class="container">
         <div
-          class="row no-gutters slider-text d-flex align-itemd-end justify-content-center"
+          class="row no-gutters slider-text d-flex align-itemd-end justify-content-center "
         >
           <div
             class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center"
@@ -41,7 +41,7 @@
     </div>
 
     <section class="section-margin">
-      <div class="row justify-content-center mb-5 pb-3 px-0 mx-0">
+      <div style="margin-top: 70px;" class="row justify-content-center mb-5 pb-3 px-0 mx-0">
         <div
           class="col-md-7 heading-section text-center ftco-animate justify-item-center"
         >

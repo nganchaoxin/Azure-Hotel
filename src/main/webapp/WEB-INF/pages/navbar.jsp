@@ -7,7 +7,7 @@
 
 <link href='<c:url value="/resources/static/css/header.css" />' rel='stylesheet'>
 <header>
-  <nav class="navbar navbar-expand-lg fixed-top px-0 mx-0" id="">
+  <nav class="navbar navbar-expand-lg fixed-top px-0 mx-0 " id="">
     <div class="container">
       <a class="navbar-brand" href="./">
         <img class="navbar-logo" width="200" height="auto" src="resources/static/images/Logo_logo.png"/>
@@ -15,8 +15,8 @@
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> Menu
       </button>
-      <div class="collapse navbar-collapse" id="ftco-nav">
-        <ul class="navbar-nav ml-auto">
+      <div class="collapse navbar-collapse my-auto" id="ftco-nav">
+        <ul class="navbar-nav ml-auto align-items-center">
           <li class="nav-item active">
             <a href="./" class="nav-link">Home</a>
           </li>
@@ -40,9 +40,9 @@
               </li>
             </sec:authorize>
             <sec:authorize access="hasRole('ROLE_USER')">
-              <li class="nav-item">
-                <a href="<c:url value="/bookingcart" />" class="nav-link">My Cart
-                  <span class="cart-basket d-flex align-items-center justify-content-center" style="height: 1.4em;border-radius: 50%;width: 1.4em;background-color: #fff700b8;position: relative;top: -38px;left: 52px;font-size: 105%;color: #a67f01;font-weight: 500">
+              <li class="nav-item ">
+                <a href="<c:url value="/bookingcart" />" class="nav-link d-flex align-items-center">My Cart
+                  <span class="cart-basket d-flex align-items-center justify-content-center" style="height: 1.4em;border-radius: 50%;width: 1.4em;background-color: #fff700b8;position: relative;top: -18px;left: 0px;font-size: 105%;color: #a67f01;font-weight: 500">
                     ${cartItemList.size()}
                   </span>
                 </a>

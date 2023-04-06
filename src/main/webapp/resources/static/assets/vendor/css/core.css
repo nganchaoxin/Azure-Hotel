@@ -4162,6 +4162,9 @@ textarea.form-control-lg {
   background-color: rgba(105, 108, 255, 0.08);
   border-color: rgba(105, 108, 255, 0.08);
 }
+li {
+  text-align: center;
+}
 .page-item.disabled .page-link {
   color: #a1acb8;
   pointer-events: none;
