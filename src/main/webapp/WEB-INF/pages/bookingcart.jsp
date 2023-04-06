@@ -21,7 +21,6 @@
     <link href='<c:url value="/resources/static/css/footer.css" />' rel='stylesheet'>
     <title>Tanz Hotel</title>
 </head>
-
 <body>
     <header>
             <div class="logo_top">
@@ -297,13 +296,13 @@
                             </div>
                         </div>
                         <c:if test="${payment_status.equals('payment_available')}">
-                        <form:form action="bookingcart/checkout" method="POST">
+                        <form action="bookingcart/checkout" id="checkoutForm" method="POST">
                             <div class="customer_note">
-                                <input name="note" class="input_note" type='text' placeholder='Enter your note...' />
+                                <input name="note" class="input_note"  type='text' placeholder='Enter your note...' />
                             </div>
                             <div class="button_checkout">
-                                    <button type="submit" class="btn_checkout">Check Out</button>
-                                </form:form>
+                                    <button type="submit" class="btn_checkout" id="checkout-button" onclick="display_data()">Check Out</button>
+                                </form>
                             </div>
                         </c:if>
                     </div>
@@ -319,7 +318,51 @@
                            Website was designed by Thanh Tam and Ngan Pham, please don't copyright.
                        </div>
                    </footer>
+
 </body>
+ <!-- Preloader -->
+                       <div id="loader-overlay">
+                         <div class="loader">
+                           <div class="inner one"></div>
+                           <div class="inner two"></div>
+                           <div class="inner three"></div>
+                         </div>
+                       </div>
+                       </div>
+
+
+<script>
+ $(document).ready(function() {
+   $("#checkout-button").click(function() {
+     // Show the loader overlay
+     $("#loader-overlay").show();
+
+     var form_data = $("#checkoutForm").serialize();
+
+     $.ajax({
+       url: "bookingcart/checkout",
+       method: "POST",
+       data: form_data,
+       success: function(response) {
+         console.log(response);
+         // Do something with the response, like display a success message
+
+         // Hide the loader overlay
+         $("#loader-overlay").hide();
+       },
+       error: function(xhr, status, error) {
+         console.log("Error: " + error);
+         // Display an error message to the user
+
+         // Hide the loader overlay
+         $("#loader-overlay").hide();
+       }
+     });
+   });
+ });
+
+  </script>
+
 <script>
     $(document).ready(function () {
         $("#customer-detail").click(function () {
@@ -334,5 +377,8 @@
         });
     });
 </script>
-
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<!-- Include Bootstrap JS -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </html>
