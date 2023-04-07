@@ -42,7 +42,7 @@
     <sec:authorize access="isAuthenticated()">
       <ul class="user_ul">
         <li class="nav_item">
-          <a href="<c:url value=" /user/account" />" class="nav_link" style="font-weight: 500;">
+          <a href="<c:url value=" user/account" />" class="nav_link" style="font-weight: 500;">
           ${accountEntity.username}
           </a>
         </li>
@@ -191,7 +191,7 @@
                       <div class="card space icon-relative">
                         <label class="label">Card number:</label>
                         <form:input path="card_number" type="text" class="input"
-                          placeholder="0000 0000 0000 0000" required="true" />
+                          placeholder="0000 0000 0000 0000" required="true" minlength="8" maxlength="8"/>
                         <i class="far fa-credit-card"></i>
                       </div>
                       <div class="card-grp space">

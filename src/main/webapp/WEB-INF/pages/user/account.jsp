@@ -254,7 +254,7 @@
                         </div>
                         <div class="mb-3 col-md-6">
                           <label for="email" class="form-label">E-mail</label>
-                          <input class="form-control" type="text" id="email" name="email" value="${accountEntity.email}"
+                          <input class="form-control" type="email" id="email" name="email" value="${accountEntity.email}" readonly="true"
                              placeholder="john.doe@example.com" />
                         </div>
                         <div class="mb-3 col-md-6">
