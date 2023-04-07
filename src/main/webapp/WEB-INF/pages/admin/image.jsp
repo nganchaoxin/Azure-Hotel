@@ -149,7 +149,7 @@
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4">Azure's Rooms</h4>
+              <h4 class="fw-bold py-3 mb-4">Azure's Images</h4>
               <a href="showImageForm">
                 <button type="button" class="btn btn-sm btn-outline-primary">
                   <i class="bx bx-edit-alt me-1"></i> Add image category

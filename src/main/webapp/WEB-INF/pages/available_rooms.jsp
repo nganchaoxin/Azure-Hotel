@@ -67,13 +67,13 @@
 
 
     </header>
-    <main style="padding-top:0px;">
+    <main style="padding-top:10px;">
       <c:if test="${not empty availableRoomList}">
         <div class="section section-properties">
           <div class="container">
             <div class="row">
               <c:forEach items="${availableRoomList}" var="room">
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <div style="height: 450px" class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
                   <!-- Carousel-->
                   <div class="property-item mb-30">
                     <div id="myCarousel" class="carousel slide" data-ride="carousel">

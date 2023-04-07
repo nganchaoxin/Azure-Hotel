@@ -148,7 +148,7 @@
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4">Azure's Rooms</h4>
+              <h4 class="fw-bold py-3 mb-4">Azure's Room Categories</h4>
               <a href="addCategory">
                 <button type="button" class="btn btn-sm btn-outline-primary">
                   <i class="bx bx-edit-alt me-1"></i> Add category room
@@ -159,7 +159,7 @@
 
               <!-- Hoverable Table rows -->
               <div class="card">
-                <h5 class="card-header">Category Room</h5>
+                <h5 class="card-header">Room Categories</h5>
                 <div class="table-responsive text-nowrap">
                   <table class="table table-hover">
                     <thead>
