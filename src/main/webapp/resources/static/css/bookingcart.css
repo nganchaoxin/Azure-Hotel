@@ -153,11 +153,6 @@ text-decoration: none;
 
 
 
-
-
-html {
-  height: 100%;
-}
 #loader-overlay {
   display: none;
   position: fixed;

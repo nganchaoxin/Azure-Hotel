@@ -196,11 +196,15 @@ public class UserController {
 
     @PostMapping("/cancelbooking&id={id}")
     public String cancelBooking(@PathVariable int id, HttpSession session, Model model, HttpServletRequest request) {
+        AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         BookingEntity bookingEntity = bookingService.findById(id);
         bookingEntity.setBooking_status(BookingStatus.CANCEL);
         bookingService.save(bookingEntity);
+        AccountBankingEntity accountBankingEntity = accountBankingService.findByAccountId(accountEntity.getId()).get(0);
+        accountBankingEntity.setBalance(accountBankingEntity.getBalance() + bookingEntity.getTotal_price());
+        accountBankingService.save(accountBankingEntity);
         request.setAttribute("msg", "Cancel Booking Successfully!");
-        AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
+
         List<BookingEntity> bookingEntityList = bookingService.findByAccountId(accountEntity.getId());
         model.addAttribute("bookingEntityList", bookingEntityList);
         return "user/booking";

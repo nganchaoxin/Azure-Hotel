@@ -67,14 +67,6 @@
       <div>${accountEntity.username}</div>
     </li>
     <li>
-      <div>Check In:</div>
-      <div><fmt:formatDate value="${bookingDetailEntity.getBooking_check_in()}" pattern="dd/MM/yyyy" /></div>
-    </li>
-    <li>
-      <div>Check Out:</div>
-      <div><fmt:formatDate value="${bookingDetailEntity.getBooking_check_out()}" pattern="dd/MM/yyyy" /></div>
-    </li>
-    <li>
       <div>Total Price:</div>
       <div><fmt:formatNumber value="${newBookingEntity.total_price}" pattern="#,###.##" /> VND</div>
     </li>
@@ -104,14 +96,6 @@
     <li>
       <div>Username</div>
       <div>${accountEntity.username}</div>
-    </li>
-    <li>
-      <div>Check In:</div>
-      <div><fmt:formatDate value="${cartItemList.get(0).getCheck_in()}" pattern="dd/MM/yyyy" /></div>
-    </li>
-    <li>
-      <div>Check Out:</div>
-      <div><fmt:formatDate value="${cartItemList.get(0).getCheck_out()}" pattern="dd/MM/yyyy" /></div>
     </li>
     <li>
       <div>Number Rooms:</div>

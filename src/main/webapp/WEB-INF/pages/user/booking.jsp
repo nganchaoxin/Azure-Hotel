@@ -231,7 +231,7 @@
                       <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${booking.accountEntity.username}</strong></td>
                       <td><fmt:formatDate value="${booking.booking_date}" pattern="dd-MM-yyyy" /></td>
                       <td><span class="badge bg-label-primary me-1">${booking.booking_status}</span></td>
-                      <td>${booking.total_price} VND</td>
+                      <td> <fmt:formatNumber value="${booking.total_price}" pattern="#,###.##" /> VND</td>
                       <td>
                         <div class="dropdown" style="display: flex;">
                           </button>

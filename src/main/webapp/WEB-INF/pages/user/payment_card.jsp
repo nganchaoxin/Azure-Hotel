@@ -234,7 +234,7 @@
                         </div>
                         <div class="mb-3 col-md-6">
                           <label for="email" class="form-label">Card number</label>
-                          <form:input class="form-control" type="text" id="email" path="card_number"
+                          <form:input class="form-control" type="text" id="email" path="card_number" minlength="16" maxlength="16"
                             placeholder="0000 0000 0000 0000" />
                         </div>
                         <div class="mb-3 col-md-6">
