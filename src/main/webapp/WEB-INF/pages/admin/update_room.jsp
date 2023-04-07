@@ -130,7 +130,7 @@
                     id="username"
                     name="username"
                     placeholder="Enter room name"
-                    required
+
                   />
                 </div>
                 <div class="mb-3">
@@ -142,7 +142,7 @@
                     id="email"
                     name="email"
                     placeholder="Enter room number"
-                    required
+
                   />
                 </div>
                 <div class="mb-3">
@@ -152,7 +152,7 @@
                     class="form-control"
                     id="status"
                     name="status"
-                    required
+
                   >
                     <form:option value="" label="---Select---" />
                     <c:forEach items="${roomStatusList}" var="roomStatus">
@@ -170,7 +170,7 @@
                     class="form-control"
                     id="status"
                     name="status"
-                    required
+
                   >
                     <form:option value="0" label="---Select---" />
                     <form:options items="${categoryList}" />

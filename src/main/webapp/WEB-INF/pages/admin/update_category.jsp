@@ -127,7 +127,7 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
                     class="form-control"
                     id="status"
                     name="status"
-                    required
+
                   >
                     <form:option value="" label="---Select---" />
                     <c:forEach items="${categoryList}" var="category">
@@ -147,7 +147,7 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
                     class="form-control"
                     id="email"
                     name="email"
-                    required
+
                   />
                 </div>
                 <div class="mb-3">
@@ -158,7 +158,7 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
                     class="form-control"
                     id="email"
                     name="email"
-                    required
+
                   />
                 </div>
                 <div class="mb-3">
@@ -169,7 +169,7 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
                     class="form-control"
                     id="email"
                     name="email"
-                    required
+
                   />
                 </div>
                 <div class="mb-3">
@@ -180,7 +180,7 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
                     class="form-control"
                     id="email"
                     name="email"
-                    required
+
                   />
                 </div>
                 <div class="mb-3">
@@ -191,7 +191,7 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
                     class="form-control"
                     id="email"
                     name="email"
-                    required
+
                   />
                 </div>
 
