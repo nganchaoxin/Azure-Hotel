@@ -91,6 +91,7 @@ public class SignUpController {
                 "<p>Best regards,<br>The Azure Hotel team</p>";
         sendEmail(email, "Azure Hotel -Signup new account", body);
         model.addAttribute("accountEntity", accountEntity);
+        model.addAttribute("success_msg", "Success! Please Verify your email before log in!");
         return "login";
     }
 

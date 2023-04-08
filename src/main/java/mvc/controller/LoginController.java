@@ -41,7 +41,7 @@ public class LoginController {
     @RequestMapping("/login")
     public String loginPage(Model model, @RequestParam(value = "error", required = false) boolean error) {
         if (error) {
-            model.addAttribute("message", "Login failll");
+            model.addAttribute("message", "Username or password is not correct!");
         }
 
         return "login";
