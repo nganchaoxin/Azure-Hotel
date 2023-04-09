@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <head>
@@ -245,13 +246,13 @@
                         <div class="mb-3 col-md-6">
                           <label class="form-label" for="phoneNumber">Balance</label>
                           <div class="input-group input-group-merge">
-                            <form:input type="currency" currency="VND" id="phoneNumber" path="balance" class="form-control"
-                               readonly="true"/>
+                    <form:input id="phoneNumber" path="balance" pattern="#,##0" class="form-control" readonly="true" />
+
                           </div>
                         </div>
                       <div class="mt-2">
                         <button type="submit" class="btn btn-primary me-2">Save changes</button>
-                        <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+
                       </div>
                     </form:form>
                   </div>
