@@ -112,9 +112,10 @@ public class BookingCartController {
     @RequestMapping(value = "/checkout", method = POST, produces = "text/plain;charset=UTF-8")
     public String checkOut(HttpSession session, Model model, @RequestParam("note") String note) throws Exception {
         // Get account
+        double totalPrice = (double) session.getAttribute("totalPrices");
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         AccountBankingEntity accountBanking = accountBankingService.findByAccountId(accountEntity.getId()).get(0);
-        bookingCartService.checkOut(accountEntity, accountBanking, session, model, note);
+        bookingCartService.checkOut(accountEntity, accountBanking, session, model, note, totalPrice);
         return "successpage";
     }
 
