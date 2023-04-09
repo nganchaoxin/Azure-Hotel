@@ -63,16 +63,16 @@ public class BookingCartService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void checkOut(AccountEntity accountEntity, AccountBankingEntity accountBanking, HttpSession session, Model model, String note) throws Exception {
+    public void checkOut(AccountEntity accountEntity, AccountBankingEntity accountBanking, HttpSession session, Model model, String note, double totalPrice) throws Exception {
         try {
-            if (accountBanking.getBalance() > (Double) session.getAttribute("totalPrices")) {
+            if (accountBanking.getBalance() > totalPrice) {
                 //// Create new booking entity
                 BookingEntity newBookingEntity = new BookingEntity();
                 newBookingEntity.setBooking_date(new Date());
                 newBookingEntity.setBooking_status(BookingStatus.COMPLETED);
                 newBookingEntity.setNote(note);
                 newBookingEntity.setAccountEntity(accountEntity);
-                newBookingEntity.setTotal_price((Double) session.getAttribute("totalPrices"));
+                newBookingEntity.setTotal_price(totalPrice);
                 bookingService.save(newBookingEntity);
 
                 //Create new booking detail
@@ -84,14 +84,14 @@ public class BookingCartService {
                 PaymentEntity newPayment = new PaymentEntity();
                 newPayment.setBookingEntity(newBookingEntity);
                 newPayment.setPayment_date(new Date());
-                newPayment.setAmount((Double) session.getAttribute("totalPrices"));
+                newPayment.setAmount(totalPrice);
                 String paymentNote = ("Payment for booking #ID:"+newBookingEntity.getId() + " ,date: "+newBookingEntity.getBooking_date());
                 newPayment.setNote(paymentNote);
                 newPayment.setAccountBankingEntity(accountBankingService.findByAccountId(accountEntity.getId()).get(0));
                 paymentService.save(newPayment);
 
                 // Update balance of account Banking
-                double newBalance = accountBanking.getBalance() - (Double) session.getAttribute("totalPrices");
+                double newBalance = accountBanking.getBalance() - totalPrice;
                 accountBanking.setBalance(newBalance);
                 accountBankingService.save(accountBanking);
 
@@ -109,27 +109,8 @@ public class BookingCartService {
                         "<p>Order #: "+newBookingEntity.getId()+"</p>\n" +
                         "<p>Order Date: "+newBookingEntity.getBooking_date()+"</p>\n" +
                         "<p>Order Total: "+newBookingEntity.getTotal_price()+"</p>\n" +
-                        "<p>Your Booking Details:</p>\n" +
-                        "<table>\n" +
-                        "  <tr>\n" +
-                        "    <th>Room</th>\n" +
-                        "    <th>Check In</th>\n" +
-                        "    <th>Check Out</th>\n" +
-                        "    <th>Price</th>\n" +
-                        "  </tr>\n" +
-                        "  <tr>\n" +
-                        "    <td>Phong Sieu Pham</td>\n" +
-                        "    <td>21/02/2022</td>\n" +
-                        "    <td>22/02/2022</td>\n" +
-                        "    <td>300.000 VND</td>\n" +
-                        "  </tr>\n" +
-                        "  <tr>\n" +
-                        "    <td>Phong Tong Thong</td>\n" +
-                        "    <td>21/02/2022</td>\n" +
-                        "    <td>22/02/2022</td>\n" +
-                        "    <td>500.000 CND</td>\n" +
-                        "  </tr>\n" +
-                        "</table>\n" +
+                        "<p>View your Booking:</p>\n" +
+                        "<a href=http://localhost:8080/Azure-Hotel/user/booking</a>\n" +
                         "<p>Best regards,<br>The Azure Hotel team</p>";
 
                 sendEmail(email, "Azure Hotel - New Booking Successfully", body);
