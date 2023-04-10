@@ -148,10 +148,10 @@
               <!-- User -->
               <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                  <div class="avatar avatar-online">
-                    <img src="getImagePhoto/<c:out value='${accountEntity.id}'/>" alt class="w-px-35 h-px-35 rounded-circle" />
+                <div class="avatar avatar-online">
+                                                            <img src="getImagePhoto/<c:out value='${accountEntity.id}'/>" alt class="w-px-35 h-px-35 rounded-circle" />
 
-                  </div>
+                                                          </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                   <li>

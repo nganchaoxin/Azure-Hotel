@@ -262,20 +262,35 @@ button.ghost {
 
 .notification-box {
   position: absolute;
-  top: 16%;
-  left: 38.5%;
+  top:0%;
+  left:auto;
+  right: auto;
   transform: translate(-50%, -50%);
-  background-color: #2ecc71;
+  background-color: #cca772;
   color: white;
   padding: 0px 10px;
   height: 60px;
   border-radius: 5px;
+  animation-name: fade-in-down;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
 }
 
 .notification-box.success {
-  background-color: #2ecc71;
+  background-color: #cca772;
 }
 
 .notification-box.error {
   background-color: #e74c3c;
+}
+
+@keyframes fade-in-down {
+  0% {
+    opacity: 0;
+    transform: translateX(-200px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
