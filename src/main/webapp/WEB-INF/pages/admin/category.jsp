@@ -204,13 +204,6 @@
                               <i class="bx bx-edit-alt me-1"></i> Edit
                             </button>
 
-                              <button
-                                onclick="location.href='deleteCategory/${category.id}'"
-                                type="button"
-                                class="btn btn-sm btn-outline-secondary"
-                              >
-                                <i class="bx bx-trash me-1"></i> Delete
-                              </button>
 
                           </td>
                         </tr>
