@@ -70,17 +70,27 @@ public class AdminController {
     // Save
     @RequestMapping(value = "/addRoom", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     public String saveRoom(@Valid @ModelAttribute("room") RoomEntity room, BindingResult result, Model model) {
-        if (result.hasErrors() || room.getCategoryEntity().getId() == 0) {
-            model.addAttribute("type", "update");
+        if (result.hasErrors() || room.getRoom_status() == null || room.getRoom_name() == null || room.getRoom_number() == 0) {
             setCategoryDropDownList(model);
             setStatusDropDownList(model);
+            model.addAttribute("type", "update");
+            model.addAttribute("message", "Please fill out this field");
 
-            if (room.getCategoryEntity().getId() == 0) {
-                model.addAttribute("type", "update");
-                model.addAttribute("message", "Plz input category");
-            }
+
             return "admin/update_room";
         }
+        List<RoomEntity> roomList = roomService.findAllRoom();
+
+        for (RoomEntity r : roomList) {
+            if (result.hasErrors() || room.getRoom_name().equals(r.getRoom_name()) || room.getRoom_number() == r.getRoom_number()) {
+                setCategoryDropDownList(model);
+                setStatusDropDownList(model);
+
+                model.addAttribute("error_duplicate", "This name has already been used. Please choose a different input.");
+                return "admin/update_room";
+            }
+        }
+
         roomService.saveRoom(room);
         return "redirect:/admin/room";
     }

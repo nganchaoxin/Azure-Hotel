@@ -4,6 +4,7 @@
 <%@ taglib prefix="mvc" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <!DOCTYPE html>
 
 <html
@@ -132,6 +133,12 @@
                     placeholder="Enter room name"
 
                   />
+                  <small style="color: red">
+                      <c:out value="${error_duplicate}" />
+                    </small>
+                    <small style="color: red">
+                      <c:out value="${message}" />
+                    </small>
                 </div>
                 <div class="mb-3">
                   <label for="email" class="form-label">Room number</label>
@@ -144,6 +151,12 @@
                     placeholder="Enter room number"
 
                   />
+                  <small style="color: red">
+                      <c:out value="${error_duplicate}" />
+                    </small>
+                    <small style="color: red">
+                      <c:out value="${message}" />
+                    </small>
                 </div>
                 <div class="mb-3">
                   <label for="username" class="form-label">Room status</label>
@@ -162,6 +175,9 @@
                       />
                     </c:forEach>
                   </form:select>
+                  <small style="color: red">
+                      <c:out value="${message}" />
+                    </small>
                 </div>
                 <div class="mb-3">
                   <label for="username" class="form-label">Category name</label>
@@ -172,7 +188,6 @@
                     name="status"
 
                   >
-                    <form:option value="0" label="---Select---" />
                     <form:options items="${categoryList}" />
                   </form:select>
                   <small style="color: red">
