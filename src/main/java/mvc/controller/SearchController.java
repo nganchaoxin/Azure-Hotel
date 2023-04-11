@@ -92,24 +92,30 @@ public class SearchController {
     public String addToCart(Model model, @PathVariable int roomId, HttpSession session, HttpServletRequest request) {
         // Find account and booking cart
         AccountEntity account = (AccountEntity) session.getAttribute("accountEntity");
+
         if (account == null) {
+            session.setAttribute("roomIdToAddToCart", roomId);
+
             return "redirect:/login";
         }
+
         List<BookingCartEntity> bookingCartList = bookingCartService.findByAccountId(account.getId());
         RoomEntity room = roomService.findRoomById(roomId);
 
         List<BookingCartItemEntity> cartItemSessionList = (List<BookingCartItemEntity>) request.getSession().getAttribute("cartItemList");
         List<BookingCartItemEntity> bookingCartItemDatabase = bookingCartItemService.findAllByBookingCartId(bookingCartList.get(0).getId());
 
-        Date check_in = (Date) session.getAttribute("check_in");
-        Date check_out = (Date) session.getAttribute("check_out");
         // Set new cart item
         BookingCartItemEntity cartItem = new BookingCartItemEntity();
+        Date check_in = (Date) session.getAttribute("check_in");
+        Date check_out = (Date) session.getAttribute("check_out");
         cartItem.setCheck_in(check_in);
         cartItem.setCheck_out(check_out);
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         int differenceInMillis = (int) (cartItem.getCheck_out().getTime() - cartItem.getCheck_in().getTime());
         int total_night = differenceInMillis / (1000 * 60 * 60 * 24);
+
         cartItem.setTotal_night(total_night);
         cartItem.setRoomEntity(room);
         cartItem.setBookingCartEntity(bookingCartList.get(0));
@@ -138,6 +144,7 @@ public class SearchController {
         model.addAttribute("cartItemList", cartItemSessionList);
         return "redirect:/bookingcart";
     }
+
 
     private int exists(int roomId, Date check_in, Date check_out) {
         List<BookingCartItemEntity> cartItemEntityList = bookingCartItemService.listCartItemCheck(check_in, check_out);

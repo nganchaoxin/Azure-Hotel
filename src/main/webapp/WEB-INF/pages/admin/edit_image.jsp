@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@ taglib prefix="mvc" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<%@ taglib prefix="mvc" uri="http://www.springframework.org/tags/form" %> <%@
+taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ taglib
+prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@page isELIgnored="false"%>
 <!DOCTYPE html>
 
 <html
@@ -95,109 +95,83 @@
                 </a>
               </div>
               <!-- /Logo -->
-              <h4 class="mb-2">Edit and Add Room Here 🚀</h4>
+              <h4 class="mb-2">Edit and Add Image Category Here 🚀</h4>
 
               <form:form
-                action="${action}"
-                modelAttribute="room"
-                method="post"
-                id="formAuthentication"
-                class="mb-3"
+                  action="updateImage/${image.id}"
+                  modelAttribute="image"
+                  id="formAuthentication"
+                  class="mb-3"
+                  method="POST"
+                  enctype="multipart/form-data"
               >
-                <legend class="scheduler-border">
-                  <c:out value="${msg}" />
-                </legend>
-                <c:if test="${type.equals('update')}">
+                    <legend class="scheduler-border">
+                      <c:out value="${msg}" />
+                    </legend>
+                   <c:if test="${type.equals('update')}">
+                     <div class="mb-3">
+                       <label for="username" class="form-label">Image ID</label>
+                       <input
+                        name="image_id"
+                         type="text"
+                         value="${image.id}"
+                         class="form-control"
+                         id="id"
+                         disabled="true"
+                       />
+
+                     </div>
+                   </c:if>
+
+
                   <div class="mb-3">
-                    <label for="username" class="form-label">Room ID</label>
-                    <form:input
-                      path="id"
-                      type="text"
-                      class="form-control"
-                      id="id"
-                      disabled="true"
-                    />
-                    <form:hidden path="id" />
-                    <form:hidden path="categoryEntity.id" />
-                  </div>
-                </c:if>
-
-                <div class="mb-3">
-                  <label for="username" class="form-label">Room name</label>
-                  <form:input
-                    path="room_name"
-                    type="text"
-                    class="form-control"
-                    id="username"
-                    name="username"
-                    placeholder="Enter room name"
-
-                  />
-                  <small style="color: red">
-                      <c:out value="${error_duplicate}" />
-                    </small>
-                    <small style="color: red">
-                      <c:out value="${message}" />
-                    </small>
-                </div>
-                <div class="mb-3">
-                  <label for="email" class="form-label">Room number</label>
-                  <form:input
-                    path="room_number"
-                    type="number"
-                    class="form-control"
-                    id="email"
-                    name="email"
-                    placeholder="Enter room number"
-
-                  />
-                  <small style="color: red">
-                      <c:out value="${error_duplicate}" />
-                    </small>
-                    <small style="color: red">
-                      <c:out value="${message}" />
-                    </small>
-                </div>
-                <div class="mb-3">
-                  <label for="username" class="form-label">Room status</label>
-                  <form:select
-                    path="room_status"
-                    class="form-control"
-                    id="status"
-                    name="status"
-
-                  >
-                    <form:option value="" label="---Select---" />
-                    <c:forEach items="${roomStatusList}" var="roomStatus">
-                      <form:option
-                        value="${roomStatus}"
-                        label="${roomStatus}"
+                      <label for="email" class="form-label">Image Name</label>
+                      <input
+                          name="image_name"
+                          value="${image.image_name}"
+                          type="text"
+                          class="form-control"
+                          required
                       />
-                    </c:forEach>
-                  </form:select>
-                  <small style="color: red">
-                      <c:out value="${message}" />
-                    </small>
-                </div>
-                <div class="mb-3">
-                  <label for="username" class="form-label">Category name</label>
-                  <form:select
-                    path="categoryEntity.id"
-                    class="form-control"
-                    id="status"
-                    name="status"
+                  </div>
 
-                  >
-                    <form:options items="${categoryList}" />
-                  </form:select>
-                  <small style="color: red">
-                    <c:out value="${message}" />
-                  </small>
-                </div>
-                <button type="submit" class="btn btn-primary d-grid w-100">
-                  Save
-                </button>
+                  <div class="mb-3">
+                    <label for="email" class="form-label">Url</label>
+                    <input
+                      name="image_url"
+                      value="${image_url}"
+                      required
+                      type="file"
+                      class="form-control"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                      <label for="username" class="form-label">Category name</label>
+                      <select
+                          name="category_name"
+                          value="${image.categoryEntity.category_name}"
+                          class="form-control"
+                          required
+                      >
+                          <option value="" label="---Select---" />
+                          <c:forEach items="${categoryList}" var="category">
+                              <option value="${category.value}"
+                                  <c:if test="${category.value == image.categoryEntity.category_name}">
+                                      selected
+                                  </c:if>
+                              >
+                                  ${category.value}
+                              </option>
+                          </c:forEach>
+                      </select>
+                  </div>
+
+                  <button type="submit" value="Submit" class="btn btn-primary d-grid w-100">
+                      Save
+                  </button>
               </form:form>
+
             </div>
           </div>
           <!-- Register Card -->
