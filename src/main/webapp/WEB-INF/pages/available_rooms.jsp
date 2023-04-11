@@ -146,7 +146,7 @@
                               ${availableRoomList[0].position}</span>
                           </span>
                         </div>
-                        <a href="addToCart&room=${room.id}" class="btn btn-primary py-2 px-3"
+                        <a href="addToCart/room=${room.id}" class="btn btn-primary py-2 px-3"
                           style="margin-top: 0px; color:hover: black !important;">Add to cart</a>
                       </div>
                     </div>
