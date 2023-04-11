@@ -4,10 +4,9 @@
 <%@ taglib prefix="mvc" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
   <head>
-    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
@@ -99,7 +98,7 @@
               <span class="menu-header-text">Room Management</span>
             </li>
             <!-- Cards -->
-            <li class="menu-item">
+            <li class="menu-item ">
               <a href="room" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Manage room</div>
@@ -107,48 +106,49 @@
             </li>
             <!-- Components -->
             <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">Category Management</span>
-            </li>
-            <!-- Cards -->
-            <li class="menu-item">
-              <a href="category" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">Manage category</div>
-              </a>
-            </li>
-            <!-- Components -->
+                <span class="menu-header-text">Category Management</span>
+              </li>
+              <!-- Cards -->
+              <li class="menu-item">
+                <a href="category" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-collection"></i>
+                  <div data-i18n="Basic">Manage category</div>
+                </a>
+              </li>
+              <!-- Components -->
             <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">Booking Management</span>
-            </li>
-            <!-- Cards -->
-            <li class="menu-item active">
-              <a href="booking" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">Manage booking</div>
-              </a>
-            </li>
-            <!-- Components -->
-            <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">Image Management</span>
-            </li>
-            <!-- Cards -->
-            <li class="menu-item">
-              <a href="image" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">Manage image</div>
-              </a>
-            </li>
-            <!-- Components -->
-            <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">Account Management</span>
-            </li>
-            <!-- Cards -->
-            <li class="menu-item ">
-              <a href="account" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">Manage account</div>
-              </a>
-            </li>
+                <span class="menu-header-text">Booking Management</span>
+              </li>
+              <!-- Cards -->
+              <li class="menu-item">
+                <a href="booking" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-collection"></i>
+                  <div data-i18n="Basic">Manage booking</div>
+                </a>
+              </li>
+
+              <!-- Components -->
+              <li class="menu-header small text-uppercase">
+                <span class="menu-header-text">Image Management</span>
+              </li>
+              <!-- Cards -->
+              <li class="menu-item">
+                <a href="image" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-collection"></i>
+                  <div data-i18n="Basic">Manage image</div>
+                </a>
+              </li>
+              <!-- Components -->
+                <li class="menu-header small text-uppercase">
+                  <span class="menu-header-text">Account Management</span>
+                </li>
+                <!-- Cards -->
+                <li class="menu-item active">
+                  <a href="account" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-collection"></i>
+                    <div data-i18n="Basic">Manage account</div>
+                  </a>
+                </li>
           </ul>
         </aside>
         <!-- / Menu -->
@@ -160,65 +160,65 @@
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4">Azure's Booking Detail</h4>
-              <a href="<c:url value="/admin/booking" />">
-                <button type="button" class="btn btn-sm btn-outline-primary">
-                   Back to booking
-                </button>
-              </a>
+              <h4 class="fw-bold py-3 mb-4">Azure's Account</h4>
+
 
               <hr class="my-5" />
 
               <!-- Hoverable Table rows -->
-              <c:if test="${not empty bookingDetailList}">
               <div class="card">
-                <h5 class="card-header">Booking Detail</h5>
+                <h5 class="card-header">Accounts</h5>
                 <div class="table-responsive text-nowrap">
-
                   <table class="table table-hover">
                     <thead>
                       <tr>
-                        <th>Room</th>
-                        <th>Check In</th>
-                        <th>Check Out</th>
-                        <th>Adult</th>
-                        <th>Children</th>
+                        <th>Email</th>
+                        <th>Username</th>
+                        <th>Status</th>
+                        <th>Action</th>
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
+                      <c:forEach
+                        var="account"
+                        items="${accountList}"
+                        varStatus="index"
+                      >
+                        <tr>
+                          <td>${account.email}</td>
+                          <td>${account.username}</td>
+                          <td>
+                            <span class="badge bg-label-primary me-1"
+                              >${account.status}</span
+                            >
+                          </td>
+                          <td>
+                            <c:if test="${account.status == 'ACTIVE'}">
+                                <button
+                                  onclick="location.href='unactiveAccount/${account.id}'"
+                                  type="button"
+                                  class="btn btn-sm btn-outline-primary"
+                                >
+                                  <i class="bx bx-edit-alt me-1"></i> UNACTIVE
+                                </button>
+                            </c:if>
+                            <c:if test="${account.status == 'UNACTIVE'}">
+                                <button
+                                  onclick="location.href='activeAccount/${account.id}'"
+                                  type="button"
+                                  class="btn btn-sm btn-outline-primary"
+                                >
+                                  <i class="bx bx-edit-alt me-1"></i> ACTIVE
+                                </button>
+                            </c:if>
 
-                        <c:forEach
-                            var="bookingDetail"
-                            items="${bookingDetailList}"
-                            varStatus="index"
-                          >
-                            <tr>
-                              <td>${bookingDetail.roomEntity.room_name}</td>
-                              <td>
-                                <fmt:formatDate
-                                  value="${bookingDetail.booking_check_in}"
-                                  pattern="dd-MM-yyyy"
-                                />
-                              </td>
-                              <td>
-                                <fmt:formatDate
-                                  value="${bookingDetail.booking_check_out}"
-                                  pattern="dd-MM-yyyy"
-                                />
-                              </td>
-
-                              <td>${bookingDetail.number_of_adult}</td>
-                              <td>${bookingDetail.number_of_children}</td>
-                            </tr>
-                          </c:forEach>
+                          </td>
+                        </tr>
+                      </c:forEach>
                     </tbody>
                   </table>
                 </div>
               </div>
-              </c:if>
-              <c:if test="${empty bookingDetailList}">
-                  <h3>No booking detail </h3>
-                </c:if>
               <!--/ Hoverable Table rows -->
             </div>
 

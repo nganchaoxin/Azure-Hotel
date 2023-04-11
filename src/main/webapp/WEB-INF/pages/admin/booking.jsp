@@ -137,6 +137,17 @@
                     <div data-i18n="Basic">Manage image</div>
                   </a>
                 </li>
+                <!-- Components -->
+                    <li class="menu-header small text-uppercase">
+                      <span class="menu-header-text">Account Management</span>
+                    </li>
+                    <!-- Cards -->
+                    <li class="menu-item ">
+                      <a href="account" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-collection"></i>
+                        <div data-i18n="Basic">Manage account</div>
+                      </a>
+                    </li>
           </ul>
         </aside>
         <!-- / Menu -->
@@ -194,7 +205,7 @@
                           <td>${booking.accountEntity.email}</td>
                           <td><fmt:formatDate value="${booking.booking_date}" pattern="dd-MM-yyyy" /></td>
                           <td>${booking.booking_status}</td>
-                          <td>${booking.total_price} VND</td>
+                          <td><fmt:formatNumber value="${booking.total_price}" pattern="#,###.##" /> VND</td>
 
                           <td>
                             <button
