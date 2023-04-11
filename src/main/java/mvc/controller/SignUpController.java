@@ -109,6 +109,7 @@ public class SignUpController {
             bookingCart.setAccountEntity(accountEntity);
 
             accountService.save(accountEntity);
+            model.addAttribute("success_msg", "Success! Log in now!!");
             return "login";
         } else {
             return "not_found";
