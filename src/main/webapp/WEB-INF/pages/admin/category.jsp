@@ -4,6 +4,7 @@
 <%@ taglib prefix="mvc" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -137,6 +138,17 @@
                     <div data-i18n="Basic">Manage image</div>
                   </a>
                 </li>
+                <!-- Components -->
+                <li class="menu-header small text-uppercase">
+                  <span class="menu-header-text">Account Management</span>
+                </li>
+                <!-- Cards -->
+                <li class="menu-item ">
+                  <a href="account" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-collection"></i>
+                    <div data-i18n="Basic">Manage account</div>
+                  </a>
+                </li>
           </ul>
         </aside>
         <!-- / Menu -->
@@ -193,7 +205,8 @@
                           <td>${category.max_occupancy}</td>
                           <td>${category.bed_info}</td>
                           <td>${category.square}</td>
-                          <td>${category.price} VND</td>
+
+                          <td><fmt:formatNumber value="${category.price}" pattern="#,###.##" /> VND</td>
 
                           <td>
                             <button

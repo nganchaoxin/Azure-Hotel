@@ -3,6 +3,7 @@ package mvc.controller;
 import mvc.entity.*;
 import mvc.enums.BookingStatus;
 import mvc.enums.RoomStatus;
+import mvc.enums.UserStatus;
 import mvc.repository.ImageRepository;
 import mvc.service.*;
 import org.apache.commons.io.IOUtils;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.ws.rs.GET;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,6 +47,8 @@ public class AdminController {
 
     @Autowired
     BookingDetailService bookingDetailService;
+    @Autowired
+    AccountService accountService;
 
     // ROOM
     // Show
@@ -351,6 +355,31 @@ public class AdminController {
         imageService.deleteById(id);
         return "redirect:/admin/image";
 
+    }
+
+    // ACCOUNT
+    @RequestMapping(value="/account", method=RequestMethod.GET)
+    public String showAccount(Model model){
+        List<AccountEntity> accountList = accountService.findAll();
+
+        model.addAttribute("accountList", accountList);
+        return "admin/account";
+    }
+    @RequestMapping(value="unactiveAccount/{id}", method=RequestMethod.GET)
+    public String unactiveAccount(Model model, @PathVariable int id){
+        AccountEntity account = accountService.findById(id);
+        account.setStatus(UserStatus.UNACTIVE);
+        accountService.save(account);
+
+        return "redirect:/admin /account";
+    }
+    @RequestMapping(value="activeAccount/{id}", method=RequestMethod.GET)
+    public String activeAccount(Model model, @PathVariable int id){
+        AccountEntity account = accountService.findById(id);
+        account.setStatus(UserStatus.ACTIVE);
+        accountService.save(account);
+
+        return "redirect:/admin/account";
     }
 
     // DROP DOWN
