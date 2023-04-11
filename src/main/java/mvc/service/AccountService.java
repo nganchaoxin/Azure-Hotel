@@ -8,6 +8,8 @@ import mvc.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AccountService {
     @Autowired
@@ -42,5 +44,9 @@ public class AccountService {
 
     public AccountEntity findByToken(String token) {
         return accountRepository.findByToken(token);
+    }
+
+    public List<AccountEntity> findAll(){
+        return (List<AccountEntity>) accountRepository.findAll();
     }
 }
