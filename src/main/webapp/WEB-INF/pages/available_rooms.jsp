@@ -54,12 +54,12 @@
           <ul class="user_ul d-flex justify-item-center">
 
             <li class="nav_item">
-              <a href="<c:url value=" /user/account" />" class="nav_link" style="font-weight: 500;">
+              <a href="<c:url value="/user/account" />" class="nav_link" style="font-weight: 500;">
               ${accountEntity.username}
               </a>
             </li>
             <li class="nav_item">
-              <a href="<c:url value=" /logout" />" class="nav_link">LogOut</a>
+              <a href="<c:url value="/logout" />" class="nav_link">LogOut</a>
             </li>
           </ul>
         </sec:authorize>
