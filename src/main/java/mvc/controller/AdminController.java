@@ -195,7 +195,7 @@ public class AdminController {
             model.addAttribute("type", "update");
             setCategoryDropDownList(model);
 
-            return "admin/update_room";
+            return "admin/update_category";
         }
         categoryService.save(category);
         return "redirect:/admin/category";
@@ -272,7 +272,6 @@ public class AdminController {
 
         ImageEntity i = new ImageEntity();
         i.setImage_name(image_name);
-        //i.setImage_type(image_type);
         i.setUrl(image_url.getBytes());
 
         CategoryEntity category = categoryService.findByCategoryName(category_name);
@@ -283,6 +282,7 @@ public class AdminController {
         return "redirect:/admin/image";
 
     }
+
 
     // Get image to table
     @RequestMapping(value = "/getImagePhoto/{id}")
@@ -295,22 +295,44 @@ public class AdminController {
         IOUtils.copy(inputStream, response.getOutputStream());
     }
 
-    // Edit
     @RequestMapping(value = "/editImage/{imageId}", method = RequestMethod.GET)
-    public String showEditImage(Model model, @PathVariable int imageId) {
-        model.addAttribute("image", imageService.findById(imageId));
-        model.addAttribute("msg", "Update image information");
-        model.addAttribute("type", "update");
+    public String showEditImage(Model model, @PathVariable long imageId) {
+        ImageEntity image = imageService.findById(imageId);
+        if (image != null) {
+            model.addAttribute("image", image);
+            model.addAttribute("category_name", image.getCategoryEntity().getCategory_name());
 
-        setCategoryDropDownList(model);
-
-        if (imageService.findById(imageId) != null) {
-            return "admin/update_image";
+            model.addAttribute("msg", "Update image information");
+            model.addAttribute("type", "update");
+            model.addAttribute("action", "updateImage" + imageId);
+            setCategoryDropDownList(model);
+            return "admin/edit_image";
         } else {
             model.addAttribute("id", imageId);
+            return "not_found";
         }
+    }
 
-        return "not_found";
+    @RequestMapping(value = "/editImage/updateImage/{id}", method = RequestMethod.POST)
+    public String editImage(@ModelAttribute("image") ImageEntity image,
+                            @RequestParam("image_url") MultipartFile file,
+                            @RequestParam("category_name") String categoryName,
+                            @PathVariable long id,
+                            Model model
+    ) throws IOException {
+        ImageEntity existingImage = imageService.findById(id);
+        if (existingImage != null) {
+            if (!file.isEmpty()) {
+                existingImage.setUrl(file.getBytes());
+            }
+            existingImage.setImage_name(image.getImage_name());
+            CategoryEntity category = categoryService.findByCategoryName(categoryName);
+            existingImage.setCategoryEntity(category);
+            imageRepository.save(existingImage);
+            return "redirect:/admin/image";
+        } else {
+            return "not_found";
+        }
     }
 
     // Delete

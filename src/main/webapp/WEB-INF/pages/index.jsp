@@ -394,9 +394,7 @@
                     <a href="#">${category.category_name}</a>
                   </h4>
                   <p>${category.description}</p>
-                  <a class="card-explore__link font-weight-bold" href="#"
-                    >Book Now <i class="ti-arrow-right"></i
-                  ></a>
+
                 </div>
               </div>
             </div>
