@@ -63,19 +63,28 @@ public class LoginController {
         }
         AccountEntity accountEntity = accountService.findByEmail(username);
 
+
         // Create session
         if (accountEntity != null) {
             session.setAttribute("accountEntity", accountEntity);
+            Integer roomIdInSession = (Integer) session.getAttribute("roomIdToAddToCart");
 
             List<BookingCartEntity> bookingCartList = bookingCartService.findByAccountId(accountEntity.getId());
             List<BookingCartItemEntity> cartItemDatabaseList = null;
 
             if (bookingCartList != null && !bookingCartList.isEmpty()) {
+
                 BookingCartEntity bookingCart = bookingCartList.get(0);
                 List<BookingCartItemEntity> cartItemSessionList = (List<BookingCartItemEntity>) session.getAttribute("cartItemList");
                 if (cartItemSessionList == null || cartItemSessionList.isEmpty()) {
                     cartItemDatabaseList = bookingCartItemService.findAllByBookingCartId(bookingCart.getId());
                     session.setAttribute("cartItemList", cartItemDatabaseList);
+                    if(roomIdInSession != null) {
+                        session.removeAttribute("roomIdToAddToCart");
+                        int roomId = roomIdInSession.intValue();
+
+                        return "redirect:/addToCart/room=" + roomId;
+                    }
                 }
             }
 

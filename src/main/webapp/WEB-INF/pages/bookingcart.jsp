@@ -19,7 +19,7 @@
 <link href='<c:url value="/resources/static/css/bookingdetail.css" />' rel='stylesheet'>
 <link href='<c:url value="/resources/static/css/bookingcart.css" />' rel='stylesheet'>
 <link href='<c:url value="/resources/static/css/footer.css" />' rel='stylesheet'>
-<title>Tanz Hotel</title>
+<title>Booking Cart |  Azure Hotel</title>
 </head>
 
 <body>
