@@ -186,6 +186,18 @@
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
+                    <c:if test="${not empty sessionScope.msgAdd}">
+                        <div class="alert alert-success">${sessionScope.msgAdd}</div>
+                        <% session.removeAttribute("msgAdd"); %>
+                    </c:if>
+                    <c:if test="${not empty sessionScope.msgUpdate}">
+                        <div class="alert alert-success">${sessionScope.msgUpdate}</div>
+                        <% session.removeAttribute("msgUpdate"); %>
+                    </c:if>
+                    <c:if test="${not empty sessionScope.msgDelete}">
+                        <div class="alert alert-success">${sessionScope.msgDelete}</div>
+                        <% session.removeAttribute("msgDelete"); %>
+                    </c:if>
                       <c:forEach
                         var="room"
                         items="${roomList}"
@@ -220,7 +232,7 @@
                             </button>
                             <c:if test="${room.room_status == 'AVAILABLE'}">
                               <button
-                                data-toggle="modal" data-target="#confirm-delete"
+                                data-toggle="modal" data-target="#confirm-delete-${index.index}"
 
                                 type="button"
                                 class="btn btn-sm btn-outline-secondary"
@@ -228,23 +240,23 @@
                                 <i class="bx bx-trash me-1"></i> Delete
                               </button>
                               <!-- Modal -->
-                              <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
-                                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                    </div>
-                                    <div class="modal-body">
-                                      <p>Are you sure you want to delete this item?</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                      <button onclick="location.href='deleteRoom/${room.id}'" class="btn btn-danger">Delete</button>
-                                    </div>
-                                  </div><!-- /.modal-content -->
-                                </div><!-- /.modal-dialog -->
-                              </div><!-- /.modal -->
+                                <div class="modal fade" id="confirm-delete-${index.index}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <p>Are you sure you want to delete this item?</p>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        <button onclick="location.href='deleteRoom/${room.id}'" class="btn btn-danger">Delete</button>
+                                      </div>
+                                    </div><!-- /.modal-content -->
+                                  </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
                             </c:if>
                           </td>
                         </tr>
