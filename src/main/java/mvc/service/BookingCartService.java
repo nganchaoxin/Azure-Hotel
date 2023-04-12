@@ -65,7 +65,7 @@ public class BookingCartService {
     @Transactional(rollbackFor = Exception.class)
     public void checkOut(AccountEntity accountEntity, AccountBankingEntity accountBanking, HttpSession session, Model model, String note, double totalPrice) throws Exception {
         try {
-            if (accountBanking.getBalance() > totalPrice) {
+            if (accountBanking.getBalance() >= totalPrice) {
                 //// Create new booking entity
                 BookingEntity newBookingEntity = new BookingEntity();
                 newBookingEntity.setBooking_date(new Date());
@@ -104,13 +104,13 @@ public class BookingCartService {
                 // Send email success booking new
                 String email = accountEntity.getEmail();
                 List<BookingDetailEntity> bookingDetailEntities = bookingDetailService.findByBookingId(newBookingEntity.getId());
-                String body = "<h1>Azure Hotel - New Booking Successfully</h1>\n" +
+                String body = "<h1>Azure Hotel - Create Booking Successfully</h1>\n" +
                         "<p>Woo hoo! Your order is on its way. Your order details can be found below.</p>\n" +
                         "<p>Order #: "+newBookingEntity.getId()+"</p>\n" +
                         "<p>Order Date: "+newBookingEntity.getBooking_date()+"</p>\n" +
-                        "<p>Order Total: "+newBookingEntity.getTotal_price()+"</p>\n" +
+                        "<p style= \"currency\">Order Total: "+newBookingEntity.getTotal_price()+"</p>\n" +
                         "<p>View your Booking:</p>\n" +
-                        "<a href=http://localhost:8080/Azure-Hotel/user/booking</a>\n" +
+                        "<a href=http://localhost:8080/Azure-Hotel/user/booking>Click here to manage your booking</a>\n" +
                         "<p>Best regards,<br>The Azure Hotel team</p>";
 
                 sendEmail(email, "Azure Hotel - New Booking Successfully", body);

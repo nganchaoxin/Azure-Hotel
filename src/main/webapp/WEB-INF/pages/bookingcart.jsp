@@ -23,6 +23,7 @@
 </head>
 
 <body>
+
 <header>
   <div class="logo_top">
     <a href="./">
@@ -56,7 +57,6 @@
 </header>
 <main>
   <div class="container">
-
     <c:if test="${type.equals('listNull')}">
       <div class="container-fluid  mt-100">
         <div class="row">
@@ -81,7 +81,7 @@
           <c:forEach var="cartItem" items="${cartItemList}">
             <div class="room-card">
               <div class="room-card-image">
-                <img src='<c:url value="/resources/static/images/rooms/room-1.jpg" />' alt="">
+                <img src="getImagePhoto/${cartItem.roomEntity.categoryEntity.id}" />
               </div>
               <div class="room-card-content">
                 <div class="room-name">
@@ -147,13 +147,13 @@
                 <div class="form-group row"
                   style="display: flex; align-items: center; width: 97%; margin-bottom: 1.3em;">
                   <label class="col-sm-4 col-form-label" style="font-size: 16px;">Email:</label>
-                  <form:input path="email" type="text" class="input" placeholder="Email"
+                  <form:input path="email" type="email" class="input" placeholder="Email"
                     style="text-align: left;height: 40px;" readonly="true" />
                 </div>
                 <div class="form-group row"
                   style="display: flex; align-items: center; width: 97%;margin-bottom: 1.3em;">
                   <label class="col-sm-4 col-form-label" style="font-size: 16px;">Phone Number:</label>
-                  <form:input path="phone_number" type="text" class="input" placeholder="Phone Number"
+                  <form:input path="phone_number" type="text" class="input" placeholder="Phone Number" minlength="10"
                     style="text-align: left;height: 40px;" />
                 </div>
                 <div class="form-group row" style="display: flex; align-items: center; width: 97%; ">
@@ -191,7 +191,7 @@
                       <div class="card space icon-relative">
                         <label class="label">Card number:</label>
                         <form:input path="card_number" type="text" class="input"
-                          placeholder="0000 0000 0000 0000" required="true" minlength="8" maxlength="8"/>
+                          placeholder="0000 0000 0000 0000" required="true" minlength="16" maxlength="16"/>
                         <i class="far fa-credit-card"></i>
                       </div>
                       <div class="card-grp space">
@@ -204,7 +204,7 @@
                         <div class="card-item icon-relative">
                           <label class="label">CVV:</label>
                           <form:input path="cvv" type="text" class="input" data-mask="000" placeholder="000"
-                            maxlength="3" required="true" />
+                            maxlength="3" minlength="3" required="true" />
                           <i class="fas fa-lock"></i>
                         </div>
                       </div>
@@ -350,6 +350,7 @@
   </div>
 </footer>
 
+
 </body>
 <!-- Preloader -->
 <div id="loader-overlay">
@@ -360,39 +361,6 @@
 </div>
 </div>
 </div>
-
-
-<script>
-$(document).ready(function () {
-  $("#checkout-button").click(function () {
-    // Show the loader overlay
-    $("#loader-overlay").show();
-
-    var form_data = $("#checkoutForm").serialize();
-
-    $.ajax({
-      url: "bookingcart/checkout",
-      method: "POST",
-      data: form_data,
-      success: function (response) {
-        console.log(response);
-        // Do something with the response, like display a success message
-
-        // Hide the loader overlay
-        $("#loader-overlay").hide();
-      },
-      error: function (xhr, status, error) {
-        console.log("Error: " + error);
-        // Display an error message to the user
-
-        // Hide the loader overlay
-        $("#loader-overlay").hide();
-      }
-    });
-  });
-});
-
-</script>
 
 <script>
 $(document).ready(function () {
