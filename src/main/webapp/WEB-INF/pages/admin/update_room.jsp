@@ -134,11 +134,12 @@
 
                   />
                   <small style="color: red">
-                      <c:out value="${error_duplicate}" />
-                    </small>
-                    <small style="color: red">
+                     <c:out value="${error_duplicate}" />
+                   </small>
+                   <small style="color: red">
                       <c:out value="${message}" />
                     </small>
+
                 </div>
                 <div class="mb-3">
                   <label for="email" class="form-label">Room number</label>
@@ -152,11 +153,12 @@
 
                   />
                   <small style="color: red">
-                      <c:out value="${error_duplicate}" />
-                    </small>
-                    <small style="color: red">
+                     <c:out value="${error_duplicate}" />
+                   </small>
+                   <small style="color: red">
                       <c:out value="${message}" />
                     </small>
+
                 </div>
                 <div class="mb-3">
                   <label for="username" class="form-label">Room status</label>
@@ -167,7 +169,6 @@
                     name="status"
 
                   >
-                    <form:option value="" label="---Select---" />
                     <c:forEach items="${roomStatusList}" var="roomStatus">
                       <form:option
                         value="${roomStatus}"
@@ -175,25 +176,21 @@
                       />
                     </c:forEach>
                   </form:select>
-                  <small style="color: red">
-                      <c:out value="${message}" />
-                    </small>
-                </div>
-                <div class="mb-3">
-                  <label for="username" class="form-label">Category name</label>
-                  <form:select
-                    path="categoryEntity.id"
-                    class="form-control"
-                    id="status"
-                    name="status"
 
-                  >
-                    <form:options items="${categoryList}" />
-                  </form:select>
-                  <small style="color: red">
-                    <c:out value="${message}" />
-                  </small>
                 </div>
+
+                    <div class="mb-3">
+                      <label for="username" class="form-label">Category name</label>
+
+                      <form:select
+                        path="categoryEntity.id"
+                        class="form-control"
+                      >
+                           <form:options items="${categoryList}" />
+                      </form:select>
+                    
+                    </div>
+
                 <button type="submit" class="btn btn-primary d-grid w-100">
                   Save
                 </button>
