@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -73,7 +74,7 @@ public class AdminController {
 
     // Save
     @RequestMapping(value = "/addRoom", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-    public String saveRoom(@Valid @ModelAttribute("room") RoomEntity room, BindingResult result, Model model) {
+    public String saveRoom(@Valid @ModelAttribute("room") RoomEntity room, HttpSession session, BindingResult result, Model model) {
         if (result.hasErrors() || room.getRoom_name() == null || room.getRoom_number() == 0){
             setCategoryDropDownList(model);
             setStatusDropDownList(model);
@@ -93,7 +94,7 @@ public class AdminController {
                 return "admin/update_room";
             }
         }
-
+        session.setAttribute("msgAdd", "Room added successfully!");
         roomService.saveRoom(room);
         return "redirect:/admin/room";
     }
@@ -119,19 +120,8 @@ public class AdminController {
 
     // Update
     @RequestMapping(value = "/editRoom/updateRoom", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-    public String updateRoom(@Valid @ModelAttribute("room") RoomEntity room, BindingResult result, Model model) {
-
-        List<RoomEntity> roomList = roomService.findAllRoom();
-
-        for (RoomEntity r : roomList) {
-            if (result.hasErrors() || room.getRoom_name().equals(r.getRoom_name()) || room.getRoom_number() == r.getRoom_number()) {
-                setCategoryDropDownList(model);
-                setStatusDropDownList(model);
-
-                model.addAttribute("error_duplicate", "This name has already been used. Please choose a different input.");
-                return "admin/update_room";
-            }
-        }
+    public String updateRoom(@Valid @ModelAttribute("room") RoomEntity room,HttpSession session, BindingResult result, Model model) {
+        session.setAttribute("msgUpdate", "Room updated successfully!");
 
         roomService.saveRoom(room);
         return "redirect:/admin/room";
@@ -140,10 +130,11 @@ public class AdminController {
 
     // Delete
     @RequestMapping(value = "/deleteRoom/{id}", method = RequestMethod.GET)
-    public String deleteRoom(Model model, @PathVariable int id) {
+    public String deleteRoom(Model model, HttpSession session,@PathVariable int id) {
         roomService.deleteById(id);
-        return "redirect:/admin/room";
 
+        session.setAttribute("msgDelete", "Room deleted successfully! " + "ID room: " + id);
+        return "redirect:/admin/room";
     }
 
 
@@ -250,15 +241,13 @@ public class AdminController {
 
     // Cancel booking
     @RequestMapping(value = "/cancelBooking/{id}", method = RequestMethod.GET)
-    public String cancelBooking(HttpServletRequest request, Model model, @PathVariable(name = "id") int id) {
+    public String cancelBooking(HttpSession session, Model model, @PathVariable(name = "id") int id) {
         BookingEntity bookingEntity = bookingService.findById(id);
         bookingEntity.setBooking_status(BookingStatus.CANCEL);
         bookingService.save(bookingEntity);
 
-        request.setAttribute("msg", "Cancel Booking Successfully!");
-        List<BookingEntity> bookingList = bookingService.findAll();
-        model.addAttribute("bookingList", bookingList);
-        return "admin/booking";
+        session.setAttribute("msg", "Cancel Booking Successfully!");
+        return "redirect:/admin/booking";
     }
 
     // IMAGE

@@ -168,8 +168,10 @@
               <!-- Hoverable Table rows -->
               <div class="card">
                 <h5 class="card-header">Booking</h5>
-                <c:if test="${not empty msg}">
-                  <div class="alert alert-success" id="success-msg">${msg}</div>
+
+                <c:if test="${not empty sessionScope.msg}">
+                    <div class="alert alert-success">${sessionScope.msg}</div>
+                    <% session.removeAttribute("msg"); %>
                 </c:if>
                 <div class="table-responsive text-nowrap">
                   <table class="table table-hover">
