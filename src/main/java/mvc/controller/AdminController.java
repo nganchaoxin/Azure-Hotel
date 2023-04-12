@@ -254,9 +254,11 @@ public class AdminController {
         BookingEntity bookingEntity = bookingService.findById(id);
         bookingEntity.setBooking_status(BookingStatus.CANCEL);
         bookingService.save(bookingEntity);
-        request.setAttribute("msg", "Cancel Booking Successfully!");
 
-        return "redirect:/booking";
+        request.setAttribute("msg", "Cancel Booking Successfully!");
+        List<BookingEntity> bookingList = bookingService.findAll();
+        model.addAttribute("bookingList", bookingList);
+        return "admin/booking";
     }
 
     // IMAGE
