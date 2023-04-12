@@ -13,10 +13,8 @@ public class RoomEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-
     @Column(name = "room_name")
     private String room_name;
-
 
     @Column(name = "room_number")
     private int room_number;

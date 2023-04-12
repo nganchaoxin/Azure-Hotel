@@ -127,15 +127,16 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
                     class="form-control"
                     id="status"
                     name="status"
-
                   >
-                    <form:option value="" label="---Select---" />
-                    <c:forEach items="${categoryList}" var="category">
-                        <form:option value="${category.value}">${category.value}</form:option>
-                    </c:forEach>
+                     <c:forEach items="${categoryRoomList}" var="categoryRoom">
+                       <form:option
+                         value="${categoryRoom}"
+                         label="${categoryRoom}"
+                       />
+                     </c:forEach>
                   </form:select>
-                  <small style="color: red">
-                    <c:out value="${message}" />
+                   <small style="color: red">
+                    <c:out value="${error_duplicate}" />
                   </small>
                 </div>
 
@@ -154,45 +155,53 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
                   <label for="email" class="form-label">Max Occupancy</label>
                   <form:input
                     path="max_occupancy"
-                    type="text"
+                    type="number"
+                    value="2"
                     class="form-control"
                     id="email"
                     name="email"
 
                   />
+
                 </div>
                 <div class="mb-3">
                   <label for="email" class="form-label">Bed Info</label>
                   <form:input
                     path="bed_info"
-                    type="text"
+                    value="1"
+                    type="number"
                     class="form-control"
                     id="email"
                     name="email"
 
                   />
+
                 </div>
                 <div class="mb-3">
                   <label for="email" class="form-label">Square</label>
                   <form:input
                     path="square"
-                    type="text"
+                    value="45"
+                    type="number"
                     class="form-control"
                     id="email"
                     name="email"
-
                   />
+
                 </div>
                 <div class="mb-3">
                   <label for="email" class="form-label">Price</label>
                   <form:input
                     path="price"
-                    type="text"
+                    type="number"
                     class="form-control"
                     id="email"
                     name="email"
 
                   />
+                  <small style="color: red">
+                      <c:out value="${message}" />
+                    </small>
                 </div>
 
                 <button type="submit" class="btn btn-primary d-grid w-100">

@@ -134,10 +134,9 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
                     value="${image.categoryEntity.category_name}"
                     required
                   >
-                    <option value="" label="---Select---" />
-                    <c:forEach items="${categoryList}" var="category">
-                        <option value="${category.value}">${category.value}</option>
-                    </c:forEach>
+                <c:forEach items="${categoryList}" var="category">
+                    <option value="${category.value}">${category.value}</option>
+                </c:forEach>
                   </select>
                 </div>
 

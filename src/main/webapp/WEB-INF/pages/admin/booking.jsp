@@ -165,12 +165,6 @@
                   <div class="alert alert-success" id="success-msg">${msg}</div>
                 </c:if>
 
-              <a href="addBooking">
-                <button type="button" class="btn btn-sm btn-outline-primary">
-                  <i class="bx bx-edit-alt me-1"></i> Add booking room
-                </button>
-              </a>
-
               <hr class="my-5" />
 
               <!-- Hoverable Table rows -->

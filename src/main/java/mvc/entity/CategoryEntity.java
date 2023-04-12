@@ -23,7 +23,7 @@ public class CategoryEntity {
     private int max_occupancy;
 
     @Column(name = "bed_info")
-    private String bed_info;
+    private int bed_info;
 
     @Column(name = "square")
     private double square;
@@ -69,11 +69,11 @@ public class CategoryEntity {
         this.max_occupancy = max_occupancy;
     }
 
-    public String getBed_info() {
+    public int getBed_info() {
         return bed_info;
     }
 
-    public void setBed_info(String bed_info) {
+    public void setBed_info(int bed_info) {
         this.bed_info = bed_info;
     }
 

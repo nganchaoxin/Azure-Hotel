@@ -2,6 +2,7 @@ package mvc.controller;
 
 import mvc.entity.*;
 import mvc.enums.BookingStatus;
+import mvc.enums.CategoryRoom;
 import mvc.enums.RoomStatus;
 import mvc.enums.UserStatus;
 import mvc.repository.ImageRepository;
@@ -18,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.ws.rs.GET;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -74,15 +74,14 @@ public class AdminController {
     // Save
     @RequestMapping(value = "/addRoom", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     public String saveRoom(@Valid @ModelAttribute("room") RoomEntity room, BindingResult result, Model model) {
-        if (result.hasErrors() || room.getRoom_status() == null || room.getRoom_name() == null || room.getRoom_number() == 0) {
+        if (result.hasErrors() || room.getRoom_name() == null || room.getRoom_number() == 0){
             setCategoryDropDownList(model);
             setStatusDropDownList(model);
-            model.addAttribute("type", "update");
+
             model.addAttribute("message", "Please fill out this field");
-
-
             return "admin/update_room";
         }
+
         List<RoomEntity> roomList = roomService.findAllRoom();
 
         for (RoomEntity r : roomList) {
@@ -122,12 +121,16 @@ public class AdminController {
     @RequestMapping(value = "/editRoom/updateRoom", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     public String updateRoom(@Valid @ModelAttribute("room") RoomEntity room, BindingResult result, Model model) {
 
-        if (result.hasErrors()) {
-            model.addAttribute("type", "update");
-            setCategoryDropDownList(model);
-            setStatusDropDownList(model);
+        List<RoomEntity> roomList = roomService.findAllRoom();
 
-            return "admin/update_room";
+        for (RoomEntity r : roomList) {
+            if (result.hasErrors() || room.getRoom_name().equals(r.getRoom_name()) || room.getRoom_number() == r.getRoom_number()) {
+                setCategoryDropDownList(model);
+                setStatusDropDownList(model);
+
+                model.addAttribute("error_duplicate", "This name has already been used. Please choose a different input.");
+                return "admin/update_room";
+            }
         }
 
         roomService.saveRoom(room);
@@ -167,16 +170,23 @@ public class AdminController {
     // Save
     @RequestMapping(value = "/addCategory", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     public String saveCategory(@Valid @ModelAttribute("category") CategoryEntity category, BindingResult result, Model model) {
-        if (result.hasErrors() || category.getCategory_name() == null) {
-            model.addAttribute("type", "update");
+        if (result.hasErrors() || category.getPrice() == 0){
             setCategoryDropDownList(model);
+            setStatusDropDownList(model);
 
-            if (category.getCategory_name() == null) {
-                model.addAttribute("type", "update");
-                model.addAttribute("message", "Plz input category");
-            }
-
+            model.addAttribute("message", "Please fill out this field");
             return "admin/update_category";
+        }
+        List<CategoryEntity> categoryList = categoryService.findAllCategory();
+
+        for (CategoryEntity c : categoryList) {
+            if (result.hasErrors() || category.getCategory_name().equals(c.getCategory_name())) {
+                setCategoryDropDownList(model);
+                setStatusDropDownList(model);
+
+                model.addAttribute("error_duplicate", "This name has already been used. Please choose a different input.");
+                return "admin/update_category";
+            }
         }
         categoryService.save(category);
         return "redirect:/admin/category";
@@ -205,12 +215,6 @@ public class AdminController {
     @RequestMapping(value = "/editCategory/updateCategory", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     public String updateCategory(@Valid @ModelAttribute("category") CategoryEntity category, BindingResult result, Model model) {
 
-        if (result.hasErrors()) {
-            model.addAttribute("type", "update");
-            setCategoryDropDownList(model);
-
-            return "admin/update_category";
-        }
         categoryService.save(category);
         return "redirect:/admin/category";
 
@@ -358,23 +362,25 @@ public class AdminController {
     }
 
     // ACCOUNT
-    @RequestMapping(value="/account", method=RequestMethod.GET)
-    public String showAccount(Model model){
+    @RequestMapping(value = "/account", method = RequestMethod.GET)
+    public String showAccount(Model model) {
         List<AccountEntity> accountList = accountService.findAll();
 
         model.addAttribute("accountList", accountList);
         return "admin/account";
     }
-    @RequestMapping(value="unactiveAccount/{id}", method=RequestMethod.GET)
-    public String unactiveAccount(Model model, @PathVariable int id){
+
+    @RequestMapping(value = "unactiveAccount/{id}", method = RequestMethod.GET)
+    public String unactiveAccount(Model model, @PathVariable int id) {
         AccountEntity account = accountService.findById(id);
         account.setStatus(UserStatus.UNACTIVE);
         accountService.save(account);
 
-        return "redirect:/admin /account";
+        return "redirect:/admin/account";
     }
-    @RequestMapping(value="activeAccount/{id}", method=RequestMethod.GET)
-    public String activeAccount(Model model, @PathVariable int id){
+
+    @RequestMapping(value = "activeAccount/{id}", method = RequestMethod.GET)
+    public String activeAccount(Model model, @PathVariable int id) {
         AccountEntity account = accountService.findById(id);
         account.setStatus(UserStatus.ACTIVE);
         accountService.save(account);
@@ -384,18 +390,28 @@ public class AdminController {
 
     // DROP DOWN
     private void setCategoryDropDownList(Model model) {
+        List<CategoryRoom> categoryRoomList = new ArrayList<>();
+        categoryRoomList.add(CategoryRoom.STANDARD);
+        categoryRoomList.add(CategoryRoom.LUXURY);
+        categoryRoomList.add(CategoryRoom.BUSINESS);
+        categoryRoomList.add(CategoryRoom.FAMILY);
+        categoryRoomList.add(CategoryRoom.STUDIO);
+
+        model.addAttribute("categoryRoomList", categoryRoomList);
+
+
         List<CategoryEntity> categoryList = categoryService.findAllCategory();
 
-        if (!categoryList.isEmpty()) {
-            Map<Integer, String> categoryMap = new HashMap<>();
-            for (CategoryEntity categoryEntity : categoryList) {
-                String categoryName = String.valueOf(categoryEntity.getCategory_name());
-                categoryMap.put(categoryEntity.getId(), categoryName);
-            }
-
-            model.addAttribute("categoryList", categoryMap);
+        Map<Integer, String> categoryMap = new HashMap<>();
+        for (CategoryEntity categoryEntity : categoryList) {
+            String categoryName = String.valueOf(categoryEntity.getCategory_name());
+            categoryMap.put(categoryEntity.getId(), categoryName);
         }
+
+        model.addAttribute("categoryList", categoryMap);
+
     }
+
 
     public void setStatusDropDownList(Model model) {
         List<RoomStatus> roomStatusList = new ArrayList<>();
