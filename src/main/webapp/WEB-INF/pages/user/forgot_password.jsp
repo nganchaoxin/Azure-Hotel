@@ -212,7 +212,7 @@
                             <!--/ User -->
                         </ul>
                     </div>
-                </nav>xx
+                </nav>
 
                 <!-- / Navbar -->
 

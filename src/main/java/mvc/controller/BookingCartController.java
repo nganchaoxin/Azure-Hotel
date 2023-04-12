@@ -1,10 +1,8 @@
 package mvc.controller;
 
-import mvc.entity.AccountBankingEntity;
-import mvc.entity.AccountEntity;
-import mvc.entity.BookingCartEntity;
-import mvc.entity.BookingCartItemEntity;
+import mvc.entity.*;
 import mvc.service.*;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.mail.MailSender;
@@ -13,8 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -44,6 +46,9 @@ public class BookingCartController {
 
     @Autowired
     MailSender mailSender;
+
+    @Autowired
+    ImageService imageService;
 
     @Autowired
     BookingCartItemService bookingCartItemService;
@@ -100,11 +105,12 @@ public class BookingCartController {
     }
 
     @RequestMapping(value = "/payment", method = POST, produces = "text/plain;charset=UTF-8")
-    public String saveNewAccountBanking(@ModelAttribute(name = "accountBanking") AccountBankingEntity accountBanking, HttpSession session) {
+    public String saveNewAccountBanking(@ModelAttribute(name = "accountBanking") AccountBankingEntity accountBanking, HttpSession session, Model model) {
         // Get Account
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         // Set Account to payment
         accountBanking.setAccountEntity(accountEntity);
+        accountBanking.setBalance(10000000);
         accountBankingService.save(accountBanking);
         return "redirect:/bookingcart";
     }
@@ -160,5 +166,14 @@ public class BookingCartController {
         session.setAttribute("totalPrices", totalPrices);
     }
 
+    @RequestMapping(value = "/getImagePhoto/{id}")
+    public void getImagePhoto(HttpServletResponse response, @PathVariable("id") long id) throws Exception {
+        response.setContentType("image/jpeg");
+
+        ImageEntity i = imageService.findById(id);
+        byte[] ph = i.getUrl();
+        InputStream inputStream = new ByteArrayInputStream(ph);
+        IOUtils.copy(inputStream, response.getOutputStream());
+    }
 
 }

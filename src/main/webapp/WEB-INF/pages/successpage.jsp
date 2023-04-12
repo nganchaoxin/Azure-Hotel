@@ -49,7 +49,7 @@
     </header>
 <main>
 <c:if test="${status.equals('completed')}">
-<div class="order-status order-success" style="height: 510px;">
+<div class="order-status order-success" style="height: 430px; margin-top: -200px;">
   <div class="top-part">
     <i class="far fa-check-circle"></i>
     <h3>
@@ -82,7 +82,7 @@
 </div>
 </c:if>
 <c:if test="${status.equals('dismiss')}">
-<div class="order-status order-error" style="height: 510px;">
+<div class="order-status order-error" style="height: 430px; margin-top:-200px;">
   <div class="top-part">
     <i class="far fa-times-circle"></i>
     <h3>
@@ -118,6 +118,10 @@
   </ul>
 </div>
 </c:if>
+
+<div>
+<a href="../" class="btn btn-primary cart-btn-transform m-3" data-abc="true">Homepage</a>
+</div>
 </main>
 <footer class="footer_cart" style="bottom:0px;">
    <div class="footer_cart_logo" style="width: 10%;">
