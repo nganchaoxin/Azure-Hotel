@@ -13,24 +13,16 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href='<c:url value="/resources/static/assets/img/favicon/favicon.ico" />' />
-
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
         href='<c:url value="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" />'
         rel="stylesheet" />
-
-    <!-- Icons. Uncomment required icon fonts -->
     <link href='<c:url value="/resources/static/assets/vendor/fonts/boxicons.css" />' rel='stylesheet'>
-
-    <!-- Core CSS -->
     <link href='<c:url value="/resources/static/assets/vendor/css/core.css" />' class="template-customizer-core-css"
         rel='stylesheet'>
     <link href='<c:url value="/resources/static/assets/vendor/css/theme-default.css" />'
         class="template-customizer-theme-css" rel='stylesheet'>
-
-    <!-- Vendors CSS -->
     <link href='<c:url value="/resources/static/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />'
         rel='stylesheet'>
 
@@ -232,6 +224,9 @@
                                 <c:if test="${not empty msg}">
                                     <div class="alert alert-success" id="success-msg">${msg}</div>
                                 </c:if>
+                                <c:if test="${not empty msg_fail}">
+                                    <div class="alert alert-fail" id="success-msg">${msg_fail}</div>
+                                </c:if>
                             </h5>
 
                             <div class="table-responsive text-nowrap">
@@ -249,7 +244,8 @@
                                         <c:forEach var="booking" items="${bookingEntityList}">
                                             <tr>
                                                 <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                                    <strong>${booking.accountEntity.username}</strong></td>
+                                                    <strong>${booking.accountEntity.username}</strong>
+                                                </td>
                                                 <td>
                                                     <fmt:formatDate value="${booking.booking_date}"
                                                         pattern="dd-MM-yyyy" />
@@ -345,7 +341,8 @@
     <script src='<c:url value="/resources/static/assets/vendor/libs/jquery/jquery.js" />'></script>
     <script src='<c:url value="/resources/static/assets/vendor/libs/popper/popper.js" />'></script>
     <script src='<c:url value="/resources/static/assets/vendor/js/bootstrap.js" />'></script>
-    <script src='<c:url value="/resources/static/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js" />'></script>
+    <script
+        src='<c:url value="/resources/static/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js" />'></script>
     <script src='<c:url value="/resources/static/assets/vendor/js/menu.js" />'></script>
     <!-- Main JS -->
     <script src='<c:url value="/resources/static/assets/js/main.js" />'></script>

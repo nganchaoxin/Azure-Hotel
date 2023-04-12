@@ -87,6 +87,9 @@
                 <div class="room-name">
                   <h1>${cartItem.roomEntity.room_name}</h1>
                 </div>
+                <div class="room-name" style="margin-top:-5px;">
+                  <h1>${cartItem.roomEntity.categoryEntity.category_name} </h1>
+                </div>
                 <div class="room-number_of_person">${cartItem.roomEntity.categoryEntity.max_occupancy}
                   Guestss</div>
                 <div class="room-info">
@@ -191,19 +194,19 @@
                       <div class="card space icon-relative">
                         <label class="label">Card number:</label>
                         <form:input path="card_number" type="text" class="input"
-                          placeholder="0000 0000 0000 0000" required="true" minlength="16" maxlength="16"/>
+                          placeholder="0000 0000 0000 0000" minlength="16" maxlength="16" required="true" />
                         <i class="far fa-credit-card"></i>
                       </div>
                       <div class="card-grp space">
                         <div class="card-item icon-relative">
                           <label class="label">Expired date:</label>
                           <form:input path="expired_date" type="text" class="input" data-mask="dd/MM/yyyy"
-                            placeholder="dd/MM/yyyy" required="true" />
+                            placeholder="dd/MM/yyyy" required="true"/>
                           <i class="far fa-calendar-alt"></i>
                         </div>
                         <div class="card-item icon-relative">
                           <label class="label">CVV:</label>
-                          <form:input path="cvv" type="text" class="input" data-mask="000" placeholder="000"
+                          <form:input path="cvv" type="text" class="input" placeholder="000"
                             maxlength="3" minlength="3" required="true" />
                           <i class="fas fa-lock"></i>
                         </div>
@@ -228,8 +231,7 @@
                       </div>
                       <div class="card space icon-relative">
                         <label class="label">Card number:</label>
-                        <input value="${accountBanking.card_number}" class="input"
-                          data-mask="0000 0000 0000 0000" placeholder="Card Number" readonly="readonly">
+                        <input value="${accountBanking.card_number}" class="input" id="cardNumberInput" placeholder="Card Number" readonly="readonly">
                         <i class="far fa-credit-card"></i>
                       </div>
                       <div class="card-grp space">
@@ -380,5 +382,4 @@ $(document).ready(function () {
 <!-- Include Bootstrap JS -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 </html>

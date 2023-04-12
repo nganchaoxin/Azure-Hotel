@@ -6509,3 +6509,52 @@
   src: url("../fonts/boxicons/boxicons.eot");
   src: url("../fonts/boxicons/boxicons.eot") format("embedded-opentype"), url("../fonts/boxicons/boxicons.woff2") format("woff2"), url("../fonts/boxicons/boxicons.woff") format("woff"), url("../fonts/boxicons/boxicons.ttf") format("truetype"), url("../fonts/boxicons/boxicons.svg?#boxicons") format("svg");
 }
+
+
+
+
+#notification-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+
+.notification-box {
+display:flex;
+align-items: center;
+padding-top:10px;
+  position: absolute;
+  top:80px;
+  right: 0px;
+  transform: translate(-50%, -50%);
+  background-color: #cca772;
+  color: white;
+  padding: 0px 10px;
+  height: 40px;
+  border-radius: 5px;
+  animation-name: fade-in-down;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.notification-box.success {
+  background-color: #cca772;
+}
+
+.notification-box.error {
+  background-color: #e74c3c;
+}
+
+@keyframes fade-in-down {
+  0% {
+    opacity: 0;
+    transform: translateX(200px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

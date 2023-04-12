@@ -4,38 +4,42 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-
-   <title>Azure Hotel - Profile Management</title>
-  <meta name="description" content="asdas" />
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href='<c:url value="/resources/static/assets/img/favicon/favicon.ico" />' />
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href='<c:url value="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" />'
-    rel="stylesheet" />
-
-  <!-- Icons. Uncomment required icon fonts -->
-  <link href='<c:url value="/resources/static/assets/vendor/fonts/boxicons.css" />' rel='stylesheet'>
-
-  <!-- Core CSS -->
-  <link href='<c:url value="/resources/static/assets/vendor/css/core.css" />' class="template-customizer-core-css" rel='stylesheet'>
-  <link href='<c:url value="/resources/static/assets/vendor/css/theme-default.css" />' class="template-customizer-theme-css" rel='stylesheet'>
-  <link href='<c:url value="/resources/static/assets/assets/css/demo.css" />' rel='stylesheet'>
-
-  <!-- Vendors CSS -->
-  <link href='<c:url value="/resources/static/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />' rel='stylesheet'>
-
-  <script src='<c:url value="/resources/static/assets/vendor/js/helpers.js" />'></script>
-  <script src='<c:url value="/resources/static/assets/js/config.js" />'></script>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>Azure Hotel - Profile Management</title>
+    <meta name="description" content="asdas" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href='<c:url value="/resources/static/assets/img/favicon/favicon.ico" />' />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href='<c:url value="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" />'
+        rel="stylesheet" />
+    <!-- Icons. Uncomment required icon fonts -->
+    <link href='<c:url value="/resources/static/assets/vendor/fonts/boxicons.css" />' rel='stylesheet'>
+    <!-- Core CSS -->
+    <link href='<c:url value="/resources/static/assets/vendor/css/core.css" />' class="template-customizer-core-css"
+        rel='stylesheet'>
+    <link href='<c:url value="/resources/static/assets/vendor/css/theme-default.css" />'
+        class="template-customizer-theme-css" rel='stylesheet'>
+    <link href='<c:url value="/resources/static/assets/assets/css/demo.css" />' rel='stylesheet'>
+    <!-- Vendors CSS -->
+    <link href='<c:url value="/resources/static/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />'
+        rel='stylesheet'>
+    <script src='<c:url value="/resources/static/assets/vendor/js/helpers.js" />'></script>
+    <script src='<c:url value="/resources/static/assets/js/config.js" />'></script>
 </head>
 
 <body>
+    <c:if test="${success_msg != null && success_msg != ''}">
+        <div id="notification-container">
+            <div class="notification-box success">
+                <p style="padding-top:15px;">${success_msg}</p>
+            </div>
+        </div>
+    </c:if>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
@@ -239,14 +243,16 @@
                                         modelAttribute="accountEntity">
                                         <div class="card-body">
                                             <div class="d-flex align-items-start align-items-sm-center gap-4">
-                                                     <c:if test="${not empty accountEntity.photo}">
-                                                        <img src="getImagePhoto/<c:out value='${accountEntity.id}'/>"
-                                                            alt="user-avatar" class="d-block rounded" height="100" width="100"   id="uploadedAvatar" />
-                                                    </c:if>
-                                                    <c:if test="${empty accountEntity.photo}">
-                                                        <img src="https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg"
-                                                            alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar" />
-                                                    </c:if>
+                                                <c:if test="${not empty accountEntity.photo}">
+                                                    <img src="getImagePhoto/<c:out value='${accountEntity.id}'/>"
+                                                        alt="user-avatar" class="d-block rounded" height="100"
+                                                        width="100" id="uploadedAvatar" />
+                                                </c:if>
+                                                <c:if test="${empty accountEntity.photo}">
+                                                    <img src="https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg"
+                                                        alt="user-avatar" class="d-block rounded" height="100"
+                                                        width="100" id="uploadedAvatar" />
+                                                </c:if>
                                                 <div class="button-wrapper">
                                                     <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                                                         <span class="d-none d-sm-block">Upload new photo</span>
@@ -285,7 +291,7 @@
                                                 <div class="mb-3 col-md-6">
                                                     <label for="email" class="form-label">E-mail</label>
                                                     <input class="form-control" type="text" id="email" name="email"
-                                                        value="${accountEntity.email}"
+                                                        value="${accountEntity.email}" readonly
                                                         placeholder="john.doe@example.com" />
                                                 </div>
                                                 <div class="mb-3 col-md-6">
@@ -296,7 +302,7 @@
                                                 <div class="mb-3 col-md-6">
                                                     <label class="form-label" for="phoneNumber">Phone Number</label>
                                                     <div class="input-group input-group-merge">
-                                                        <span class="input-group-text">US (+84)</span>
+                                                        <span class="input-group-text">VN (+84)</span>
                                                         <input type="text" id="phoneNumber" name="phone_number"
                                                             value="${accountEntity.phone_number}" class="form-control"
                                                             placeholder="384 203 345" />
@@ -377,6 +383,15 @@
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src='<c:url value="https://buttons.github.io/buttons.js" />'></script>
 
+    <script>
+        // hide success message after 5 seconds
+        setTimeout(function () {
+            var successMsg = document.getElementById("notification-container");
+            if (successMsg) {
+                successMsg.parentNode.removeChild(successMsg);
+            }
+        }, 3000);
+    </script>
 </body>
 
 </html>

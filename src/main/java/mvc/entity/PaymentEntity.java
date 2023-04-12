@@ -22,9 +22,11 @@ public class PaymentEntity {
     @Column(name = "note")
     private String note;
 
+    @Column(name = "card_number")
+    private String card_number;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "account_banking_id")
-    private AccountBankingEntity accountBankingEntity;
+    @JoinColumn(name = "account_id")
+    private AccountEntity accountEntity;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "booking_id")
@@ -62,16 +64,24 @@ public class PaymentEntity {
         this.note = note;
     }
 
-    public AccountBankingEntity getAccountBankingEntity() {
-        return accountBankingEntity;
+    public AccountEntity getAccountEntity() {
+        return accountEntity;
     }
 
-    public void setAccountBankingEntity(AccountBankingEntity accountBankingEntity) {
-        this.accountBankingEntity = accountBankingEntity;
+    public void setAccountEntity(AccountEntity accountEntity) {
+        this.accountEntity = accountEntity;
     }
 
     public BookingEntity getBookingEntity() {
         return bookingEntity;
+    }
+
+    public String getCard_number() {
+        return card_number;
+    }
+
+    public void setCard_number(String card_number) {
+        this.card_number = card_number;
     }
 
     public void setBookingEntity(BookingEntity bookingEntity) {
