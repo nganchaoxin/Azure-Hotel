@@ -31,4 +31,7 @@ public class AccountBankingService {
         accountBanking.setBalance(newBalance);
         accountBankingRepository.save(accountBanking);
     }
+
+    public void deleteById(int id) { accountBankingRepository.deleteById(id);
+    }
 }

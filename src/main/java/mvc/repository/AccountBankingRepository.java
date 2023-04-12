@@ -14,4 +14,6 @@ public interface AccountBankingRepository extends CrudRepository<AccountBankingE
 
     @Query(value = "select * from account_banking where account_id =?1", nativeQuery = true)
     List<AccountBankingEntity> findByAccountId(int id);
+
+    void deleteById(int id);
 }

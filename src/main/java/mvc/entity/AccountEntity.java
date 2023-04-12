@@ -72,6 +72,8 @@ public class AccountEntity implements Serializable {
 
     @OneToMany(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AccountBankingEntity> accountBankingEntities;
+    @OneToMany(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PaymentEntity> paymentEntities;
 
     @OneToMany(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BookingEntity> bookingEntities;
@@ -221,5 +223,13 @@ public class AccountEntity implements Serializable {
 
     public void setPhoto(byte[] photo) {
         this.photo = photo;
+    }
+
+    public List<PaymentEntity> getPaymentEntities() {
+        return paymentEntities;
+    }
+
+    public void setPaymentEntities(List<PaymentEntity> paymentEntities) {
+        this.paymentEntities = paymentEntities;
     }
 }

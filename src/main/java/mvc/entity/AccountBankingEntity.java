@@ -14,12 +14,12 @@ public class AccountBankingEntity {
     private int id;
 
     @Column(name = "card_number")
-    private int card_number;
+    private String card_number;
     @Column(name = "full_name")
     private String full_name;
 
     @Column(name = "expired_date")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
     private Date expired_date;
 
     @Column(name = "cvv")
@@ -28,8 +28,6 @@ public class AccountBankingEntity {
     @Column(name = "balance")
     private double balance;
 
-    @OneToMany(mappedBy = "accountBankingEntity", cascade = CascadeType.ALL)
-    private List<PaymentEntity> paymentEntities;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "account_id")
@@ -59,13 +57,6 @@ public class AccountBankingEntity {
         this.expired_date = expired_date;
     }
 
-    public int getCard_number() {
-        return card_number;
-    }
-
-    public void setCard_number(int card_number) {
-        this.card_number = card_number;
-    }
 
     public int getCvv() {
         return cvv;
@@ -83,19 +74,19 @@ public class AccountBankingEntity {
         this.balance = balance;
     }
 
-    public List<PaymentEntity> getPaymentEntities() {
-        return paymentEntities;
-    }
-
-    public void setPaymentEntities(List<PaymentEntity> paymentEntities) {
-        this.paymentEntities = paymentEntities;
-    }
-
     public AccountEntity getAccountEntity() {
         return accountEntity;
     }
 
     public void setAccountEntity(AccountEntity accountEntity) {
         this.accountEntity = accountEntity;
+    }
+
+    public String getCard_number() {
+        return card_number;
+    }
+
+    public void setCard_number(String card_number) {
+        this.card_number = card_number;
     }
 }

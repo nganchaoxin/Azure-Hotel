@@ -41,6 +41,14 @@
 </head>
 
 <body>
+<c:if test="${not empty sessionScope.success_msg}">
+    <div id="notification-container">
+        <div class="notification-box success">
+            <p style="padding-top:15px;">${success_msg}</p>
+        </div>
+    </div>
+    <% session.removeAttribute("success_msg"); %>
+</c:if>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
@@ -218,6 +226,7 @@
                 <!-- / Navbar -->
 
                 <!-- Content wrapper -->
+                <c:if test="${accountBankingEntity.getId() != 0}">
                 <div class="content-wrapper">
                     <!-- Content -->
 
@@ -240,47 +249,31 @@
                                 <div class="card mb-4">
                                     <hr class="my-0" />
                                     <div class="card-body">
-                                        <form:form action="cardpayment" id="paymentinfo" method="POST"
-                                            modelAttribute="accountBankingEntity">
                                             <div class="row">
-                                                <div class="mb-3">
-                                                    <form:hidden path="id" />
-                                                </div>
                                                 <div class="mb-3 col-md-6">
                                                     <label for="firstName" class="form-label">Full name</label>
-                                                    <form:input class="form-control" type="text" id="firstName"
-                                                        path="full_name" />
+                                                    <input class="form-control" value="${accountBankingEntity.full_name}" readonly/>
                                                 </div>
                                                 <div class="mb-3 col-md-6">
                                                     <label for="lastName" class="form-label">Expired date</label>
-                                                    <form:input class="form-control" type="text" path="expired_date"
-                                                        id="lastName" />
+                                                    <input class="form-control" value="${accountBankingEntity.expired_date}" pattern="dd/MM/yyyy" readonly/>
                                                 </div>
                                                 <div class="mb-3 col-md-6">
                                                     <label for="email" class="form-label">Card number</label>
-                                                    <form:input class="form-control" type="text" id="email"
-                                                        path="card_number" minlength="16" maxlength="16"
-                                                        placeholder="0000 0000 0000 0000" />
+                                                    <input class="form-control" value="${accountBankingEntity.card_number}" readonly/>
                                                 </div>
                                                 <div class="mb-3 col-md-6">
                                                     <label for="organization" class="form-label">CVV</label>
-                                                    <form:input type="text" class="form-control" id="organization"
-                                                        path="cvv" placeholder="000" maxlength="3" />
+                                                    <input class="form-control" value="${accountBankingEntity.cvv}" readonly/>
                                                 </div>
                                                 <div class="mb-3 col-md-6">
                                                     <label class="form-label" for="phoneNumber">Balance</label>
                                                     <div class="input-group input-group-merge">
-                                                        <form:input id="phoneNumber" path="balance" pattern="#,##0"
-                                                            class="form-control" readonly="true" />
-
+                                                        <div class="form-control" readonly>
+                                                            <fmt:formatNumber  value="${accountBankingEntity.getBalance()}"/> VND
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="mt-2">
-                                                    <button type="submit" class="btn btn-primary me-2">Save
-                                                        changes</button>
-
-                                                </div>
-                                        </form:form>
                                     </div>
                                     <!-- /Account -->
                                 </div>
@@ -295,22 +288,89 @@
                                                     Please be certain.</p>
                                             </div>
                                         </div>
-                                        <form id="formAccountDeactivation" onsubmit="return false">
+                                        <form action="deletecard${accountBankingEntity.getId()}">
                                             <div class="form-check mb-3">
                                                 <input class="form-check-input" type="checkbox" name="accountActivation"
                                                     id="accountActivation" />
-                                                <label class="form-check-label" for="accountActivation">I confirm my
-                                                    account
-                                                    deactivation</label>
+                                                <label class="form-check-label" for="accountActivation">I confirm my account deactivation</label>
                                             </div>
-                                            <button type="submit" class="btn btn-danger deactivate-account">Delete
-                                                Account Banking</button>
+                                            <button type="submit" class="btn btn-danger deactivate-account">Delete Account Banking</button>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </c:if>
+                <c:if test="${accountBankingEntity.getId() == 0}">
+                    <div class="content-wrapper">
+                        <!-- Content -->
+
+                        <div class="container-xxl flex-grow-1 container-p-y">
+                            <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Payment Infomation /</span>
+                                Payment Card</h4>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <ul class="nav nav-pills flex-column flex-md-row mb-3">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" href="javascript:void(0);"><i
+                                                    class="bx bx-user me-1"></i> Card Payment</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="paymenthistory"><i class="bx bx-bell me-1"></i>
+                                                Payment History</a>
+                                        </li>
+                                    </ul>
+                                    <div class="card mb-4">
+                                        <hr class="my-0" />
+                                        <div class="card-body">
+                                            <form:form action="cardpayment" id="paymentinfo" method="POST"
+                                                modelAttribute="accountBankingEntity">
+                                                <div class="row">
+                                                    <div class="mb-3">
+                                                        <form:hidden path="id" />
+                                                    </div>
+                                                    <div class="mb-3 col-md-6">
+                                                        <label for="firstName" class="form-label">Full name</label>
+                                                        <form:input class="form-control" type="text" id="firstName"
+                                                            path="full_name" />
+                                                    </div>
+                                                    <div class="mb-3 col-md-6">
+                                                        <label for="lastName" class="form-label">Expired date</label>
+                                                        <form:input class="form-control" type="date" path="expired_date"
+                                                            id="lastName" />
+                                                    </div>
+                                                    <div class="mb-3 col-md-6">
+                                                        <label for="email" class="form-label">Card number</label>
+                                                        <form:input class="form-control" type="text" id="card_number"
+                                                            path="card_number" minlength="16" maxlength="16"
+                                                            placeholder="0000 0000 0000 0000" />
+                                                    </div>
+                                                    <div class="mb-3 col-md-6">
+                                                        <label for="organization" class="form-label">CVV</label>
+                                                        <form:input type="text" class="form-control" id="organization"
+                                                            path="cvv" placeholder="000" maxlength="3" />
+                                                    </div>
+                                                    <div class="mb-3 col-md-6">
+                                                        <label class="form-label" for="phoneNumber">Balance</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <div class="form-control" readonly>
+                                                                <fmt:formatNumber  value="${accountBankingEntity.getBalance()}"/> VND
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-2">
+                                                        <button type="submit" class="btn btn-primary me-2">Save changes</button>
+                                                    </div>
+                                            </form:form>
+                                        </div>
+                                        <!-- /Account -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:if>
                     <!-- / Content -->
 
                     <!-- Footer -->
@@ -350,6 +410,15 @@
     <script src='<c:url value="/resources/static/assets/js/pages-account-settings-account.js" />'></script>
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src='<c:url value="https://buttons.github.io/buttons.js" />'></script>
+    <script>
+        // hide success message after 5 seconds
+        setTimeout(function () {
+            var successMsg = document.getElementById("notification-container");
+            if (successMsg) {
+                successMsg.parentNode.removeChild(successMsg);
+            }
+        }, 3000);
+    </script>
 </body>
 
   </html>

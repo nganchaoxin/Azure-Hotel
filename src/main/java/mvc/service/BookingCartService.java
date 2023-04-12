@@ -87,7 +87,8 @@ public class BookingCartService {
                 newPayment.setAmount(totalPrice);
                 String paymentNote = ("Payment for booking #ID:"+newBookingEntity.getId() + " ,date: "+newBookingEntity.getBooking_date());
                 newPayment.setNote(paymentNote);
-                newPayment.setAccountBankingEntity(accountBankingService.findByAccountId(accountEntity.getId()).get(0));
+                newPayment.setAccountEntity(accountEntity);
+                newPayment.setCard_number(String.valueOf(accountBankingService.findByAccountId(accountEntity.getId()).get(0).getCard_number()));
                 paymentService.save(newPayment);
 
                 // Update balance of account Banking

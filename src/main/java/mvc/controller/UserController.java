@@ -11,13 +11,18 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -51,6 +56,8 @@ public class UserController {
 
     @Autowired
     PaymentService paymentService;
+    @Autowired
+    JavaMailSender javaMailSender;
 
     @GetMapping(value = "/account")
     public String account(Model model, HttpSession session) {
@@ -71,7 +78,7 @@ public class UserController {
             @RequestParam(name = "phone_number") String phone_number,
             @RequestParam(name = "gender") Gender gender,
             @RequestParam(name = "birth_date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date birth_date,
-            HttpSession session, Model model) throws IOException {
+            HttpSession session, Model model, RedirectAttributes redirectAttributes) throws IOException {
         AccountEntity accountEntity = accountService.findByEmail(((AccountEntity) session.getAttribute("accountEntity")).getEmail());
         accountEntity.setFirst_name(first_name);
 
@@ -91,6 +98,7 @@ public class UserController {
         accountService.save(accountEntity);
         setGenderDropDownList(model);
         session.setAttribute("accountEntity", accountEntity);
+        redirectAttributes.addFlashAttribute("success_msg", "Change successfully!");
         return "redirect:/user/account";
     }
 
@@ -106,7 +114,7 @@ public class UserController {
         model.addAttribute("page", "sendEmailSuccess");
 
         if (!accountEntity.getEmail().equals(email)) {
-            model.addAttribute("msg", "Form submitted successfully!");
+            model.addAttribute("msg", "Email is not correct!");
             model.addAttribute("type", "wrongEmail");
             model.addAttribute("page", "password");
         } else {
@@ -114,19 +122,23 @@ public class UserController {
             String encodedString = UUID.randomUUID().toString();
             accountEntity.setToken(encodedString);
             accountService.save(accountEntity);
-            sendEmail(email, "Azure Hotel Account - Forgot your password", "You have been send a request forgot your password, please click here to set new pass word:" + "http://localhost:8080/Azure-Hotel/user/forgotpassword&id=" + accountEntity.getId());
+            String body = "<h1>Change your Password</h1>\n" +
+                    "<p>To continue changing your password, click here:</p>\n" +
+                    "<a href=http://localhost:8080/Azure-Hotel/user/forgotpasswordaccess?token=" + encodedString + " class=\"btn btn-primary\" type=\"button\">Change your password</a>\n" +
+                    "<p>Best regards,<br>The Azure Hotel team</p>";
+            sendEmail(email, "Azure Hotel -Signup new account", body);
         }
         return "user/forgot_password";
     }
 
-    @GetMapping("/forgotpassword&id={id}")
-    public String changePassWord(Model model, @PathVariable int id) {
-        AccountEntity accountEntity = accountService.findById(id);
-        if (accountEntity.getToken() == "" || accountEntity.getToken() == null) {
-            return "not_found";
-        } else {
+    @GetMapping("/forgotpasswordaccess")
+    public String changePassWord(@RequestParam("token") String token, Model model) {
+        AccountEntity accountEntity = accountService.findByToken(token);
+        if (accountEntity != null) {
             model.addAttribute("page", "changePassword");
             return "user/forgot_password";
+        }else {
+            return "not_found";
         }
     }
 
@@ -139,7 +151,7 @@ public class UserController {
             accountEntity.setPassword(encoder.encode(password));
             accountEntity.setToken(null);
             accountService.save(accountEntity);
-            model.addAttribute("page", "changePasswordSuccess");
+            session.setAttribute("page", "changePasswordSuccess");
             session.setAttribute("accountEntity", accountEntity);
         } else {
             model.addAttribute("page", "changePassword");
@@ -169,19 +181,27 @@ public class UserController {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         accountBankingEntity.setAccountEntity(accountEntity);
         accountBankingService.save(accountBankingEntity);
+        session.setAttribute("success_msg", "Add new account banking successfully!");
         return "user/payment_card";
     }
+
+    @RequestMapping(value = "/deletecard{id}", method = GET)
+    public String deleteCard(@PathVariable int id, HttpSession session) {
+        accountBankingService.deleteById(id);
+        session.setAttribute("success_msg", "Delete account banking successfully!");
+        return "redirect: cardpayment";
+    }
+
 
     @GetMapping("/paymenthistory")
     public String paymentHistory(HttpSession session, Model model) {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
-        List<AccountBankingEntity> accountBankingEntityList = accountBankingService.findByAccountId(accountEntity.getId());
-        if (accountBankingEntityList == null || accountBankingEntityList.isEmpty()) {
+        List<PaymentEntity> paymentEntityList = paymentService.findByAccountId(accountEntity.getId());
+        if (paymentEntityList == null || paymentEntityList.isEmpty()) {
             model.addAttribute("status", "paymentNull");
         } else {
-            List<PaymentEntity> paymentEntityList = paymentService.findByAccountBankingId(accountBankingEntityList.get(0).getId());
             model.addAttribute("paymentEntityList", paymentEntityList);
-            model.addAttribute("status", "paymentNull");
+            model.addAttribute("status", "paymentNotNull");
         }
         return "user/payment_history";
     }
@@ -197,16 +217,33 @@ public class UserController {
     @PostMapping("/cancelbooking&id={id}")
     public String cancelBooking(@PathVariable int id, HttpSession session, Model model, HttpServletRequest request) {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
-        BookingEntity bookingEntity = bookingService.findById(id);
-        bookingEntity.setBooking_status(BookingStatus.CANCEL);
-        bookingService.save(bookingEntity);
-        AccountBankingEntity accountBankingEntity = accountBankingService.findByAccountId(accountEntity.getId()).get(0);
-        accountBankingEntity.setBalance(accountBankingEntity.getBalance() + bookingEntity.getTotal_price());
-        accountBankingService.save(accountBankingEntity);
-        request.setAttribute("msg", "Cancel Booking Successfully!");
+        List<AccountBankingEntity> accountBankingEntityList = accountBankingService.findByAccountId(accountEntity.getId());
+        if(accountBankingEntityList == null || accountBankingEntityList.isEmpty()) {
+            request.setAttribute("msg_fail", "Please insert your payment card before cancel this booking!");
+            List<BookingEntity> bookingEntityList = bookingService.findByAccountId(accountEntity.getId());
+            model.addAttribute("bookingEntityList", bookingEntityList);
+        }else {
+            AccountBankingEntity accountBankingEntity = accountBankingEntityList.get(0);
+            BookingEntity bookingEntity = bookingService.findById(id);
+            bookingEntity.setBooking_status(BookingStatus.CANCEL);
+            bookingService.save(bookingEntity);
+            accountBankingEntity.setBalance(accountBankingEntity.getBalance() + bookingEntity.getTotal_price());
+            accountBankingService.save(accountBankingEntity);
+            request.setAttribute("msg", "Cancel Booking Successfully!");
 
-        List<BookingEntity> bookingEntityList = bookingService.findByAccountId(accountEntity.getId());
-        model.addAttribute("bookingEntityList", bookingEntityList);
+            String email = accountEntity.getEmail();
+            String body = "<h1>Azure Hotel - Cancel booking</h1>\n" +
+                    "<p>Your booking has been successfully canceled.</p>\n" +
+                    "<p>Order #: "+bookingEntity.getId()+"</p>\n" +
+                    "<p>Order Date: "+bookingEntity.getBooking_date()+"</p>\n" +
+                    "<p>Thank you!</p>\n" +
+                    "<p>Best regards,<br>The Azure Hotel team</p>";
+
+            sendEmail(email, "Azure Hotel - New Booking Successfully", body);
+
+            List<BookingEntity> bookingEntityList = bookingService.findByAccountId(accountEntity.getId());
+            model.addAttribute("bookingEntityList", bookingEntityList);
+        }
         return "user/booking";
     }
 
@@ -224,13 +261,17 @@ public class UserController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
     }
 
-    public void sendEmail(String to, String subject, String content) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(to);
-        mailMessage.setSubject(subject);
-        mailMessage.setText(content);
-
-        mailSender.send(mailMessage);
+    public void sendEmail(String recipient, String subject, String body) {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(recipient);
+            helper.setSubject(subject);
+            helper.setText(body, true);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        javaMailSender.send(message);
     }
 
     public void setGenderDropDownList(Model model) {
