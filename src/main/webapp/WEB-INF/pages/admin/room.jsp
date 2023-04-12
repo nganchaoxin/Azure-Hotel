@@ -220,15 +220,35 @@
                             </button>
                             <c:if test="${room.room_status == 'AVAILABLE'}">
                               <button
-                                onclick="location.href='deleteRoom/${room.id}'"
+                                data-toggle="modal" data-target="#confirm-delete"
+
                                 type="button"
                                 class="btn btn-sm btn-outline-secondary"
                               >
                                 <i class="bx bx-trash me-1"></i> Delete
                               </button>
+                              <!-- Modal -->
+                              <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <p>Are you sure you want to delete this item?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                      <button onclick="location.href='deleteRoom/${room.id}'" class="btn btn-danger">Delete</button>
+                                    </div>
+                                  </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                              </div><!-- /.modal -->
                             </c:if>
                           </td>
                         </tr>
+
                       </c:forEach>
                     </tbody>
                   </table>
@@ -291,5 +311,10 @@
       defer
       src='<c:url value="https://buttons.github.io/buttons.js" />'
     ></script>
+
+    <!-- JavaScript and jQuery (optional, but required for some features) -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
   </body>
 </html>

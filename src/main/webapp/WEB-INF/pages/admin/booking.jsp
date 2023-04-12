@@ -161,15 +161,16 @@
             <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4">Azure's Booking</h4>
 
-                <c:if test="${not empty msg}">
-                  <div class="alert alert-success" id="success-msg">${msg}</div>
-                </c:if>
+
 
               <hr class="my-5" />
 
               <!-- Hoverable Table rows -->
               <div class="card">
                 <h5 class="card-header">Booking</h5>
+                <c:if test="${not empty msg}">
+                  <div class="alert alert-success" id="success-msg">${msg}</div>
+                </c:if>
                 <div class="table-responsive text-nowrap">
                   <table class="table table-hover">
                     <thead>
@@ -184,6 +185,9 @@
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
+                    <small style="color: red">
+                      <c:out value="${message}" />
+                    </small>
                       <c:forEach
                         var="booking"
                         items="${bookingList}"
@@ -211,12 +215,30 @@
                             </button>
                             <c:if test="${booking.booking_status == 'COMPLETED'}">
                                 <button
-                                    onclick="location.href='cancelBooking/${booking.id}'"
+                                   data-toggle="modal" data-target="#confirm-delete"
                                     type="button"
                                     class="btn btn-sm btn-outline-secondary"
                                   >
                                     <i class="bx bx-trash me-1"></i> Cancel
                                   </button>
+                                  <!-- Modal -->
+                                <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">Confirm Cancel</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <p>Are you sure you want to cancel this booking?</p>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                                        <button onclick="location.href='cancelBooking/${booking.id}'" class="btn btn-danger">Yes</button>
+                                      </div>
+                                    </div><!-- /.modal-content -->
+                                  </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
                             </c:if>
 
 
@@ -290,5 +312,7 @@
       defer
       src='<c:url value="https://buttons.github.io/buttons.js" />'
     ></script>
+    <script src="<c:url value='/resources/js/jquery.min.js' />"></script>
+    	<script src="<c:url value='/resources/js/bootstrap.min.js' />"></script>
   </body>
 </html>

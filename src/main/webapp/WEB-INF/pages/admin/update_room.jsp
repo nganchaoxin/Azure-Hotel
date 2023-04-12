@@ -188,7 +188,7 @@
                       >
                            <form:options items="${categoryList}" />
                       </form:select>
-                    
+
                     </div>
 
                 <button type="submit" class="btn btn-primary d-grid w-100">
