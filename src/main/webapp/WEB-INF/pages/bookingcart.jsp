@@ -320,18 +320,44 @@
             <div class="booking-summary-stay-detail-total">
               <div class="booking-summary-stay-detail-total_total">Total</div>
               <div class="booking-summary-stay-detail-total_space"></div>
-              <div class="booking-summary-stay-detail-total_totalprice">VND
+              <div  class="booking-summary-stay-detail-total_totalprice">VND
                 <fmt:formatNumber value="${totalPrices}" pattern="#,###.##" />
               </div>
+
             </div>
+            <c:if test="${not empty sessionScope.discountedPrice}">
+              <div style="margin-bottom: 0px;" class="alert alert-success" role="alert">
+                Discount applied successfully! Total price: VND <fmt:formatNumber value="${sessionScope.discountedPrice}" pattern="#,###.##" />
+              </div>
+
+            </c:if>
           </div>
+          <form style="padding: 0px 20px 0px 20px;" action="bookingcart/discount" method="post">
+
+            <div class="form-group">
+              <label for="discount">Select discount:</label>
+              <select name="discountId"  id="discount-select" onchange="storeDiscountId()"  class="form-control mb-0 pb-0">
+                <option value="0">No discount</option>
+                <c:forEach items="${discountList}" var="discount">
+                  <option value="${discount.key}">${discount.value}</option>
+                </c:forEach>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary" style="margin-top: 0px; padding: 10px 0px 10px 0px;">Apply discount</button>
+          </form>
+
+
           <c:if test="${payment_status.equals('payment_available')}">
+
+
+
+
             <form action="bookingcart/checkout" id="checkoutForm" method="POST">
-              <div class="customer_note">
+              <div style="padding-top: 0px;" class="customer_note ">
                 <input name="note" class="input_note" type='text' placeholder='Enter your note...' />
               </div>
               <div class="button_checkout">
-                <button type="submit" class="btn_checkout" id="checkout-button"
+                <button style="margin-top: 0px;" type="submit" class="btn_checkout" id="checkout-button"
                   onclick="display_data()">Check Out</button>
             </form>
         </div>
@@ -363,6 +389,20 @@
 </div>
 
 <script>
+function storeDiscountId() {
+  var discountSelect = document.getElementById("discount-select");
+  var selectedValue = discountSelect.options[discountSelect.selectedIndex].value;
+  localStorage.setItem("discountId", selectedValue);
+}
+
+window.onload = function() {
+  var discountSelect = document.getElementById("discount-select");
+  var storedValue = localStorage.getItem("discountId");
+  if (storedValue) {
+    discountSelect.value = storedValue;
+  }
+}
+
 $(document).ready(function () {
   $("#customer-detail").click(function () {
     $("#customer-detail-content").slideToggle("slow");

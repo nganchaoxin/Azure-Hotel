@@ -45,6 +45,9 @@ public class BookingCartService {
     @Autowired
     BookingCartItemService bookingCartItemService;
 
+    @Autowired
+    DiscountService discountService;
+
 
     public BookingCartEntity findById(int id) {
         return bookingCartRepository.findById(id);
@@ -63,16 +66,22 @@ public class BookingCartService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void checkOut(AccountEntity accountEntity, AccountBankingEntity accountBanking, HttpSession session, Model model, String note, double totalPrice) throws Exception {
+    public void checkOut(AccountEntity accountEntity, AccountBankingEntity accountBanking, HttpSession session, Model model, String note, double discountedPrice) throws Exception {
         try {
-            if (accountBanking.getBalance() >= totalPrice) {
-                //// Create new booking entity
+            if (accountBanking.getBalance() >= discountedPrice) {
+
+                // Create new booking entity
                 BookingEntity newBookingEntity = new BookingEntity();
                 newBookingEntity.setBooking_date(new Date());
                 newBookingEntity.setBooking_status(BookingStatus.COMPLETED);
                 newBookingEntity.setNote(note);
                 newBookingEntity.setAccountEntity(accountEntity);
-                newBookingEntity.setTotal_price(totalPrice);
+                newBookingEntity.setTotal_price(discountedPrice);
+
+                Integer discountId = (Integer) session.getAttribute("discountId");
+                DiscountEntity discountEntity = discountService.findById(discountId);
+                newBookingEntity.setDiscountEntity(discountEntity);
+
                 bookingService.save(newBookingEntity);
 
                 //Create new booking detail
@@ -84,14 +93,14 @@ public class BookingCartService {
                 PaymentEntity newPayment = new PaymentEntity();
                 newPayment.setBookingEntity(newBookingEntity);
                 newPayment.setPayment_date(new Date());
-                newPayment.setAmount(totalPrice);
+                newPayment.setAmount(discountedPrice);
                 String paymentNote = ("Payment for booking #ID:"+newBookingEntity.getId() + " ,date: "+newBookingEntity.getBooking_date());
                 newPayment.setNote(paymentNote);
                 newPayment.setAccountBankingEntity(accountBankingService.findByAccountId(accountEntity.getId()).get(0));
                 paymentService.save(newPayment);
 
                 // Update balance of account Banking
-                double newBalance = accountBanking.getBalance() - totalPrice;
+                double newBalance = accountBanking.getBalance() - discountedPrice;
                 accountBanking.setBalance(newBalance);
                 accountBankingService.save(accountBanking);
 

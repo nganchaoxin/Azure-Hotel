@@ -103,7 +103,7 @@
     </li>
     <li>
       <div>Total price:</div>
-      <div><fmt:formatNumber value="${totalPrices}" pattern="#,###.##" /> VND</div>
+      <div><fmt:formatNumber value="${discountedPrice}" pattern="#,###.##" /> VND</div>
     </li>
     <li>
       <div>Created Date:</div>
