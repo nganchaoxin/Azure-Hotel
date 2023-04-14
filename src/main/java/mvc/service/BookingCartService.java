@@ -66,7 +66,7 @@ public class BookingCartService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void checkOut(AccountEntity accountEntity, AccountBankingEntity accountBanking, HttpSession session, Model model, String note, double totalPrice, DiscountEntity discountEntity) throws Exception {
+    public void checkOut(AccountEntity accountEntity, AccountBankingEntity accountBanking, HttpSession session, Model model, String note, double totalPrice) throws Exception {
         try {
             if (accountBanking.getBalance() >= totalPrice) {
 
@@ -89,7 +89,7 @@ public class BookingCartService {
                 newPayment.setBookingEntity(newBookingEntity);
                 newPayment.setPayment_date(new Date());
                 newPayment.setAmount(totalPrice);
-                String paymentNote = ("Payment for booking #ID:"+newBookingEntity.getId() + " ,date: "+newBookingEntity.getBooking_date());
+                String paymentNote = ("Payment for booking #ID:" + newBookingEntity.getId() + " ,date: " + newBookingEntity.getBooking_date());
                 newPayment.setNote(paymentNote);
                 newPayment.setAccountEntity(accountEntity);
                 newPayment.setCard_number(String.valueOf(accountBankingService.findByAccountId(accountEntity.getId()).get(0).getCard_number()));
@@ -108,9 +108,9 @@ public class BookingCartService {
                 List<BookingDetailEntity> bookingDetailEntities = bookingDetailService.findByBookingId(newBookingEntity.getId());
                 String body = "<h1>Azure Hotel - Create Booking Successfully</h1>\n" +
                         "<p>Woo hoo! Your order is on its way. Your order details can be found below.</p>\n" +
-                        "<p>Order #: "+newBookingEntity.getId()+"</p>\n" +
-                        "<p>Order Date: "+newBookingEntity.getBooking_date()+"</p>\n" +
-                        "<p style= \"currency\">Order Total: "+newBookingEntity.getTotal_price()+"</p>\n" +
+                        "<p>Order #: " + newBookingEntity.getId() + "</p>\n" +
+                        "<p>Order Date: " + newBookingEntity.getBooking_date() + "</p>\n" +
+                        "<p style= \"currency\">Order Total: " + newBookingEntity.getTotal_price() + "</p>\n" +
                         "<p>View your Booking:</p>\n" +
                         "<a href=http://localhost:8080/Azure-Hotel/user/booking>Click here to manage your booking</a>\n" +
                         "<p>Best regards,<br>The Azure Hotel team</p>";
@@ -120,7 +120,10 @@ public class BookingCartService {
                 model.addAttribute("newBookingEntity", newBookingEntity);
                 model.addAttribute("bookingDetailEntity", bookingDetailService.findByBookingId(newBookingEntity.getId()).get(0));
 
+                DiscountEntity discountEntity = (DiscountEntity) session.getAttribute("discount");
+                if (discountEntity != null) {
                 discountService.reduceQuantity(discountEntity);
+                }
                 // Clear Session List and Database
                 removeSession(session);
             } else {
