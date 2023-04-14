@@ -580,16 +580,21 @@
     							<c:forEach items="${ratingList}" var="rating">
     								<div class="item">
     									<div class="testimony-wrap py-4 pb-5">
-    										<div class="user-img mb-4"">
+    										<div class="user-img mb-4">
     											<img style="width:105px; height:105px;border-radius:50%;" src="getuseravatar/${rating.accountEntity.id}" />
     											<span class="quote d-flex align-items-center justify-content-center">
     												<i class="icon-quote-left"></i>
     											</span>
     										</div>
     										<div class="text text-center">
-    											<p class="mb-4">${rating.content}</p>
-    											<p class="name">${rating.user_name}</p>
-    											<span class="position">${rating.rating_point}</span>
+    										<p class="name">${rating.user_name}</p>
+    										<span class="position>
+                                                <c:forEach begin="1" end="${rating.rating_point+1}">
+                                                  <span class="icon-star text-warning"></span>
+                                                </c:forEach>
+                                            </span>
+    											<p class="mb-4" style="line-height: 1.5em; padding: 0px 20em; font-style: italic;margin-top: 0.5em;">“${rating.content}“</p>
+
     										</div>
     									</div>
     								</div>

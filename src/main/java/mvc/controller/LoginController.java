@@ -115,7 +115,12 @@ public class LoginController {
     }
 
     @GetMapping(value = "/rating")
-    public String rating(Model model) {
+    public String rating(Model model, HttpSession session) {
+        AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
+        if(accountEntity == null) {
+            model.addAttribute("success_msg", "Please login before rating!");
+            return "login";
+        }
         model.addAttribute("rating", new RatingEntity());
         return "rating";
     }
@@ -124,7 +129,7 @@ public class LoginController {
     public String createRating(@ModelAttribute(name = "rating") RatingEntity rating,
                               @RequestParam(name = "content") String content,
                               @RequestParam(name = "hdrating") float hdrating,
-                              HttpSession session) {
+                              HttpSession session, Model model) {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         rating.setReview_status("WAIT");
         rating.setReview_date(new Date());
