@@ -152,9 +152,38 @@
         </aside>
         <!-- / Menu -->
 
+
         <!-- Layout container -->
         <div class="layout-page">
           <!-- Content wrapper -->
+          <!-- Navbar -->
+
+          <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+              id="layout-navbar">
+              <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                  <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                      <i class="bx bx-menu bx-sm"></i>
+                  </a>
+              </div>
+
+              <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                  <!-- Search -->
+                  <form action="/Azure-Hotel/admin/search" method="GET">
+                      <div class="navbar-nav align-items-center">
+                          <div class="nav-item d-flex align-items-center">
+                              <i class="bx bx-search fs-4 lh-0"></i>
+                              <input type="text"  id="query" name="query" placeholder="Enter search query" value="${param.query}" class="form-control border-0 shadow-none"
+                                  aria-label="Search..." />
+                          </div>
+                      </div>
+                  <form>
+                  <!-- /Search -->
+
+
+              </div>
+          </nav>
+
+          <!-- / Navbar -->
           <div class="content-wrapper">
             <!-- Content -->
 
@@ -166,7 +195,8 @@
               <hr class="my-5" />
 
               <!-- Hoverable Table rows -->
-              <div class="card">
+              <c:if test="${not empty resultList}">
+                <div class="card">
                 <h5 class="card-header">Booking</h5>
 
                 <c:if test="${not empty sessionScope.msg}">
@@ -191,8 +221,8 @@
                       <c:out value="${message}" />
                     </small>
                       <c:forEach
-                        var="booking"
-                        items="${bookingList}"
+                        var="result"
+                        items="${resultList}"
                         varStatus="index"
                       >
                         <tr>
@@ -200,16 +230,16 @@
                             <i
                               class="fab fa-angular fa-lg text-danger me-3"
                             ></i>
-                            <strong>${booking.id}</strong>
+                            <strong>${result.id}</strong>
                           </td>
-                          <td>${booking.accountEntity.email}</td>
-                          <td><fmt:formatDate value="${booking.booking_date}" pattern="dd-MM-yyyy" /></td>
-                          <td>${booking.booking_status}</td>
-                          <td><fmt:formatNumber value="${booking.total_price}" pattern="#,###.##" /> VND</td>
+                          <td>${result.accountEntity.email}</td>
+                          <td><fmt:formatDate value="${result.booking_date}" pattern="dd-MM-yyyy" /></td>
+                          <td>${result.booking_status}</td>
+                          <td><fmt:formatNumber value="${result.total_price}" pattern="#,###.##" /> VND</td>
 
                           <td>
                             <button
-                              onclick="location.href='viewBookingDetail/${booking.id}'"
+                              onclick="location.href='viewBookingDetail/${result.id}'"
                               type="button"
                               class="btn btn-sm btn-outline-primary"
                             >
@@ -236,7 +266,7 @@
                                       </div>
                                       <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                                        <button onclick="location.href='cancelBooking/${booking.id}'" class="btn btn-danger">Yes</button>
+                                        <button onclick="location.href='cancelBooking/${result.id}'" class="btn btn-danger">Yes</button>
                                       </div>
                                     </div><!-- /.modal-content -->
                                   </div><!-- /.modal-dialog -->
@@ -252,6 +282,108 @@
                   </table>
                 </div>
               </div>
+               </c:if>
+              <c:if test="${not empty bookingList}">
+                  <div class="card">
+                    <h5 class="card-header">Booking</h5>
+
+                    <c:if test="${not empty sessionScope.msg}">
+                        <div class="alert alert-success">${sessionScope.msg}</div>
+                        <% session.removeAttribute("msg"); %>
+                    </c:if>
+                    <div class="table-responsive text-nowrap">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Account Name</th>
+                            <th>Booking Date</th>
+                            <th>Booking Status</th>
+                            <th>Total Price</th>
+
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                        <small style="color: red">
+                          <c:out value="${message}" />
+                        </small>
+                          <c:forEach
+                            var="booking"
+                            items="${bookingList}"
+                            varStatus="index"
+                          >
+                            <tr>
+                              <td>
+                                <i
+                                  class="fab fa-angular fa-lg text-danger me-3"
+                                ></i>
+                                <strong>${booking.id}</strong>
+                              </td>
+                              <td>${booking.accountEntity.email}</td>
+                              <td><fmt:formatDate value="${booking.booking_date}" pattern="dd-MM-yyyy" /></td>
+                              <td>${booking.booking_status}</td>
+                              <td><fmt:formatNumber value="${booking.total_price}" pattern="#,###.##" /> VND</td>
+
+                              <td>
+                                <button
+                                  onclick="location.href='viewBookingDetail/${booking.id}'"
+                                  type="button"
+                                  class="btn btn-sm btn-outline-primary"
+                                >
+                                  <i class="bx bx-edit-alt me-1"></i> View Detail
+                                </button>
+                                <c:if test="${booking.booking_status == 'COMPLETED'}">
+                                    <button
+                                       data-toggle="modal" data-target="#confirm-delete"
+                                        type="button"
+                                        class="btn btn-sm btn-outline-secondary"
+                                      >
+                                        <i class="bx bx-trash me-1"></i> Cancel
+                                      </button>
+                                      <!-- Modal -->
+                                    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel">Confirm Cancel</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                          </div>
+                                          <div class="modal-body">
+                                            <p>Are you sure you want to cancel this booking?</p>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                                            <button onclick="location.href='cancelBooking/${booking.id}'" class="btn btn-danger">Yes</button>
+                                          </div>
+                                        </div><!-- /.modal-content -->
+                                      </div><!-- /.modal-dialog -->
+                                    </div><!-- /.modal -->
+                                </c:if>
+
+
+                              </td>
+                            </tr>
+                          </c:forEach>
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+              </c:if>
+
+               <c:if test="${not empty sessionScope.findFail}">
+                    <div class="alert alert-fail">${sessionScope.findFail}</div>
+                    <% session.removeAttribute("findFail"); %>
+                </c:if>
+              <c:if test="${not empty sessionScope.nullBookingFound}">
+                 <div class="alert alert-fail">${sessionScope.nullBookingFound}</div>
+                 <% session.removeAttribute("nullBookingFound"); %>
+             </c:if>
+             <c:if test="${not empty sessionScope.findSuccess}">
+                  <div class="alert alert-success">${sessionScope.findSuccess}</div>
+                  <% session.removeAttribute("findSuccess"); %>
+              </c:if>
               <!--/ Hoverable Table rows -->
             </div>
 

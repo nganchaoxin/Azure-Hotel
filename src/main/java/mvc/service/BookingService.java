@@ -27,4 +27,8 @@ public class BookingService {
     public List<BookingEntity> findAll() {
         return (List<BookingEntity>) bookingRepository.findAll();
     }
+
+    public List<BookingEntity> search(String query){
+        return bookingRepository.findBookingByEmailOrDate(query);
+    }
 }

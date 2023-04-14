@@ -23,6 +23,8 @@ import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -410,5 +412,23 @@ public class AdminController {
         roomStatusList.add(RoomStatus.OCCUPIED);
 
         model.addAttribute("roomStatusList", roomStatusList);
+    }
+
+    // SEARCH
+    @GetMapping("/search")
+    public String search(@RequestParam(name = "query", required = false) String query, Model model, HttpSession session) {
+        if (query == null || query.isEmpty() ) {
+            session.setAttribute("nullBookingFound", "Please provide a search query.");
+        } else {
+            List<BookingEntity> resultList= bookingService.search(query);
+            if (resultList.isEmpty()){
+                session.setAttribute("findFail", "No booking found");
+                return "admin/booking";
+            }
+            model.addAttribute("resultList", resultList);
+            session.setAttribute("findSuccess", "All booking from search");
+        }
+
+        return "admin/booking";
     }
 }
