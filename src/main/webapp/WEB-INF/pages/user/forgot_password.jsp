@@ -3,36 +3,24 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
     <title>Azure Hotel - Profile Management</title>
     <meta name="description" content="asdas" />
-
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href='<c:url value="/resources/static/assets/img/favicon/favicon.ico" />' />
-
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href='<c:url value="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" />'
-        rel="stylesheet" />
-
+    <link href='<c:url value="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" />' rel="stylesheet" />
     <!-- Icons. Uncomment required icon fonts -->
     <link href='<c:url value="/resources/static/assets/vendor/fonts/boxicons.css" />' rel='stylesheet'>
-
     <!-- Core CSS -->
-    <link href='<c:url value="/resources/static/assets/vendor/css/core.css" />' class="template-customizer-core-css"
-        rel='stylesheet'>
-    <link href='<c:url value="/resources/static/assets/vendor/css/theme-default.css" />'
-        class="template-customizer-theme-css" rel='stylesheet'>
+    <link href='<c:url value="/resources/static/assets/vendor/css/core.css" />' class="template-customizer-core-css" rel='stylesheet'>
+    <link href='<c:url value="/resources/static/assets/vendor/css/theme-default.css" />' class="template-customizer-theme-css" rel='stylesheet'>
     <link href='<c:url value="/resources/static/assets/assets/css/demo.css" />' rel='stylesheet'>
-
     <!-- Vendors CSS -->
-    <link href='<c:url value="/resources/static/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />'
-        rel='stylesheet'>
-
+    <link href='<c:url value="/resources/static/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />' rel='stylesheet'>
     <script src='<c:url value="/resources/static/assets/vendor/js/helpers.js" />'></script>
     <script src='<c:url value="/resources/static/assets/js/config.js" />'></script>
 </head>
@@ -257,13 +245,12 @@
                                     <div class="alert alert-danger">${msg}</div>
                                 </c:if>
                                 <form action="forgotpassword&id=${accountEntity.id}" method="POST">
-
                                     <div class="form-outline">
                                         <label class="form-label" for="typeEmail">Email input</label>
                                         <input type="password" id="typeEmail" name="password" class="form-control my-3"
-                                            placeholder="Enter new password" />
+                                            placeholder="Enter new password" minlength="6" />
                                         <input type="password" id="typeEmail" name="password_two"
-                                            class="form-control my-3" placeholder="Confirm password" />
+                                            class="form-control my-3" placeholder="Confirm password" minlength="6" />
                                     </div>
                                     <button type="submit" class="btn btn-primary w-100">Reset password</button>
                                 </form>

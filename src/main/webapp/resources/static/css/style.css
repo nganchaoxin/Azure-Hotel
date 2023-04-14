@@ -10930,7 +10930,7 @@ textarea.form-control {
 .testimony-wrap .name {
   font-weight: 400;
   font-size: 18px;
-  margin-bottom: 0;
+  margin-bottom: revert;
   color: #000000;
 }
 .testimony-wrap .position {

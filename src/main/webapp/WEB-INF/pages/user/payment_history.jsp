@@ -240,7 +240,7 @@
                                         <c:forEach var="payment" items="${paymentEntityList}">
                                             <tr>
                                                 <td>${accountEntity.username}</td>
-                                                <td>${payment.accountBankingEntity.card_number}</td>
+                                                <td>${payment.card_number}</td>
                                                 <td>
                                                     <fmt:formatDate value="${payment.payment_date}"
                                                         pattern="dd/MM/yyyy" />

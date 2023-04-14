@@ -13,4 +13,6 @@ public interface PaymentRepository extends CrudRepository<PaymentEntity, Integer
 
     @Query(value = "select * from payment where account_banking_id =?1", nativeQuery = true)
     List<PaymentEntity> findByAccountBankingId(int id);
+    @Query(value = "select * from payment where account_id =?1", nativeQuery = true)
+    List<PaymentEntity> findByAccountId(int accountId);
 }

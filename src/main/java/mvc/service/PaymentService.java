@@ -24,4 +24,7 @@ public class PaymentService {
     public List<PaymentEntity> findByAccountBankingId(int id) {
         return paymentRepository.findByAccountBankingId(id);
     }
+
+    public List<PaymentEntity> findByAccountId(int accountId) { return paymentRepository.findByAccountId(accountId);
+    }
 }

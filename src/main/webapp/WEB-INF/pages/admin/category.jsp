@@ -94,9 +94,11 @@
           <div class="menu-inner-shadow"></div>
 
           <ul class="menu-inner py-1">
-            <!-- Components -->
-            <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">Room Management</span>
+            <li class="menu-item ">
+              <a href="chart" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Dashboard</div>
+              </a>
             </li>
             <!-- Cards -->
             <li class="menu-item">
@@ -105,10 +107,7 @@
                 <div data-i18n="Basic">Manage room</div>
               </a>
             </li>
-            <!-- Components -->
-            <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">Category Management</span>
-            </li>
+
             <!-- Cards -->
             <li class="menu-item active">
               <a href="category" class="menu-link">
@@ -116,10 +115,7 @@
                 <div data-i18n="Basic">Manage category</div>
               </a>
             </li>
-            <!-- Components -->
-            <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">Booking Management</span>
-            </li>
+
             <!-- Cards -->
             <li class="menu-item">
               <a href="booking" class="menu-link">
@@ -127,10 +123,7 @@
                 <div data-i18n="Basic">Manage booking</div>
               </a>
             </li>
-            <!-- Components -->
-                <li class="menu-header small text-uppercase">
-                  <span class="menu-header-text">Image Management</span>
-                </li>
+
                 <!-- Cards -->
                 <li class="menu-item">
                   <a href="image" class="menu-link">
@@ -138,10 +131,7 @@
                     <div data-i18n="Basic">Manage image</div>
                   </a>
                 </li>
-                <!-- Components -->
-                <li class="menu-header small text-uppercase">
-                  <span class="menu-header-text">Account Management</span>
-                </li>
+
                 <!-- Cards -->
                 <li class="menu-item ">
                   <a href="account" class="menu-link">

@@ -30,7 +30,7 @@
             <a href="<c:url value="/about" />" class="nav-link">About</a>
           </li>
           <li class="nav-item">
-            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="<c:url value="/rating" />" class="nav-link">Rating</a>
           </li>
           <!-- Login -->
           <sec:authorize access="isAuthenticated()">
