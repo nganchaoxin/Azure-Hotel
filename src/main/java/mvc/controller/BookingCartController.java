@@ -143,14 +143,16 @@ public class BookingCartController {
     public String checkOut(HttpSession session, Model model, @RequestParam("note") String note) throws Exception {
         // Get account
         double totalPrice = (double) session.getAttribute("totalPrices");
-        double discountedPrice = (double) session.getAttribute("discountedPrice");
-        if (totalPrice > discountedPrice) {
+        double discountedPrice = 0;
+        if(session.getAttribute("discountedPrice") != null) {
+            discountedPrice = (double) session.getAttribute("discountedPrice");
+        }
+        if (totalPrice > discountedPrice && discountedPrice > 0) {
             totalPrice = discountedPrice;
         }
-        DiscountEntity discountEntity = (DiscountEntity) session.getAttribute("discount");
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         AccountBankingEntity accountBanking = accountBankingService.findByAccountId(accountEntity.getId()).get(0);
-        bookingCartService.checkOut(accountEntity, accountBanking, session, model, note, totalPrice, discountEntity);
+        bookingCartService.checkOut(accountEntity, accountBanking, session, model, note, totalPrice);
         return "successpage";
     }
 

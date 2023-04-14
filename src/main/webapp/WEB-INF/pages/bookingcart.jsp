@@ -332,7 +332,6 @@
               <div style="margin: 10px; margin-top:2em;" class="alert alert-success" role="alert">
                 Discount applied successfully! Total price: <strong style="font-size:120%;">VND <fmt:formatNumber value="${sessionScope.discountedPrice}" pattern="#,###.##" /><strong>
               </div>
-
             </c:if>
           </div>
             <form style="padding: 0px 20px 0px 20px;" action="bookingcart/discount" method="post">
@@ -341,7 +340,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <select name="discountId" id="discount-select" onchange="storeDiscountId()" style="height:40px;" class="form-control mb-0 pb-0">
-                                <option value="1">Choose discount</option>
+                                <option value="${discount.id}">Choose discount</option>
                                 <c:forEach items="${discountList}" var="discount">
                                     <option value="${discount.key}">${discount.value}</option>
                                 </c:forEach>
@@ -399,7 +398,7 @@ function storeDiscountId() {
 
 window.onload = function() {
   var discountSelect = document.getElementById("discount-select");
-  var storedValue = localStorage.getItem("discountId");
+  var storedValue = localStorage.getItem("discount");
   if (storedValue) {
     discountSelect.value = storedValue;
   }
