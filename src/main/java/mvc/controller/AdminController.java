@@ -25,10 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -431,4 +428,45 @@ public class AdminController {
 
         return "admin/booking";
     }
+
+    // CHART
+    @GetMapping("/chart")
+    public String showChart(){
+        return "admin/chart";
+    }
+    @RequestMapping(value = "total-price-data", method = RequestMethod.GET,  produces = "application/json")
+    @ResponseBody
+    public List<Double> getBookingTotalPriceData(HttpServletRequest request) {
+        String url = request.getRequestURL().toString();
+        System.out.println("Request URL: " + url);
+
+        List<Double> totalPriceEachMonthList = new ArrayList<>();
+        // create a map to store the total price for each month,loop to put month and total price
+        Map<Integer, Double> monthToTotalPriceMap = new HashMap<>();
+
+        for (BookingEntity booking : bookingService.findAll()) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(booking.getBooking_date());
+
+            int month = calendar.get(Calendar.MONTH) + 1;
+            double totalPriceEachMonth = booking.getTotal_price();
+
+            // get all booking have the same month and sum up
+            if (monthToTotalPriceMap.containsKey(month)) {
+                totalPriceEachMonth += monthToTotalPriceMap.get(month);
+            }
+            monthToTotalPriceMap.put(month, totalPriceEachMonth);
+        }
+
+        // adding the total price of each month to the totalPriceEachMonth list.
+        for (int i = 1; i <= 12; i++) {
+            if (monthToTotalPriceMap.containsKey(i)) {
+                totalPriceEachMonthList.add(monthToTotalPriceMap.get(i));
+            } else {
+                totalPriceEachMonthList.add(0.0);
+            }
+        }
+        return totalPriceEachMonthList;
+    }
+
 }

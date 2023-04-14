@@ -4,7 +4,6 @@
 <%@ taglib prefix="mvc" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -61,9 +60,15 @@
 
     <script src='<c:url value="/resources/static/assets/vendor/js/helpers.js" />'></script>
     <script src='<c:url value="/resources/static/assets/js/config.js" />'></script>
+    <!-- chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
   </head>
 
   <body>
+
+
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -94,7 +99,8 @@
           <div class="menu-inner-shadow"></div>
 
           <ul class="menu-inner py-1">
-            <li class="menu-item ">
+            <!-- Cards -->
+            <li class="menu-item active">
               <a href="chart" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
@@ -108,37 +114,39 @@
               </a>
             </li>
 
-            <!-- Cards -->
-            <li class="menu-item active">
-              <a href="category" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">Manage category</div>
-              </a>
-            </li>
+              <!-- Cards -->
+              <li class="menu-item">
+                <a href="category" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-collection"></i>
+                  <div data-i18n="Basic">Manage category</div>
+                </a>
+              </li>
 
-            <!-- Cards -->
-            <li class="menu-item">
-              <a href="booking" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">Manage booking</div>
-              </a>
-            </li>
+              <!-- Cards -->
+              <li class="menu-item">
+                <a href="booking" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-collection"></i>
+                  <div data-i18n="Basic">Manage booking</div>
+                </a>
+              </li>
 
-                <!-- Cards -->
-                <li class="menu-item">
-                  <a href="image" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-collection"></i>
-                    <div data-i18n="Basic">Manage image</div>
-                  </a>
-                </li>
 
-                <!-- Cards -->
-                <li class="menu-item ">
-                  <a href="account" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-collection"></i>
-                    <div data-i18n="Basic">Manage account</div>
-                  </a>
-                </li>
+              <!-- Cards -->
+              <li class="menu-item">
+                <a href="image" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-collection"></i>
+                  <div data-i18n="Basic">Manage image</div>
+                </a>
+              </li>
+
+              <!-- Cards -->
+              <li class="menu-item ">
+                <a href="account" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-collection"></i>
+                  <div data-i18n="Basic">Manage account</div>
+                </a>
+              </li>
+
           </ul>
         </aside>
         <!-- / Menu -->
@@ -149,75 +157,8 @@
           <div class="content-wrapper">
             <!-- Content -->
 
-            <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4">Azure's Room Categories</h4>
-              <a href="addCategory">
-                <button type="button" class="btn btn-sm btn-outline-primary">
-                  <i class="bx bx-edit-alt me-1"></i> Add category room
-                </button>
-              </a>
-
-              <hr class="my-5" />
-
-              <!-- Hoverable Table rows -->
-              <div class="card">
-                <h5 class="card-header">Room Categories</h5>
-                <div class="table-responsive text-nowrap">
-                  <table class="table table-hover">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Category Name</th>
-                        <th>Description</th>
-                        <th>Max Occupancy</th>
-                        <th>Bed Info</th>
-                        <th>Square</th>
-                        <th>Price</th>
-
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0">
-                      <c:forEach
-                        var="category"
-                        items="${categoryList}"
-                        varStatus="index"
-                      >
-                        <tr>
-                          <td>
-                            <i
-                              class="fab fa-angular fa-lg text-danger me-3"
-                            ></i>
-                            <strong>${category.id}</strong>
-                          </td>
-                          <td>${category.category_name}</td>
-                          <td>${category.description}</td>
-                          <td>${category.max_occupancy}</td>
-                          <td>${category.bed_info}</td>
-                          <td>${category.square}</td>
-
-                          <td><fmt:formatNumber value="${category.price}" pattern="#,###.##" /> VND</td>
-
-                          <td>
-                            <button
-                              onclick="location.href='editCategory/${category.id}'"
-                              type="button"
-                              class="btn btn-sm btn-outline-primary"
-                            >
-                              <i class="bx bx-edit-alt me-1"></i> Edit
-                            </button>
-
-
-                          </td>
-                        </tr>
-                      </c:forEach>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <!--/ Hoverable Table rows -->
-            </div>
-
+           <h1>Booking Total Price Chart</h1>
+           	<canvas id="myChart"></canvas>
             <!-- Footer -->
             <footer class="content-footer footer bg-footer-theme">
               <div
@@ -241,10 +182,56 @@
         <!-- / Layout page -->
       </div>
 
-      <!-- Overlay -->
-      <div class="layout-overlay layout-menu-toggle"></div>
     </div>
     <!-- / Layout wrapper -->
+    <!-- chart js -->
+    <script>
+		// Get the chart data from the server
+		fetch('total-price-data')
+			.then(response => response.json())
+			.then(totalPriceData => {
+				// Create the chart
+				var ctx = document.getElementById('myChart').getContext('2d');
+				var myChart = new Chart(ctx, {
+				    type: 'bar',
+				    data: {
+				        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+				        datasets: [{
+				            label: 'Total Price',
+				            data: totalPriceData,
+				            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+				            borderColor: 'rgba(255, 99, 132, 1)',
+				            borderWidth: 1
+				        }]
+				    },
+				    options: {
+				        plugins: {
+				            datalabels: {
+				                anchor: 'end',
+				                align: 'top',
+				                formatter: (value, context) => '$' + value.toFixed(2)
+				            }
+				        },
+				        scales: {
+				            yAxes: [{
+				                ticks: {
+				                    beginAtZero: true,
+				                    callback: (value, index, values) => '$' + value.toFixed(2)
+				                }
+				            }]
+				        }
+				    }
+				});
+			});
+	</script>
+
+
+
+
+
+
+
+
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
@@ -272,5 +259,10 @@
       defer
       src='<c:url value="https://buttons.github.io/buttons.js" />'
     ></script>
+
+    <!-- JavaScript and jQuery (optional, but required for some features) -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
   </body>
 </html>

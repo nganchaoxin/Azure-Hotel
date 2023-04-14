@@ -93,9 +93,11 @@
           <div class="menu-inner-shadow"></div>
 
           <ul class="menu-inner py-1">
-            <!-- Components -->
-            <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">Room Management</span>
+            <li class="menu-item ">
+              <a href="chart" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Dashboard</div>
+              </a>
             </li>
             <!-- Cards -->
             <li class="menu-item">
@@ -104,10 +106,7 @@
                 <div data-i18n="Basic">Manage room</div>
               </a>
             </li>
-            <!-- Components -->
-            <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">Category Management</span>
-            </li>
+
             <!-- Cards -->
             <li class="menu-item ">
               <a href="category" class="menu-link">
@@ -115,10 +114,7 @@
                 <div data-i18n="Basic">Manage category</div>
               </a>
             </li>
-            <!-- Components -->
-            <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">Booking Management</span>
-            </li>
+
             <!-- Cards -->
             <li class="menu-item active">
               <a href="booking" class="menu-link">
@@ -126,10 +122,7 @@
                 <div data-i18n="Basic">Manage booking</div>
               </a>
             </li>
-            <!-- Components -->
-                <li class="menu-header small text-uppercase">
-                  <span class="menu-header-text">Image Management</span>
-                </li>
+
                 <!-- Cards -->
                 <li class="menu-item">
                   <a href="image" class="menu-link">
@@ -137,10 +130,7 @@
                     <div data-i18n="Basic">Manage image</div>
                   </a>
                 </li>
-                <!-- Components -->
-                    <li class="menu-header small text-uppercase">
-                      <span class="menu-header-text">Account Management</span>
-                    </li>
+
                     <!-- Cards -->
                     <li class="menu-item ">
                       <a href="account" class="menu-link">
@@ -190,7 +180,18 @@
             <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4">Azure's Booking</h4>
 
-
+                <c:if test="${not empty sessionScope.findFail}">
+                        <div class="alert alert-fail">${sessionScope.findFail}</div>
+                        <% session.removeAttribute("findFail"); %>
+                    </c:if>
+                  <c:if test="${not empty sessionScope.nullBookingFound}">
+                     <div class="alert alert-fail">${sessionScope.nullBookingFound}</div>
+                     <% session.removeAttribute("nullBookingFound"); %>
+                 </c:if>
+                 <c:if test="${not empty sessionScope.findSuccess}">
+                      <div class="alert alert-success">${sessionScope.findSuccess}</div>
+                      <% session.removeAttribute("findSuccess"); %>
+                  </c:if>
 
               <hr class="my-5" />
 
@@ -372,18 +373,7 @@
                   </div>
               </c:if>
 
-               <c:if test="${not empty sessionScope.findFail}">
-                    <div class="alert alert-fail">${sessionScope.findFail}</div>
-                    <% session.removeAttribute("findFail"); %>
-                </c:if>
-              <c:if test="${not empty sessionScope.nullBookingFound}">
-                 <div class="alert alert-fail">${sessionScope.nullBookingFound}</div>
-                 <% session.removeAttribute("nullBookingFound"); %>
-             </c:if>
-             <c:if test="${not empty sessionScope.findSuccess}">
-                  <div class="alert alert-success">${sessionScope.findSuccess}</div>
-                  <% session.removeAttribute("findSuccess"); %>
-              </c:if>
+
               <!--/ Hoverable Table rows -->
             </div>
 
