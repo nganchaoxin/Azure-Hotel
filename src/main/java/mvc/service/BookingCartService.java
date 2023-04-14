@@ -45,6 +45,9 @@ public class BookingCartService {
     @Autowired
     BookingCartItemService bookingCartItemService;
 
+    @Autowired
+    DiscountService discountService;
+
 
     public BookingCartEntity findById(int id) {
         return bookingCartRepository.findById(id);
@@ -63,10 +66,11 @@ public class BookingCartService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void checkOut(AccountEntity accountEntity, AccountBankingEntity accountBanking, HttpSession session, Model model, String note, double totalPrice) throws Exception {
+    public void checkOut(AccountEntity accountEntity, AccountBankingEntity accountBanking, HttpSession session, Model model, String note, double totalPrice, DiscountEntity discountEntity) throws Exception {
         try {
             if (accountBanking.getBalance() >= totalPrice) {
-                //// Create new booking entity
+
+                // Create new booking entity
                 BookingEntity newBookingEntity = new BookingEntity();
                 newBookingEntity.setBooking_date(new Date());
                 newBookingEntity.setBooking_status(BookingStatus.COMPLETED);
@@ -96,9 +100,6 @@ public class BookingCartService {
                 accountBanking.setBalance(newBalance);
                 accountBankingService.save(accountBanking);
 
-                // Clear Session List and Database
-                removeSession(session);
-
                 BookingCartEntity bookingCartEntity = bookingCartService.findByAccountId(accountEntity.getId()).get(0);
                 List<BookingCartItemEntity> bookingCartItemEntities = bookingCartItemService.findAllByBookingCartId(bookingCartEntity.getId());
                 bookingCartItemService.deleteAll(bookingCartItemEntities);
@@ -119,6 +120,9 @@ public class BookingCartService {
                 model.addAttribute("newBookingEntity", newBookingEntity);
                 model.addAttribute("bookingDetailEntity", bookingDetailService.findByBookingId(newBookingEntity.getId()).get(0));
 
+                discountService.reduceQuantity(discountEntity);
+                // Clear Session List and Database
+                removeSession(session);
             } else {
                 throw new Exception("An account error occurs. Procedure. Check whether the account balance is sufficient for the calling party.");
             }
@@ -133,6 +137,8 @@ public class BookingCartService {
         session.removeAttribute("totalPrices");
         session.removeAttribute("totalGuests");
         session.removeAttribute("totalDays");
+        session.removeAttribute("discount");
+        session.removeAttribute("discountedPrice");
     }
 
     public void sendEmail(String recipient, String subject, String body) {

@@ -17,7 +17,7 @@ public class DiscountEntity {
     private String discount_name;
 
     @Column(name = "discount_amount")
-    private double discount_value;
+    private double discount_amount;
 
     @Column(name = "discount_start_date")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
@@ -55,12 +55,12 @@ public class DiscountEntity {
         this.discount_name = discount_name;
     }
 
-    public double getDiscount_value() {
-        return discount_value;
+    public double getDiscount_amount() {
+        return discount_amount;
     }
 
-    public void setDiscount_value(double discount_value) {
-        this.discount_value = discount_value;
+    public void setDiscount_amount(double discount_value) {
+        this.discount_amount = discount_value;
     }
 
     public Date getDiscount_start_date() {
