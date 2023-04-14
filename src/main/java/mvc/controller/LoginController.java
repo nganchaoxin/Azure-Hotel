@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -38,6 +39,9 @@ public class LoginController {
     @Autowired
     ImageService imageService;
 
+    @Autowired
+    RatingService ratingService;
+
     @RequestMapping("/login")
     public String loginPage(Model model, @RequestParam(value = "error", required = false) boolean error) {
         if (error) {
@@ -56,6 +60,9 @@ public class LoginController {
         // Auth account
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = principal.toString();
+
+        List<RatingEntity> ratingEntityList = ratingService.findAll();
+        model.addAttribute("ratingList", ratingEntityList);
 
         if (principal instanceof UserDetails) {
             username = ((UserDetails) principal).getUsername();
@@ -107,6 +114,27 @@ public class LoginController {
         return "about";
     }
 
+    @GetMapping(value = "/rating")
+    public String rating(Model model) {
+        model.addAttribute("rating", new RatingEntity());
+        return "rating";
+    }
+
+    @PostMapping("/createrating")
+    public String createRating(@ModelAttribute(name = "rating") RatingEntity rating,
+                              @RequestParam(name = "content") String content,
+                              @RequestParam(name = "hdrating") float hdrating,
+                              HttpSession session) {
+        AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
+        rating.setReview_status("WAIT");
+        rating.setReview_date(new Date());
+        rating.setRating_point(hdrating);
+        rating.setAccountEntity(accountEntity);
+        rating.setContent(content);
+        ratingService.save(rating);
+        return "thankyou";
+    }
+
     @GetMapping(value = "/restaurant")
     public String restaurantPage() {
         return "restaurant";
@@ -119,5 +147,14 @@ public class LoginController {
         model.addAttribute("categoryList", categoryList);
 
         return "rooms";
+    }
+
+    @RequestMapping(value = "/getuseravatar/{id}")
+    public void getUserPhoto(HttpServletResponse response, @PathVariable("id") int id) throws Exception {
+        response.setContentType("image/jpeg");
+        AccountEntity accountEntity = accountService.findById(id);
+        byte[] ph = accountEntity.getPhoto();
+        InputStream inputStream = new ByteArrayInputStream(ph);
+        IOUtils.copy(inputStream, response.getOutputStream());
     }
 }

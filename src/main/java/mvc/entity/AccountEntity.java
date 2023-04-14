@@ -78,6 +78,9 @@ public class AccountEntity implements Serializable {
     @OneToMany(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BookingEntity> bookingEntities;
 
+    @OneToMany(mappedBy = "accountEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RatingEntity> ratingEntities;
+
     @OneToOne(mappedBy = "accountEntity", cascade = CascadeType.ALL)
     private BookingCartEntity bookingCartEntity;
 

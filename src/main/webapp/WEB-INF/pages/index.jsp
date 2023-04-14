@@ -14,45 +14,35 @@
   <body>
     <jsp:include page="navbar.jsp" />
 
-    <section class="home-slider owl-carousel">
-      <div
-        class="slider-item"
-        style="background-image: url(resources/static/images/hero_1.jpg)"
-      >
-        <div class="overlay"></div>
-        <div class="container">
-          <div
-            class="row no-gutters slider-text align-items-center justify-content-center"
-          >
-            <div class="col-md-12 ftco-animate text-center">
-              <div class="text mb-5 pb-3">
-                <h1 class="mb-3">Welcome To Azure</h1>
-                <h2>Hotels &amp; Resorts</h2>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+   <section class="home-slider owl-carousel">
+   	<div class="slider-item" style="background-image: url(resources/static/images/hero_1.jpg)">
+   		<div class="overlay"></div>
+   		<div class="container">
+   			<div class="row no-gutters slider-text align-items-center justify-content-center">
+   				<div class="col-md-12 ftco-animate text-center">
+   					<div class="text mb-5 pb-3">
+   						<h1 class="mb-3">Welcome To Azure</h1>
+   						<h2>Hotels &amp; Resorts</h2>
+   					</div>
+   				</div>
+   			</div>
+   		</div>
+   	</div>
 
-      <div
-        class="slider-item"
-        style="background-image: url(resources/static/images/hero_2.jpg)"
-      >
-        <div class="overlay"></div>
-        <div class="container">
-          <div
-            class="row no-gutters slider-text align-items-center justify-content-center"
-          >
-            <div class="col-md-12 ftco-animate text-center">
-              <div class="text mb-5 pb-3">
-                <h1 class="mb-3">Enjoy A Luxury Experience</h1>
-                <h2>Join With Us</h2>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+   	<div class="slider-item" style="background-image: url(resources/static/images/hero_2.jpg)">
+   		<div class="overlay"></div>
+   		<div class="container">
+   			<div class="row no-gutters slider-text align-items-center justify-content-center">
+   				<div class="col-md-12 ftco-animate text-center">
+   					<div class="text mb-5 pb-3">
+   						<h1 class="mb-3">Enjoy A Luxury Experience</h1>
+   						<h2>Join With Us</h2>
+   					</div>
+   				</div>
+   			</div>
+   		</div>
+   	</div>
+   </section>
 
     <section class="ftco-booking">
       <div class="container">
@@ -581,148 +571,35 @@
     </section>
 
     <section class="ftco-section testimony-section bg-light">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-md-8 ftco-animate">
-            <div class="row ftco-animate">
-              <div class="col-md-12">
-                <div class="carousel-testimony owl-carousel ftco-owl">
-                  <div class="item">
-                    <div class="testimony-wrap py-4 pb-5">
-                      <div
-                        class="user-img mb-4"
-                        style="
-                          background-image: url(resources/static/images/persons/person_1.jpg);
-                        "
-                      >
-                        <span
-                          class="quote d-flex align-items-center justify-content-center"
-                        >
-                          <i class="icon-quote-left"></i>
-                        </span>
-                      </div>
-                      <div class="text text-center">
-                        <p class="mb-4">
-                          A small river named Duden flows by their place and
-                          supplies it with the necessary regelialia. It is a
-                          paradisematic country, in which roasted parts of
-                          sentences fly into your mouth.
-                        </p>
-                        <p class="name">Nathan Smith</p>
-                        <span class="position">Guests</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="item">
-                    <div class="testimony-wrap py-4 pb-5">
-                      <div
-                        class="user-img mb-4"
-                        style="
-                          background-image: url(resources/static/images/persons/person_2.jpg);
-                        "
-                      >
-                        <span
-                          class="quote d-flex align-items-center justify-content-center"
-                        >
-                          <i class="icon-quote-left"></i>
-                        </span>
-                      </div>
-                      <div class="text text-center">
-                        <p class="mb-4">
-                          A small river named Duden flows by their place and
-                          supplies it with the necessary regelialia. It is a
-                          paradisematic country, in which roasted parts of
-                          sentences fly into your mouth.
-                        </p>
-                        <p class="name">Nathan Smith</p>
-                        <span class="position">Guests</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="item">
-                    <div class="testimony-wrap py-4 pb-5">
-                      <div
-                        class="user-img mb-4"
-                        style="
-                          background-image: url(resources/static/images/persons/person_3.jpg);
-                        "
-                      >
-                        <span
-                          class="quote d-flex align-items-center justify-content-center"
-                        >
-                          <i class="icon-quote-left"></i>
-                        </span>
-                      </div>
-                      <div class="text text-center">
-                        <p class="mb-4">
-                          A small river named Duden flows by their place and
-                          supplies it with the necessary regelialia. It is a
-                          paradisematic country, in which roasted parts of
-                          sentences fly into your mouth.
-                        </p>
-                        <p class="name">Nathan Smith</p>
-                        <span class="position">Guests</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="item">
-                    <div class="testimony-wrap py-4 pb-5">
-                      <div
-                        class="user-img mb-4"
-                        style="
-                          background-image: url(resources/static/images/persons/person_1.jpg);
-                        "
-                      >
-                        <span
-                          class="quote d-flex align-items-center justify-content-center"
-                        >
-                          <i class="icon-quote-left"></i>
-                        </span>
-                      </div>
-                      <div class="text text-center">
-                        <p class="mb-4">
-                          A small river named Duden flows by their place and
-                          supplies it with the necessary regelialia. It is a
-                          paradisematic country, in which roasted parts of
-                          sentences fly into your mouth.
-                        </p>
-                        <p class="name">Nathan Smith</p>
-                        <span class="position">Guests</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="item">
-                    <div class="testimony-wrap py-4 pb-5">
-                      <div
-                        class="user-img mb-4"
-                        style="
-                          background-image: url(resources/static/images/persons/person_1.jpg);
-                        "
-                      >
-                        <span
-                          class="quote d-flex align-items-center justify-content-center"
-                        >
-                          <i class="icon-quote-left"></i>
-                        </span>
-                      </div>
-                      <div class="text text-center">
-                        <p class="mb-4">
-                          A small river named Duden flows by their place and
-                          supplies it with the necessary regelialia. It is a
-                          paradisematic country, in which roasted parts of
-                          sentences fly into your mouth.
-                        </p>
-                        <p class="name">Nathan Smith</p>
-                        <span class="position">Guests</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    	<div class="container">
+    		<div class="row justify-content-center">
+    			<div class="col-md-8 ftco-animate">
+    				<div class="row ftco-animate">
+    					<div class="col-md-12">
+    						<div class="carousel-testimony owl-carousel ftco-owl">
+    							<c:forEach items="${ratingList}" var="rating">
+    								<div class="item">
+    									<div class="testimony-wrap py-4 pb-5">
+    										<div class="user-img mb-4"">
+    											<img style="width:105px; height:105px;border-radius:50%;" src="getuseravatar/${rating.accountEntity.id}" />
+    											<span class="quote d-flex align-items-center justify-content-center">
+    												<i class="icon-quote-left"></i>
+    											</span>
+    										</div>
+    										<div class="text text-center">
+    											<p class="mb-4">${rating.content}</p>
+    											<p class="name">${rating.user_name}</p>
+    											<span class="position">${rating.rating_point}</span>
+    										</div>
+    									</div>
+    								</div>
+    								</c:forEach>
+    						</div>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
     </section>
 
     <section class="ftco-section">
@@ -890,5 +767,6 @@
         .setAttribute("min", checkInDate);
     </script>
     <jsp:include page="scripts.jsp" />
+
   </body>
 </html>
