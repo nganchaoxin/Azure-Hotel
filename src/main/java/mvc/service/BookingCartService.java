@@ -66,9 +66,9 @@ public class BookingCartService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void checkOut(AccountEntity accountEntity, AccountBankingEntity accountBanking, HttpSession session, Model model, String note, double discountedPrice) throws Exception {
+    public void checkOut(AccountEntity accountEntity, AccountBankingEntity accountBanking, HttpSession session, Model model, String note, double totalPrice, DiscountEntity discountEntity) throws Exception {
         try {
-            if (accountBanking.getBalance() >= discountedPrice) {
+            if (accountBanking.getBalance() >= totalPrice) {
 
                 // Create new booking entity
                 BookingEntity newBookingEntity = new BookingEntity();
@@ -76,12 +76,7 @@ public class BookingCartService {
                 newBookingEntity.setBooking_status(BookingStatus.COMPLETED);
                 newBookingEntity.setNote(note);
                 newBookingEntity.setAccountEntity(accountEntity);
-                newBookingEntity.setTotal_price(discountedPrice);
-
-                Integer discountId = (Integer) session.getAttribute("discountId");
-                DiscountEntity discountEntity = discountService.findById(discountId);
-                newBookingEntity.setDiscountEntity(discountEntity);
-
+                newBookingEntity.setTotal_price(totalPrice);
                 bookingService.save(newBookingEntity);
 
                 //Create new booking detail
@@ -93,19 +88,16 @@ public class BookingCartService {
                 PaymentEntity newPayment = new PaymentEntity();
                 newPayment.setBookingEntity(newBookingEntity);
                 newPayment.setPayment_date(new Date());
-                newPayment.setAmount(discountedPrice);
+                newPayment.setAmount(totalPrice);
                 String paymentNote = ("Payment for booking #ID:"+newBookingEntity.getId() + " ,date: "+newBookingEntity.getBooking_date());
                 newPayment.setNote(paymentNote);
                 newPayment.setAccountBankingEntity(accountBankingService.findByAccountId(accountEntity.getId()).get(0));
                 paymentService.save(newPayment);
 
                 // Update balance of account Banking
-                double newBalance = accountBanking.getBalance() - discountedPrice;
+                double newBalance = accountBanking.getBalance() - totalPrice;
                 accountBanking.setBalance(newBalance);
                 accountBankingService.save(accountBanking);
-
-                // Clear Session List and Database
-                removeSession(session);
 
                 BookingCartEntity bookingCartEntity = bookingCartService.findByAccountId(accountEntity.getId()).get(0);
                 List<BookingCartItemEntity> bookingCartItemEntities = bookingCartItemService.findAllByBookingCartId(bookingCartEntity.getId());
@@ -127,6 +119,9 @@ public class BookingCartService {
                 model.addAttribute("newBookingEntity", newBookingEntity);
                 model.addAttribute("bookingDetailEntity", bookingDetailService.findByBookingId(newBookingEntity.getId()).get(0));
 
+                discountService.reduceQuantity(discountEntity);
+                // Clear Session List and Database
+                removeSession(session);
             } else {
                 throw new Exception("An account error occurs. Procedure. Check whether the account balance is sufficient for the calling party.");
             }
@@ -141,6 +136,8 @@ public class BookingCartService {
         session.removeAttribute("totalPrices");
         session.removeAttribute("totalGuests");
         session.removeAttribute("totalDays");
+        session.removeAttribute("discount");
+        session.removeAttribute("discountedPrice");
     }
 
     public void sendEmail(String recipient, String subject, String body) {

@@ -125,15 +125,13 @@ public class BookingCartController {
     public String saveDiscount(Model model, @RequestParam(name = "discountId") int discountId, HttpSession session) {
         // Discount
         double totalPrice = (double) session.getAttribute("totalPrices");
-        session.setAttribute("discountId",discountId);
-
         if (discountId > 0) {
             DiscountEntity discount = discountService.findById(discountId);
             if (discount != null) {
                 double discountAmount = totalPrice * (discount.getDiscount_amount() / 100.0);
                 double discountedPrice = totalPrice - discountAmount;
-
                 session.setAttribute("discountedPrice", discountedPrice);
+                session.setAttribute("discount", discount);
             }
         }
         discountDropDown(model);
@@ -141,30 +139,18 @@ public class BookingCartController {
     }
 
 
-    public void discountDropDown(Model model) {
-        List<DiscountEntity> discountList = discountService.findAllDiscount();
-
-        Map<Integer, String> discountMap = new HashMap<>();
-        for (DiscountEntity discount : discountList) {
-            String discountName = discount.getDiscount_name();
-            discountMap.put(discount.getId(), discountName);
-        }
-
-        model.addAttribute("discountList", discountMap);
-    }
-
     @RequestMapping(value = "/checkout", method = POST, produces = "text/plain;charset=UTF-8")
     public String checkOut(HttpSession session, Model model, @RequestParam("note") String note) throws Exception {
         // Get account
         double totalPrice = (double) session.getAttribute("totalPrices");
+        double discountedPrice = (double) session.getAttribute("discountedPrice");
+        if (totalPrice > discountedPrice) {
+            totalPrice = discountedPrice;
+        }
+        DiscountEntity discountEntity = (DiscountEntity) session.getAttribute("discount");
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         AccountBankingEntity accountBanking = accountBankingService.findByAccountId(accountEntity.getId()).get(0);
-
-        // Discount
-        double discountedPrice = (double) session.getAttribute("discountedPrice");
-        bookingCartService.checkOut(accountEntity, accountBanking, session, model, note, discountedPrice);
-
-
+        bookingCartService.checkOut(accountEntity, accountBanking, session, model, note, totalPrice, discountEntity);
         return "successpage";
     }
 
@@ -203,7 +189,6 @@ public class BookingCartController {
             totalGuests += cartItem.getRoomEntity().getCategoryEntity().getMax_occupancy();
             totalDays += cartItem.getTotal_night();
         }
-
         session.setAttribute("totalDays", totalDays);
         session.setAttribute("totalGuests", totalGuests);
         session.setAttribute("totalPrices", totalPrices);
@@ -212,14 +197,25 @@ public class BookingCartController {
     @RequestMapping(value = "/getImagePhoto/{id}")
     public void getImagePhoto(HttpServletResponse response, @PathVariable("id") long id) throws Exception {
         response.setContentType("image/jpeg");
-
         ImageEntity i = imageService.findById(id);
         byte[] ph = i.getUrl();
         InputStream inputStream = new ByteArrayInputStream(ph);
         IOUtils.copy(inputStream, response.getOutputStream());
     }
 
+    public void discountDropDown(Model model) {
+        List<DiscountEntity> discountList = discountService.findAllDiscount();
 
+        Map<Integer, String> discountMap = new HashMap<>();
+        for (DiscountEntity discount : discountList) {
+            Date currentDay = new Date();
+            if (discount.getDiscount_end_date().compareTo(currentDay) >= 0 && discount.getQuantity() > 0) {
+                String discountName = discount.getDiscount_name();
+                discountMap.put(discount.getId(), discountName);
+            }
+        }
+        model.addAttribute("discountList", discountMap);
+    }
 
 
 }

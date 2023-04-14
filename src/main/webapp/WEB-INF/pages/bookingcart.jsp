@@ -191,7 +191,7 @@
                       <div class="card space icon-relative">
                         <label class="label">Card number:</label>
                         <form:input path="card_number" type="text" class="input"
-                          placeholder="0000 0000 0000 0000" required="true" minlength="16" maxlength="16"/>
+                          placeholder="0000 0000 0000 0000" required="true" minlength="8" maxlength="8"/>
                         <i class="far fa-credit-card"></i>
                       </div>
                       <div class="card-grp space">
@@ -326,32 +326,31 @@
 
             </div>
             <c:if test="${not empty sessionScope.discountedPrice}">
-              <div style="margin-bottom: 0px;" class="alert alert-success" role="alert">
-                Discount applied successfully! Total price: VND <fmt:formatNumber value="${sessionScope.discountedPrice}" pattern="#,###.##" />
+              <div style="margin: 10px; margin-top:2em;" class="alert alert-success" role="alert">
+                Discount applied successfully! Total price: <strong style="font-size:120%;">VND <fmt:formatNumber value="${sessionScope.discountedPrice}" pattern="#,###.##" /><strong>
               </div>
 
             </c:if>
           </div>
-          <form style="padding: 0px 20px 0px 20px;" action="bookingcart/discount" method="post">
-
-            <div class="form-group">
-              <label for="discount">Select discount:</label>
-              <select name="discountId"  id="discount-select" onchange="storeDiscountId()"  class="form-control mb-0 pb-0">
-                <option value="0">No discount</option>
-                <c:forEach items="${discountList}" var="discount">
-                  <option value="${discount.key}">${discount.value}</option>
-                </c:forEach>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-primary" style="margin-top: 0px; padding: 10px 0px 10px 0px;">Apply discount</button>
-          </form>
-
-
+            <form style="padding: 0px 20px 0px 20px;" action="bookingcart/discount" method="post">
+                <div class="form-group">
+                    <label for="discount">Select discount:</label>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <select name="discountId" id="discount-select" onchange="storeDiscountId()" style="height:40px;" class="form-control mb-0 pb-0">
+                                <option value="1">Choose discount</option>
+                                <c:forEach items="${discountList}" var="discount">
+                                    <option value="${discount.key}">${discount.value}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="col-md-4" style="padding-left: 0px;">
+                            <button type="submit" class="btn btn-primary" style="width:100%;height:40px; font-size: 12px;margin-top: 0px;">Apply</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
           <c:if test="${payment_status.equals('payment_available')}">
-
-
-
-
             <form action="bookingcart/checkout" id="checkoutForm" method="POST">
               <div style="padding-top: 0px;" class="customer_note ">
                 <input name="note" class="input_note" type='text' placeholder='Enter your note...' />

@@ -19,4 +19,9 @@ public class DiscountService {
     public DiscountEntity findById(int id){
         return discountRepository.findById(id);
     }
+
+    public void reduceQuantity(DiscountEntity discountEntity) {
+        discountEntity.setQuantity(discountEntity.getQuantity() - 1);
+        discountRepository.save(discountEntity);
+    }
 }
