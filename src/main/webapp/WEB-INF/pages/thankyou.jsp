@@ -35,35 +35,35 @@
   padding:0px 10px 10px;
 }
 .thankyou-wrapper p{
-  font:26px Arial, Helvetica, sans-serif;
+  font:19px Arial, Helvetica, sans-serif;
   text-align:center;
   color:#333333;
-  padding:5px 10px 10px;
+  padding: 20px;
+  padding-bottom: 40px;
 }
 .thankyou-wrapper a {
-    font: 19px Arial, Helvetica, sans-serif;
+    font: 15px Arial, Helvetica, sans-serif;
     text-align: center;
     color: #ffffff;
     display: block;
     text-decoration: none;
-    width: 165px;
+    width: 130px;
     background: #cca772;
     margin: 10px auto 0px;
-    padding: 15px 20px 15px;
+    padding:10px;
     border-bottom: 5px solid #cca772;
     border-radius: 10px;
     }
 .thankyou-wrapper a:hover{
-  font: 19px Arial, Helvetica, sans-serif;
+  font: 15px Arial, Helvetica, sans-serif;
   text-align:center;
   color:#ffffff;
   display:block;
   text-decoration:none;
-  width: 165px;
-  background:#cca772cc;
+  width: 130px;
   margin:10px auto 0px;
-  padding:15px 20px 15px;
-  border-bottom:1px solid #F96700;
+  padding:10px;
+  box-shadow: 0px 0px 2px black;
 }
 </style>
 
@@ -102,13 +102,13 @@
 </header>
 <main>
   <div class="container">
-    <section class="login-main-wrapper">
+    <section class="login-main-wrapper" style="width:100%">
           <div class="main-container">
               <div class="login-process">
                   <div class="login-main-container">
                       <div class="thankyou-wrapper">
                           <h1><img src="http://montco.happeningmag.com/wp-content/uploads/2014/11/thankyou.png" alt="thanks" /></h1>
-                            <p>for contacting us, we will get in touch with you soon... </p>
+                            <p>Thanks so much for sharing your experience with us. We hope to see you again soon.</p>
                             <a href="./">Back to home</a>
                             <div class="clr"></div>
                         </div>

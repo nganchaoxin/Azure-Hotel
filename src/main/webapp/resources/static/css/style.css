@@ -12190,6 +12190,7 @@ body {
 }
 
 .mb-4 {
+margin-top: 1em;
   margin-bottom: 1.5rem !important;
 }
 
@@ -12316,7 +12317,7 @@ body {
 }
 
 .property-item .property-content .price {
-  color: #005555;
+  color: #003c87;
 }
 
 .property-item .property-content .price span {
