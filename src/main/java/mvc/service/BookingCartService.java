@@ -73,7 +73,7 @@ public class BookingCartService {
                 // Create new booking entity
                 BookingEntity newBookingEntity = new BookingEntity();
                 newBookingEntity.setBooking_date(new Date());
-                newBookingEntity.setBooking_status(BookingStatus.COMPLETED);
+                newBookingEntity.setBooking_status(BookingStatus.BOOKED);
                 newBookingEntity.setNote(note);
                 newBookingEntity.setAccountEntity(accountEntity);
                 newBookingEntity.setTotal_price(totalPrice);

@@ -10,7 +10,6 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,11 +28,14 @@ import javax.servlet.http.HttpSession;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -215,7 +217,7 @@ public class UserController {
     }
 
     @PostMapping("/cancelbooking&id={id}")
-    public String cancelBooking(@PathVariable int id, HttpSession session, Model model, HttpServletRequest request) {
+    public String cancelBooking(@PathVariable int id, HttpSession session, Model model, HttpServletRequest request) throws ParseException {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         List<AccountBankingEntity> accountBankingEntityList = accountBankingService.findByAccountId(accountEntity.getId());
         if(accountBankingEntityList == null || accountBankingEntityList.isEmpty()) {
@@ -225,22 +227,28 @@ public class UserController {
         }else {
             AccountBankingEntity accountBankingEntity = accountBankingEntityList.get(0);
             BookingEntity bookingEntity = bookingService.findById(id);
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+            Date checkin = format.parse(String.valueOf(getCheckInBooking(id)));
+            Date currentDate = new Date();
+            long diffInMillies = Math.abs(checkin.getTime() - currentDate.getTime() + 1);
+            long diffInDays = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS) + 1;
+            if (diffInDays <= 1) {
+                request.setAttribute("msg_fail", "You cannot cancel this booking!");
+            }else{
             bookingEntity.setBooking_status(BookingStatus.CANCEL);
             bookingService.save(bookingEntity);
             accountBankingEntity.setBalance(accountBankingEntity.getBalance() + bookingEntity.getTotal_price());
             accountBankingService.save(accountBankingEntity);
             request.setAttribute("msg", "Cancel Booking Successfully!");
-
             String email = accountEntity.getEmail();
             String body = "<h1>Azure Hotel - Cancel booking</h1>\n" +
                     "<p>Your booking has been successfully canceled.</p>\n" +
-                    "<p>Order #: "+bookingEntity.getId()+"</p>\n" +
-                    "<p>Order Date: "+bookingEntity.getBooking_date()+"</p>\n" +
+                    "<p>Order #: " + bookingEntity.getId() + "</p>\n" +
+                    "<p>Order Date: " + bookingEntity.getBooking_date() + "</p>\n" +
                     "<p>Thank you!</p>\n" +
                     "<p>Best regards,<br>The Azure Hotel team</p>";
-
             sendEmail(email, "Azure Hotel - New Booking Successfully", body);
-
+        }
             List<BookingEntity> bookingEntityList = bookingService.findByAccountId(accountEntity.getId());
             model.addAttribute("bookingEntityList", bookingEntityList);
         }
@@ -280,6 +288,17 @@ public class UserController {
         genderList.add(Gender.FEMALE);
 
         model.addAttribute("genderList", genderList);
+    }
+
+    public Date getCheckInBooking(int id) {
+        List<BookingDetailEntity> bookingDetailEntityList = bookingDetailService.findByBookingId(id);
+        Date checkin = bookingDetailEntityList.get(0).getBooking_check_in();
+        for (BookingDetailEntity bookingDetail: bookingDetailEntityList) {
+            if(bookingDetail.getBooking_check_in().compareTo(checkin) <= 0) {
+                checkin = bookingDetail.getBooking_check_in();
+            }
+        }
+        return checkin;
     }
 
     @RequestMapping(value = "/getImagePhoto/{id}")
