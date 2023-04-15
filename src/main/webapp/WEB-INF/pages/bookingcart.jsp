@@ -331,7 +331,6 @@
               <div style="margin: 10px; margin-top:2em;" class="alert alert-success" role="alert">
                 Discount applied successfully! Total price: <strong style="font-size:120%;">VND <fmt:formatNumber value="${sessionScope.discountedPrice}" pattern="#,###.##" /><strong>
               </div>
-              <% session.removeAttribute("discountedPrice"); %>
             </c:if>
           </div>
             <form style="padding: 0px 20px 0px 20px;" action="bookingcart/discount" method="post">
