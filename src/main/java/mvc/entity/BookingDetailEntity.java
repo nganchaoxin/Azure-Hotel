@@ -13,11 +13,11 @@ public class BookingDetailEntity {
     private int id;
 
     @Column(name = "booking_check_in")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date booking_check_in;
 
     @Column(name = "booking_check_out")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date booking_check_out;
 
     @Column(name = "number_of_person")
