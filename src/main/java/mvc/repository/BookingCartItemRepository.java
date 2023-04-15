@@ -17,9 +17,9 @@ public interface BookingCartItemRepository extends CrudRepository<BookingCartIte
 
     @Query(value = "SELECT booking_cart_item.*\n" +
             "FROM booking_cart_item\n" +
-            "WHERE ( booking_cart_item.check_in <= ?1 AND ?1 <= booking_cart_item.check_out\n" +
-            "OR booking_cart_item.check_in <= ?2 AND ?2 <= booking_cart_item.check_out\n" +
-            "OR ?1 <= booking_cart_item.check_out AND booking_cart_item.check_in <= ?2)", nativeQuery = true)
+            "WHERE ( booking_cart_item.check_in < ?1 AND ?1 < booking_cart_item.check_out\n" +
+            "OR booking_cart_item.check_in < ?2 AND ?2 < booking_cart_item.check_out\n" +
+            "OR ?1 < booking_cart_item.check_out AND booking_cart_item.check_in < ?2)", nativeQuery = true)
     List<BookingCartItemEntity> listCartCheck(Date check_in, Date check_out);
 
 }
