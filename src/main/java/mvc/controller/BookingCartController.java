@@ -194,6 +194,12 @@ public class BookingCartController {
         session.setAttribute("totalDays", totalDays);
         session.setAttribute("totalGuests", totalGuests);
         session.setAttribute("totalPrices", totalPrices);
+        DiscountEntity discount = (DiscountEntity) session.getAttribute("discount");
+        if(discount != null) {
+            double discountAmount = totalPrices * (discount.getDiscount_amount() / 100.0);
+            double discountedPrice = totalPrices - discountAmount;
+            session.setAttribute("discountedPrice", discountedPrice);
+        }
     }
 
     @RequestMapping(value = "/getImagePhoto/{id}")
