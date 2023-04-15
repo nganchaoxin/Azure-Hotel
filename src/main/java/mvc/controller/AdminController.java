@@ -432,8 +432,6 @@ public class AdminController {
     @RequestMapping(value = "total-price-data", method = RequestMethod.GET,  produces = "application/json")
     @ResponseBody
     public List<Double> getBookingTotalPriceData(HttpServletRequest request) {
-        String url = request.getRequestURL().toString();
-        System.out.println("Request URL: " + url);
 
         List<Double> totalPriceEachMonthList = new ArrayList<>();
         // create a map to store the total price for each month,loop to put month and total price

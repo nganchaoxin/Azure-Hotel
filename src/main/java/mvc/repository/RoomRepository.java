@@ -33,7 +33,7 @@ public interface RoomRepository extends PagingAndSortingRepository<RoomEntity, I
             "        OR booking_detail.booking_check_in <= :checkout AND :checkout <= booking_detail.booking_check_out\n" +
             "        OR :checkin <= booking_detail.booking_check_out AND booking_detail.booking_check_in <= :checkout\n" +
             "    )\n" +
-            "    AND booking.booking_status = 'COMPLETED' OR booking.booking_status = 'BOOKED'\n" +
+            "    AND booking.booking_status = 'BOOKED'\n" +
             ")\n" +
             "ORDER BY room.id ASC",
             countQuery = "SELECT COUNT(*) FROM room LEFT JOIN category ON category.id = room.category_id WHERE category.category_name = :roomType AND :guests <= category.max_occupancy",
