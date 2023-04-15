@@ -100,18 +100,19 @@
 								<form:input type="text" class="form-control" placeholder="Subject" path="tittle" />
 							</div>
 							<div class="col-12 mb-3">
-                                <select path="type_room" class="form-control" id="gender">
-                                    <option value="none" label="Type Room" />
-                                    <option value="STANDARD" label="STANDARD" />
-                                    <option value="LUXURY" label="LUXURY" />
-                                    <option value="FAMILY" label="FAMILY" />
+                                <select  name="category_name" class="form-control">
+                                    <option value="">Choose Type Room</option>
+                                    <c:forEach items="${categoryList}" var="category">
+                                        <option value="${category.key}">${category.value}</option>
+                                    </c:forEach>
                                 </select>
                             </div>
                             <div class="col-12 mb-3">
-                                <select path="room" class="form-control" id="gender">
-                                    <option value="none" label="Room" />
-                                    <option value="Cuc Tan 1" label="Cuc Tan 1" />
-                                    <option value="Cuc Tan 2" label="Cuc Tan 2" />
+                                <select name="room_name" class="form-control">
+                                    <option value="">Choose Room</option>
+                                    <c:forEach items="${roomList}" var="room">
+                                        <option value="${room.key}">${room.value}</option>
+                                    </c:forEach>
                                 </select>
                             </div>
 
