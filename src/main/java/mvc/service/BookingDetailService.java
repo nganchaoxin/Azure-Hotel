@@ -40,4 +40,7 @@ public class BookingDetailService {
         bookingDetail.setTotal_night(cartItem.getTotal_night());
         bookingDetailRepository.save(bookingDetail);
     }
+
+    public List<BookingDetailEntity> findAllOfAccount(int accountId) { return bookingDetailRepository.findAllOfAccount(accountId);
+    }
 }

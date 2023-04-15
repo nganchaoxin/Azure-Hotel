@@ -587,13 +587,14 @@
     											</span>
     										</div>
     										<div class="text text-center">
-    										<p class="name">${rating.user_name}</p>
+    										<p class="name" style="font-weight:bold;">${rating.user_name}</p>
     										<span class="position>
                                                 <c:forEach begin="1" end="${rating.rating_point+1}">
                                                   <span class="icon-star text-warning"></span>
                                                 </c:forEach>
                                             </span>
-    											<p class="mb-4" style="line-height: 1.5em; padding: 0px 20em; font-style: italic;margin-top: 0.5em;">“${rating.content}“</p>
+                                            <p class="name" style="font-style: italic; margin-top:.5em; margin-bottom:0px;">"${rating.tittle}"</p>
+    										<p class="mb-4" style="line-height: 1.5em; padding: 0px 20em; font-style: italic;margin-top: 0.5em;">“${rating.content}“</p>
 
     										</div>
     									</div>

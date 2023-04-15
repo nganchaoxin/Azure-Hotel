@@ -20,7 +20,9 @@ import javax.servlet.http.HttpSession;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class LoginController {
@@ -41,6 +43,9 @@ public class LoginController {
 
     @Autowired
     RatingService ratingService;
+
+    @Autowired
+    BookingDetailService bookingDetailService;
 
     @RequestMapping("/login")
     public String loginPage(Model model, @RequestParam(value = "error", required = false) boolean error) {
@@ -122,6 +127,8 @@ public class LoginController {
             return "login";
         }
         model.addAttribute("rating", new RatingEntity());
+        setDropDownRoomListByAccount(accountEntity.getId(), model);
+        setDropDownTypeRoomListByAccount(accountEntity.getId(), model);
         return "rating";
     }
 
@@ -129,6 +136,8 @@ public class LoginController {
     public String createRating(@ModelAttribute(name = "rating") RatingEntity rating,
                               @RequestParam(name = "content") String content,
                               @RequestParam(name = "hdrating") float hdrating,
+                              @RequestParam(name = "room_name") String room_name,
+                               @RequestParam(name = "category_name") String category_name,
                               HttpSession session, Model model) {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("accountEntity");
         rating.setReview_status("WAIT");
@@ -136,6 +145,8 @@ public class LoginController {
         rating.setRating_point(hdrating);
         rating.setAccountEntity(accountEntity);
         rating.setContent(content);
+        rating.setRoom_name(room_name);
+        rating.setType_room(category_name);
         ratingService.save(rating);
         return "thankyou";
     }
@@ -161,5 +172,28 @@ public class LoginController {
         byte[] ph = accountEntity.getPhoto();
         InputStream inputStream = new ByteArrayInputStream(ph);
         IOUtils.copy(inputStream, response.getOutputStream());
+    }
+    public void setDropDownRoomListByAccount(int id, Model model) {
+        List<BookingDetailEntity> bookingDetailEntityList = bookingDetailService.findAllOfAccount(id);
+        if (!bookingDetailEntityList.isEmpty()) {
+            Map<Integer, String> cateMap = new LinkedHashMap<>();
+            for (BookingDetailEntity bookingDetailEntity: bookingDetailEntityList) {
+                cateMap.put(bookingDetailEntity.getId(), bookingDetailEntity.getRoomEntity().getRoom_name());
+            }
+            model.addAttribute("roomList", cateMap);
+        }
+    }
+    public void setDropDownTypeRoomListByAccount(int id, Model model) {
+        List<BookingDetailEntity> bookingDetailEntityList = bookingDetailService.findAllOfAccount(id);
+        if (!bookingDetailEntityList.isEmpty()) {
+            Map<Integer, String> cateMap = new LinkedHashMap<>();
+            cateMap.put(bookingDetailEntityList.get(0).getId(), String.valueOf(bookingDetailEntityList.get(0).getRoomEntity().getCategoryEntity().getCategory_name()));
+            for (BookingDetailEntity bookingDetailEntity : bookingDetailEntityList) {
+                if (!bookingDetailEntity.getRoomEntity().getCategoryEntity().getCategory_name().equals(bookingDetailEntityList.get(0).getRoomEntity().getCategoryEntity().getCategory_name())) {
+                    cateMap.put(bookingDetailEntity.getId(), String.valueOf(bookingDetailEntity.getRoomEntity().getCategoryEntity().getCategory_name()));
+                }
+            }
+            model.addAttribute("categoryList", cateMap);
+        }
     }
 }
