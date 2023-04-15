@@ -192,6 +192,7 @@ prefix="form" uri="http://www.springframework.org/tags/form" %>
                 <div class="mb-3">
                   <label for="email" class="form-label">Price</label>
                   <form:input
+                   required="required"
                     path="price"
                     type="number"
                     class="form-control"
