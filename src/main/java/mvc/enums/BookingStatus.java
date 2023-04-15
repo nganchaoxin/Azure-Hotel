@@ -1,5 +1,5 @@
 package mvc.enums;
 
 public enum BookingStatus {
-    COMPLETED, CANCEL
+    COMPLETED, CANCEL, BOOKED
 }

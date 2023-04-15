@@ -250,8 +250,16 @@
                                                     <fmt:formatDate value="${booking.booking_date}"
                                                         pattern="dd-MM-yyyy" />
                                                 </td>
-                                                <td><span
-                                                        class="badge bg-label-primary me-1">${booking.booking_status}</span>
+                                                <td>
+                                                <c:if test="${booking.booking_status eq 'BOOKED'}">
+                                                <span class="badge bg-label-primary me-1" style="background-color:#007bff;">${booking.booking_status}</span>
+                                                </c:if>
+                                                <c:if test="${booking.booking_status eq 'CANCEL'}">
+                                                <span class="badge bg-label-primary me-1" style="background-color:#ffc107;">${booking.booking_status}</span>
+                                                </c:if>
+                                                <c:if test="${booking.booking_status eq 'COMPLETED'}">
+                                                <span class="badge bg-label-primary me-1" style="background-color:#28a745;">${booking.booking_status}</span>
+                                                </c:if>
                                                 </td>
                                                 <td>
                                                     <fmt:formatNumber value="${booking.total_price}"
@@ -265,7 +273,7 @@
                                                             href="bookingdetail&bookingid=${booking.id}"><i
                                                                 class="bx bx-edit-alt me-1"></i>
                                                             View</a>
-                                                        <c:if test="${booking.booking_status ne 'CANCEL'}">
+                                                        <c:if test="${booking.booking_status eq 'BOOKED'}">
                                                             <a style="width: 20%; border-radius: 1.3em; padding-right: 5em; color: rgb(221, 75, 75);"
                                                                 class="dropdown-item" href="#deletebooking${booking.id}"
                                                                 class="trigger-btn" data-toggle="modal"><i
