@@ -138,31 +138,31 @@
                   style="display: flex; align-items: center; width: 97%; margin-bottom: 1.3em;">
                   <label class="col-sm-4 col-form-label" style="font-size: 16px;">First Name:</label>
                   <form:input path="first_name" type="text" class="input" placeholder="First Name"
-                    style="text-align: left;height: 40px;" />
+                    style="text-align: left; height: 40px;"/>
                 </div>
                 <div class="form-group row"
                   style="display: flex; align-items: center; width: 97%; margin-bottom: 1.3em;">
                   <label for="inputEmail" class="col-sm-4 col-form-label" style="font-size: 16px;">Last
                     Name:</label>
                   <form:input path="last_name" type="text" class="input" placeholder="Last Name"
-                    style="text-align: left;height: 40px;" />
+                    style="text-align: left;height: 40px;"/>
                 </div>
                 <div class="form-group row"
                   style="display: flex; align-items: center; width: 97%; margin-bottom: 1.3em;">
                   <label class="col-sm-4 col-form-label" style="font-size: 16px;">Email:</label>
                   <form:input path="email" type="email" class="input" placeholder="Email"
-                    style="text-align: left;height: 40px;" readonly="true" />
+                    style="text-align: left;height: 40px;" readonly="true"/>
                 </div>
                 <div class="form-group row"
                   style="display: flex; align-items: center; width: 97%;margin-bottom: 1.3em;">
                   <label class="col-sm-4 col-form-label" style="font-size: 16px;">Phone Number:</label>
                   <form:input path="phone_number" type="text" class="input" placeholder="Phone Number" minlength="10"
-                    style="text-align: left;height: 40px;" />
+                    style="text-align: left;height: 40px;"/>
                 </div>
                 <div class="form-group row" style="display: flex; align-items: center; width: 97%; ">
                   <label class="col-sm-4 col-form-label" style="font-size: 16px;">Address:</label>
                   <form:input path="address" type="text" class="input" placeholder="Address"
-                    style="text-align: left;height: 40px;" />
+                    style="text-align: left;height: 40px;"/>
                 </div>
                 <div class="form-group row" style="display: flex; align-items: center; width: 97%;">
                   <label class="col-sm-4 col-form-label" style="font-size: 16px;"></label>
@@ -340,7 +340,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <select name="discountId" id="discount-select" onchange="storeDiscountId()" style="height:40px;" class="form-control mb-0 pb-0">
-                                <option value="${discount.id}">Choose discount</option>
+                                <option value="">Choose discount</option>
                                 <c:forEach items="${discountList}" var="discount">
                                     <option value="${discount.key}">${discount.value}</option>
                                 </c:forEach>
@@ -393,7 +393,7 @@
 function storeDiscountId() {
   var discountSelect = document.getElementById("discount-select");
   var selectedValue = discountSelect.options[discountSelect.selectedIndex].value;
-  localStorage.setItem("discountId", selectedValue);
+  localStorage.setItem("discount", selectedValue);
 }
 
 window.onload = function() {
