@@ -69,89 +69,89 @@
     </header>
     <main style="padding-top:10px;">
       <c:if test="${not empty availableRoomList}">
-        <div class="section section-properties">
+        <div class="section section-properties" style="margin-bottom: 5em;">
           <div class="container">
             <div class="row">
               <c:forEach items="${availableRoomList}" var="room">
-                <div style="height: 450px" class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
-                  <!-- Carousel-->
-                  <div class="property-item mb-30">
-                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                      <!-- Indicators -->
-                      <ol class="carousel-indicators">
-                        <c:forEach items="${imageList}" var="image" varStatus="status">
-                          <li data-target="#myCarousel" data-slide-to="${status.index}"
-                            class="${status.index == 0 ? 'active' : ''}"></li>
-                        </c:forEach>
-                      </ol>
+                  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                      <!-- Carousel-->
+                      <div class="property-item mb-30">
+                        <a href="property-single.html" class="img">
+                          <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                              <!-- Indicators -->
+                              <ol class="carousel-indicators">
+                                  <c:forEach items="${imageList}" var="image" varStatus="status">
+                                      <li data-target="#myCarousel" data-slide-to="${status.index}"
+                                          class="${status.index == 0 ? 'active' : ''}"></li>
+                                  </c:forEach>
+                              </ol>
 
-                      <!-- Wrapper for slides -->
-                      <div class="carousel-inner" role="listbox">
-                        <c:forEach items="${imageList}" var="image" varStatus="status">
-                          <div class="item ${status.index == 0 ? 'active' : ''}">
-                            <img style="width: 400px;height: 220px;border-radius: 10px 10px 10px 10px;"
-                              src="getImagePhoto/${image.id}" />
+                              <!-- Wrapper for slides -->
+                              <div class="carousel-inner" role="listbox">
+                                  <c:forEach items="${imageList}" var="image" varStatus="status">
+                                      <div class="item ${status.index == 0 ? 'active' : ''}" style="width:400px;max-height:300px;;min-height:300px;">
+                                          <img style="border-radius:10px;" class="img-fluid" src="getImagePhoto/${image.id}" />
+                                      </div>
+                                  </c:forEach>
+                              </div>
+
+                              <!-- Controls -->
+                              <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                                  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                  <span class="sr-only">Previous</span>
+                              </a>
+                              <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                  <span class="sr-only">Next</span>
+                              </a>
                           </div>
-                        </c:forEach>
-                      </div>
+                        </a>
 
-                      <!-- Controls -->
-                      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                      </a>
-                      <a class="right carousel-control" href="#myCarousel" role="button"
-                        data-slide="next">
-                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                      </a>
-                    </div>
+                          <div class="property-content">
+                              <div class="price mb-2"><span>
+                                      <fmt:formatNumber value="${room.categoryEntity.price}" pattern="#,###.##" /> VND
+                                  </span></div>
+                              <div>
+                                  <span style="font-size: 17px;"
+                                      class="d-block mb-2 text-black-50"><strong>${fn:toUpperCase(room.room_name)} -
+                                          ${room.categoryEntity.category_name}</strong></span>
+                                  <div class="specs d-flex mb-4">
+                                      <span style="margin-right: 1em;" class="d-block d-flex align-items-center me-3">
+                                          <span class="icon-bed me-2" style="margin-right: .5em;"></span>
+                                          <span class="caption" style="margin-right: .5em;">${room.categoryEntity.bed_info}
+                                              beds</span>
+                                      </span>
+                                      <span class="d-block d-flex align-items-center">
+                                          <span class="icon-bath me-2" style="margin-right: .5em;"></span>
+                                          <span class="caption" style="margin-right: .5em;">2 baths</span>
+                                      </span>
 
-                    <div class="property-content">
-                      <div class="price mb-2"><span>
-                          <fmt:formatNumber value="${room.categoryEntity.price}" pattern="#,###.##" /> VND
-                        </span></div>
-                      <div>
-                        <span style="font-size: 17px;"
-                          class="d-block mb-2 text-black-50"><strong>${fn:toUpperCase(room.room_name)} -
-                            ${room.categoryEntity.category_name}</strong></span>
-                        <div class="specs d-flex mb-4">
-                          <span style="margin-right: 1em;" class="d-block d-flex align-items-center me-3">
-                            <span class="icon-bed me-2" style="margin-right: .5em;"></span>
-                            <span class="caption"
-                              style="margin-right: .5em;">${room.categoryEntity.bed_info} beds</span>
-                          </span>
-                          <span class="d-block d-flex align-items-center">
-                            <span class="icon-bath me-2" style="margin-right: .5em;"></span>
-                            <span class="caption" style="margin-right: .5em;">2 baths</span>
-                          </span>
+                                  </div>
+                                  <div class="specs d-flex mb-4">
 
-                        </div>
-                        <div class="specs d-flex mb-4">
-
-                          <span class="d-block d-flex align-items-center">
-                            <span class="fas fa-user" style="margin-right: .5em;"></span>
-                            <span class="caption"
-                              style="margin-right: .5em;">${availableRoomList[0].categoryEntity.max_occupancy}
-                              guests</span>
-                          </span>
-                          <span class="d-block d-flex align-items-center">
-                            <span class="" style="margin-right: .5em;"></span>
-                            <span class="caption" style="margin-right: .5em;">
-                              ${availableRoomList[0].categoryEntity.square} m2</span>
-                          </span>
-                          <span class="d-block d-flex align-items-center">
-                            <span class="fas fa-map-marker" style="margin-right: .5em;"></span>
-                            <span class="caption" style="margin-right: .5em;">
-                              ${availableRoomList[0].position}</span>
-                          </span>
-                        </div>
-                        <a href="addToCart/room=${room.id}" class="btn btn-primary py-2 px-3"
-                          style="margin-top: 0px; color:hover: black !important;">Add to cart</a>
-                      </div>
-                    </div>
-                  </div> <!-- .item -->
-                </div>
+                                      <span class="d-block d-flex align-items-center">
+                                          <span class="fas fa-user" style="margin-right: .5em;"></span>
+                                          <span class="caption"
+                                              style="margin-right: .5em;">${availableRoomList[0].categoryEntity.max_occupancy}
+                                              guests</span>
+                                      </span>
+                                      <span class="d-block d-flex align-items-center">
+                                          <span class="fa-solid fa-square" style="margin-right: .5em;"></span>
+                                          <span class="caption" style="margin-right: .5em;">
+                                              ${availableRoomList[0].categoryEntity.square} m2</span>
+                                      </span>
+                                      <span class="d-block d-flex align-items-center" style="margin-left: 1em;">
+                                          <span class="fas fa-map-marker" style="margin-right: .5em;"></span>
+                                          <span class="caption" style="margin-right: .5em;">
+                                              ${availableRoomList[0].position}</span>
+                                      </span>
+                                  </div>
+                                  <a href="addToCart/room=${room.id}" class="btn btn-primary py-2 px-3"
+                                      style="margin-top: 7px; color:hover: black !important; height:35px; font-size:16px; font-weight:505;">Add to cart</a>
+                              </div>
+                          </div>
+                      </div> <!-- .item -->
+                  </div>
               </c:forEach>
               <c:if test="${totalPages > 1}">
                 <div class="row align-items-center py-5" style="justify-content: center;">
@@ -165,7 +165,7 @@
                       <c:forEach begin="0" end="${totalPages - 1}" var="i">
                         <li style="list-style: none; "
                           class="page-item text-center ${currentPage == i ? 'active' : ''}"><a
-                            class="page-link"
+                            class="page-link" style="padding: 0px; font-size:14px;"
                             href="?checkin=${param.checkin}&checkout=${param.checkout}&roomType=${param.roomType}&guests=${param.guests}&page=${i}">${i
                             + 1}</a></li>
                       </c:forEach>

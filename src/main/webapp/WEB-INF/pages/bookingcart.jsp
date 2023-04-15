@@ -194,7 +194,6 @@
                       <div class="card space icon-relative">
                         <label class="label">Card number:</label>
                         <form:input path="card_number" type="text" class="input"
-                          placeholder="0000 0000 0000 0000" required="true" minlength="8" maxlength="8"/>
                           placeholder="0000 0000 0000 0000" minlength="16" maxlength="16" required="true" />
                         <i class="far fa-credit-card"></i>
                       </div>
