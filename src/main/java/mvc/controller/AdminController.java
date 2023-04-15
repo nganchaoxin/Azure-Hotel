@@ -119,9 +119,9 @@ public class AdminController {
 
     // Update
     @RequestMapping(value = "/editRoom/updateRoom", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-    public String updateRoom(@Valid @ModelAttribute("room") RoomEntity room,HttpSession session, BindingResult result, Model model) {
+    public String updateRoom(@Valid @ModelAttribute("room") RoomEntity room,HttpSession session, BindingResult result, Model model, @RequestParam(name="categoryId") int categoryId) {
         session.setAttribute("msgUpdate", "Room updated successfully!");
-
+        room.setCategoryEntity(categoryService.findById(categoryId));
         roomService.saveRoom(room);
         return "redirect:/admin/room";
 
@@ -204,10 +204,8 @@ public class AdminController {
     // Update
     @RequestMapping(value = "/editCategory/updateCategory", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     public String updateCategory(@Valid @ModelAttribute("category") CategoryEntity category, BindingResult result, Model model) {
-
         categoryService.save(category);
         return "redirect:/admin/category";
-
     }
 
     // Delete
@@ -388,10 +386,7 @@ public class AdminController {
         categoryRoomList.add(CategoryRoom.STUDIO);
 
         model.addAttribute("categoryRoomList", categoryRoomList);
-
-
         List<CategoryEntity> categoryList = categoryService.findAllCategory();
-
         Map<Integer, String> categoryMap = new HashMap<>();
         for (CategoryEntity categoryEntity : categoryList) {
             String categoryName = String.valueOf(categoryEntity.getCategory_name());
